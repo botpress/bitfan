@@ -6,7 +6,7 @@
   "main": "out/index.js",
   "author": "<francois.levasseur@botpress.com>",
   "license": "MIT",
-  "types": "./bitfan.d.ts",
+  "types": "./src/bitfan.d.ts",
   "scripts": {
     "build": "tsc",
     "install": "tsc"
