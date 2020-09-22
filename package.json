@@ -10,5 +10,11 @@
   "scripts": {
     "build": "tsc",
     "install": "tsc"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.161"
   }
 }

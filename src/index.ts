@@ -1,4 +1,5 @@
 import * as sdk from "src/bitfan";
+import _ from "lodash";
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
@@ -30,6 +31,21 @@ const impl: typeof sdk = {
     bpdsSlotH: {} as sdk.SlotDataSet,
     bpdsSlotI: {} as sdk.SlotDataSet,
     bpdsSlotJ: {} as sdk.SlotDataSet,
+  },
+
+  engines: {
+    bpMisunderstoodEngine: {} as sdk.MisunderstoodEngine,
+    bpContextEngine: {} as sdk.ContextEngine,
+    bpIntentEngine: {} as sdk.IntentEngine,
+    bpSlotEngine: {} as sdk.SlotEngine,
+  },
+
+  metrics: {
+    binaryIntentScore: (res: sdk.IntentResult) => {
+      const { text, label, prediction } = res;
+      const predictions = Object.keys(prediction);
+      return _.isEqual(_.orderBy(label), _.orderBy(prediction)) ? 1 : 0;
+    },
   },
 };
 
