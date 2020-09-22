@@ -8,6 +8,7 @@
   "license": "MIT",
   "types": "./bitfan.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "install": "tsc"
   }
 }
