@@ -7,12 +7,9 @@ import {
   BaseEngine,
 } from "./base.d";
 
-export function registerDataSet(set: Dataset): void;
-export function registerProblem(problem: Problem): void;
 export function runSolution(solution: Solution): void;
 
 type Solution = {
-  name: string;
   problems: Problem[];
   seeds: number[];
 } & AtLeastOne<{

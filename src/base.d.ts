@@ -4,7 +4,6 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type ProblemType = "misunderstood" | "context" | "intent" | "slot";
 
 export interface BaseProblem {
-  name: string;
   type: ProblemType;
   trainSet: BaseDataSet;
   testSet: BaseDataSet;
@@ -20,7 +19,6 @@ export interface BaseResult {
 }
 
 export interface BaseDataSet {
-  name: string;
   type: ProblemType;
   rows: BaseRow[];
 }

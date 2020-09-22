@@ -3,12 +3,6 @@ import _ from "lodash";
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
-  registerDataSet: (set: sdk.Dataset) => {
-    console.log(set);
-  },
-  registerProblem: (problem: sdk.Problem) => {
-    console.log(problem);
-  },
   runSolution: (solution: sdk.Solution) => {
     console.log(solution);
   },
