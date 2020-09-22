@@ -40,10 +40,29 @@ export namespace datasets {
 }
 
 export namespace engines {
-  export const bpMisunderstoodEngine: MisunderstoodEngine;
-  export const bpContextEngine: ContextEngine;
-  export const bpIntentEngine: IntentEngine;
-  export const bpSlotEngine: SlotEngine;
+  export class BpMisunderstoodEngine implements MisunderstoodEngine {
+    constructor(endpoint: string, password: string);
+    train: (input: MisunderstoodDataSet, seed: number) => void;
+    predict: (text: string, lang: string) => MisunderstoodPrediction;
+  }
+
+  export class BpContextEngine implements ContextEngine {
+    constructor(endpoint: string, password: string);
+    train: (input: ContextDataSet, seed: number) => void;
+    predict: (text: string, lang: string) => ContextPrediction;
+  }
+
+  export class BpIntentEngine implements IntentEngine {
+    constructor(endpoint: string, password: string);
+    train: (input: IntentDataSet, seed: number) => void;
+    predict: (text: string, lang: string) => IntentPrediction;
+  }
+
+  export class BpSlotEngine implements SlotEngine {
+    constructor(endpoint: string, password: string);
+    train: (input: SlotDataSet, seed: number) => void;
+    predict: (text: string, lang: string) => SlotPrediction;
+  }
 }
 
 export namespace metrics {

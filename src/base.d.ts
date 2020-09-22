@@ -29,7 +29,6 @@ export interface BaseRow {
 }
 
 export interface BaseEngine<DS, Pred> {
-  id: string;
   train: (input: DS, seed: number) => void;
   predict: (text: string, lang: string) => Pred;
 }

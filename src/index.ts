@@ -1,6 +1,34 @@
 import * as sdk from "src/bitfan";
 import _ from "lodash";
 
+class BpMisunderstoodEngine implements sdk.MisunderstoodEngine {
+  train(input: sdk.MisunderstoodDataSet, seed: number) {}
+  predict(text: string, lang: string) {
+    return {} as sdk.MisunderstoodPrediction;
+  }
+}
+
+class BpContextEngine implements sdk.ContextEngine {
+  train(input: sdk.ContextDataSet, seed: number) {}
+  predict(text: string, lang: string) {
+    return {} as sdk.ContextPrediction;
+  }
+}
+
+class BpIntentEngine implements sdk.IntentEngine {
+  train(input: sdk.IntentDataSet, seed: number) {}
+  predict(text: string, lang: string) {
+    return {} as sdk.IntentPrediction;
+  }
+}
+
+class BpSlotEngine implements sdk.SlotEngine {
+  train(input: sdk.SlotDataSet, seed: number) {}
+  predict(text: string, lang: string) {
+    return {} as sdk.SlotPrediction;
+  }
+}
+
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution: (solution: sdk.Solution) => {
@@ -28,10 +56,10 @@ const impl: typeof sdk = {
   },
 
   engines: {
-    bpMisunderstoodEngine: {} as sdk.MisunderstoodEngine,
-    bpContextEngine: {} as sdk.ContextEngine,
-    bpIntentEngine: {} as sdk.IntentEngine,
-    bpSlotEngine: {} as sdk.SlotEngine,
+    BpMisunderstoodEngine,
+    BpContextEngine,
+    BpIntentEngine,
+    BpSlotEngine,
   },
 
   metrics: {
