@@ -1,6 +1,7 @@
 {
   "name": "bitfan",
   "version": "0.0.1",
+  "private": true,
   "description": "Botpress Internal Testing Framework for Algorithms of NLU",
   "main": "out/index.js",
   "author": "<francois.levasseur@botpress.com>",
