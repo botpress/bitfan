@@ -63,10 +63,13 @@ const impl: typeof sdk = {
   },
 
   metrics: {
-    binaryIntentScore: (res: sdk.IntentResult) => {
-      const { text, label, prediction } = res;
+    binaryIntentScore: (
+      text: string,
+      prediction: sdk.IntentPrediction,
+      label: string[]
+    ) => {
       const predictions = Object.keys(prediction);
-      return _.isEqual(_.orderBy(label), _.orderBy(prediction)) ? 1 : 0;
+      return _.isEqual(_.orderBy(label), _.orderBy(predictions)) ? 1 : 0;
     },
   },
 };

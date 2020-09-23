@@ -1,10 +1,9 @@
 import {
   AtLeastOne,
   BaseProblem,
-  BaseResult,
-  BaseDataSet,
-  BaseRow,
-  BaseEngine,
+  DataSet,
+  ScoreFunction,
+  Engine,
 } from "./base.d";
 
 export function runSolution(solution: Solution): void;
@@ -17,7 +16,17 @@ type Solution = {
   contextEngine: ContextEngine;
   intentEngine: IntentEngine;
   slotEngine: SlotEngine;
+  spellEngine: SpellEngine;
+  langEngine: LangEngine;
 }>;
+
+type Problem =
+  | MisunderstoodProblem
+  | ContextProblem
+  | IntentProblem
+  | SlotProblem
+  | LangProblem
+  | SpellProblem;
 
 export namespace datasets {
   export const bpdsRegressionA: IntentDataSet;
@@ -66,189 +75,75 @@ export namespace engines {
 }
 
 export namespace metrics {
-  export const binaryIntentScore: IntentScoreFunc;
+  export const binaryIntentScore: ScoreFunction<IntentPrediction, IntentLabel>;
 }
 
-type Problem =
-  | MisunderstoodProblem
-  | ContextProblem
-  | IntentProblem
-  | SlotProblem;
-
-type Dataset =
-  | MisunderstoodDataSet
-  | ContextDataSet
-  | IntentDataSet
-  | SlotDataSet;
-
-// ###################
-// ## misunderstood ##
-// ###################
-interface MisunderstoodDataSet extends BaseDataSet {
-  type: "misunderstood";
-  rows: MisunderstoodRow[];
-}
-
+// #######################
+// #### misunderstood ####
+// #######################
 type MisunderstoodLabel = boolean; // misunderstood or not
-
-interface MisunderstoodRow extends BaseRow {
-  label: MisunderstoodLabel;
-}
-
 interface MisunderstoodPrediction {
   [ctx: string]: number;
 }
-
-interface MisunderstoodResult extends BaseResult {
-  text: string;
-  prediction: MisunderstoodPrediction;
-  label: MisunderstoodLabel;
-}
-
-type MisunderstoodVisFunc = (
-  trainSet: MisunderstoodDataSet,
-  testSet: MisunderstoodDataSet,
-  results: MisunderstoodResult[]
-) => void;
-
-type MisunderstoodScoreFunc = (result: MisunderstoodResult) => number;
-
-interface MisunderstoodProblem extends BaseProblem {
-  type: "misunderstood";
-  trainSet: MisunderstoodDataSet;
-  testSet: MisunderstoodDataSet;
-  scoreFunctions: MisunderstoodScoreFunc[];
-  visualisationFunction: MisunderstoodVisFunc;
-}
-
-type MisunderstoodEngine = BaseEngine<
-  MisunderstoodDataSet,
-  MisunderstoodPrediction
+type MisunderstoodProblem = BaseProblem<
+  "misunderstood",
+  MisunderstoodPrediction,
+  MisunderstoodLabel
 >;
+type MisunderstoodEngine = Engine<
+  "misunderstood",
+  MisunderstoodPrediction,
+  MisunderstoodLabel
+>;
+type MisunderstoodDataSet = DataSet<"misunderstood", MisunderstoodLabel>;
 
-// #############
-// ## context ##
-// #############
-interface ContextDataSet extends BaseDataSet {
-  type: "context";
-  rows: ContextRow[];
-}
-
+// #######################
+// ####### context #######
+// #######################
 type ContextLabel = string;
-
-interface ContextRow extends BaseRow {
-  label: ContextLabel;
-}
-
-type ContextPrediction = {
+interface ContextPrediction {
   [ctx: string]: number;
-};
-
-interface ContextResult extends BaseResult {
-  text: string;
-  prediction: ContextPrediction;
-  label: ContextLabel;
 }
+type ContextProblem = BaseProblem<"context", ContextPrediction, ContextLabel>;
+type ContextEngine = Engine<"context", ContextPrediction, ContextLabel>;
+type ContextDataSet = DataSet<"context", ContextLabel>;
 
-type ContextVisFunc = (
-  trainSet: ContextDataSet,
-  testSet: ContextDataSet,
-  results: ContextResult[]
-) => void;
-
-type ContextScoreFunc = (result: ContextResult) => number;
-
-interface ContextProblem extends BaseProblem {
-  type: "context";
-  trainSet: ContextDataSet;
-  testSet: ContextDataSet;
-  scoreFunctions: ContextScoreFunc[];
-  visualisationFunction: ContextVisFunc;
-}
-
-type ContextEngine = BaseEngine<ContextDataSet, ContextPrediction>;
-
-// #############
-// ## intents ##
-// #############
-interface IntentDataSet extends BaseDataSet {
-  type: "intent";
-  rows: IntentRow[];
-}
-
+// #######################
+// ####### intents #######
+// #######################
 type IntentLabel = string[];
-
-interface IntentRow extends BaseRow {
-  label: IntentLabel;
-}
-
 interface IntentPrediction {
   [intent: string]: number;
 }
+type IntentProblem = BaseProblem<"intent", IntentPrediction, IntentLabel>;
+type IntentEngine = Engine<"intent", IntentPrediction, IntentLabel>;
+type IntentDataSet = DataSet<"intent", IntentLabel>;
 
-interface IntentResult extends BaseResult {
-  text: string;
-  prediction: IntentPrediction;
-  label: IntentLabel;
-}
-
-type IntentVisFunc = (
-  trainSet: IntentDataSet,
-  testSet: IntentDataSet,
-  results: IntentResult[]
-) => void;
-
-type IntentScoreFunc = (result: IntentResult) => number;
-
-interface IntentProblem extends BaseProblem {
-  type: "intent";
-  trainSet: IntentDataSet;
-  testSet: IntentDataSet;
-  scoreFunctions: IntentScoreFunc[];
-  visualisationFunction: IntentVisFunc;
-}
-
-type IntentEngine = BaseEngine<IntentDataSet, IntentPrediction>;
-
-// ###########
-// ## slots ##
-// ###########
-interface SlotDataSet extends BaseDataSet {
-  type: "slot";
-  rows: SlotRow[];
-}
-
-type SlotLabel = { start: number; end: number; name: string }[];
-
-interface SlotRow extends BaseRow {
-  label: SlotLabel;
-}
-
+// #######################
+// ######## slots ########
+// #######################
+type SlotLabel = { name: string; start: number; end: number }[];
 interface SlotPrediction {
   [slot: string]: { start: number; end: number; confidence: number };
 }
+type SlotProblem = BaseProblem<"slot", SlotPrediction, SlotLabel>;
+type SlotEngine = Engine<"slot", SlotPrediction, SlotLabel>;
+type SlotDataSet = DataSet<"slot", SlotLabel>;
 
-interface SlotResult extends BaseResult {
-  text: string;
-  DataSet: SlotDataSet;
-  prediction: SlotPrediction;
-  label: SlotLabel;
-}
+// ######################
+// ######## lang ########
+// ######################
+type LangLabel = string;
+type LangPrediction = string;
+type LangProblem = BaseProblem<"lang", LangPrediction, LangLabel>;
+type LangEngine = Engine<"lang", LangPrediction, LangLabel>;
+type LangDataSet = DataSet<"lang", LangLabel>;
 
-type SlotVisFunc = (
-  trainSet: SlotDataSet,
-  testSet: SlotDataSet,
-  results: SlotResult[]
-) => void;
-
-type SlotScoreFunc = (result: SlotResult) => number;
-
-interface SlotProblem extends BaseProblem {
-  type: "slot";
-  trainSet: SlotDataSet;
-  testSet: SlotDataSet;
-  scoreFunctions: SlotScoreFunc[];
-  visualisationFunction: SlotVisFunc;
-}
-
-type SlotEngine = BaseEngine<SlotDataSet, SlotPrediction>;
+// #######################
+// ######## spell ########
+// #######################
+type SpellLabel = string;
+type SpellPrediction = string;
+type SpellProblem = BaseProblem<"spell", SpellPrediction, SpellLabel>;
+type SpellEngine = Engine<"spell", SpellPrediction, SpellLabel>;
+type spellDataSet = DataSet<"spell", SpellLabel>;
