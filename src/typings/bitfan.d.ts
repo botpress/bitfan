@@ -1,152 +1,146 @@
-import {
-  AtLeastOne,
-  BaseProblem,
-  DataSet,
-  ScoreFunction,
-  Engine,
-  ProblemType as ProbTypes,
-} from "./base";
-
 export function runSolution(solution: Solution): void;
 
-export type ProblemType = ProbTypes;
-
-type Solution = {
-  problems: Problem[];
+export type Solution = {
+  problems: (
+    | Problem<"misunderstood">
+    | Problem<"context">
+    | Problem<"intent">
+    | Problem<"slot">
+    | Problem<"spell">
+    | Problem<"lang">
+  )[];
   seeds: number[];
 } & AtLeastOne<{
-  misunderstoodEngine: MisunderstoodEngine;
-  contextEngine: ContextEngine;
-  intentEngine: IntentEngine;
-  slotEngine: SlotEngine;
-  spellEngine: SpellEngine;
-  langEngine: LangEngine;
+  misunderstoodEngine: Engine<"misunderstood">;
+  contextEngine: Engine<"context">;
+  intentEngine: Engine<"intent">;
+  slotEngine: Engine<"slot">;
+  spellEngine: Engine<"spell">;
+  langEngine: Engine<"lang">;
 }>;
 
-type Problem =
-  | MisunderstoodProblem
-  | ContextProblem
-  | IntentProblem
-  | SlotProblem
-  | LangProblem
-  | SpellProblem;
-
 export namespace datasets {
-  export const bpdsRegressionA: IntentDataSet;
-  export const bpdsRegressionB: IntentDataSet;
-  export const bpdsRegressionC: IntentDataSet;
-  export const bpdsRegressionD: IntentDataSet;
-  export const bpdsRegressionE: IntentDataSet;
-  export const bpdsRegressionF: IntentDataSet;
+  export const bpdsRegressionA: DataSet<"intent">;
+  export const bpdsRegressionB: DataSet<"intent">;
+  export const bpdsRegressionC: DataSet<"intent">;
+  export const bpdsRegressionD: DataSet<"intent">;
+  export const bpdsRegressionE: DataSet<"intent">;
+  export const bpdsRegressionF: DataSet<"intent">;
 
-  export const bpdsSlotA: SlotDataSet;
-  export const bpdsSlotB: SlotDataSet;
-  export const bpdsSlotC: SlotDataSet;
-  export const bpdsSlotD: SlotDataSet;
-  export const bpdsSlotE: SlotDataSet;
-  export const bpdsSlotF: SlotDataSet;
-  export const bpdsSlotG: SlotDataSet;
-  export const bpdsSlotH: SlotDataSet;
-  export const bpdsSlotI: SlotDataSet;
-  export const bpdsSlotJ: SlotDataSet;
+  export const bpdsSlotA: DataSet<"slot">;
+  export const bpdsSlotB: DataSet<"slot">;
+  export const bpdsSlotC: DataSet<"slot">;
+  export const bpdsSlotD: DataSet<"slot">;
+  export const bpdsSlotE: DataSet<"slot">;
+  export const bpdsSlotF: DataSet<"slot">;
+  export const bpdsSlotG: DataSet<"slot">;
+  export const bpdsSlotH: DataSet<"slot">;
+  export const bpdsSlotI: DataSet<"slot">;
+  export const bpdsSlotJ: DataSet<"slot">;
 }
 
 export namespace engines {
-  export class BpMisunderstoodEngine implements MisunderstoodEngine {
+  export class BpMisunderstoodEngine implements Engine<"misunderstood"> {
     constructor(endpoint: string, password: string);
-    train: (input: MisunderstoodDataSet, seed: number) => void;
-    predict: (text: string, lang: string) => MisunderstoodPrediction;
+    train: (input: DataSet<"misunderstood">, seed: number) => void;
+    predict: (text: string, lang: string) => Prediction<"misunderstood">;
   }
 
-  export class BpContextEngine implements ContextEngine {
+  export class BpContextEngine implements Engine<"context"> {
     constructor(endpoint: string, password: string);
-    train: (input: ContextDataSet, seed: number) => void;
-    predict: (text: string, lang: string) => ContextPrediction;
+    train: (input: DataSet<"context">, seed: number) => void;
+    predict: (text: string, lang: string) => Prediction<"context">;
   }
 
-  export class BpIntentEngine implements IntentEngine {
+  export class BpIntentEngine implements Engine<"intent"> {
     constructor(endpoint: string, password: string);
-    train: (input: IntentDataSet, seed: number) => void;
-    predict: (text: string, lang: string) => IntentPrediction;
+    train: (input: DataSet<"intent">, seed: number) => void;
+    predict: (text: string, lang: string) => Prediction<"intent">;
   }
 
-  export class BpSlotEngine implements SlotEngine {
+  export class BpSlotEngine implements Engine<"slot"> {
     constructor(endpoint: string, password: string);
-    train: (input: SlotDataSet, seed: number) => void;
-    predict: (text: string, lang: string) => SlotPrediction;
+    train: (input: DataSet<"slot">, seed: number) => void;
+    predict: (text: string, lang: string) => Prediction<"slot">;
   }
 }
 
 export namespace metrics {
-  export const binaryIntentScore: ScoreFunction<IntentPrediction, IntentLabel>;
+  export const binaryIntentScore: ScoreFunction<"intent">;
 }
 
-// #######################
-// #### misunderstood ####
-// #######################
-type MisunderstoodLabel = boolean; // misunderstood or not
-interface MisunderstoodPrediction {
-  [ctx: string]: number;
+export type ProblemType =
+  | "misunderstood"
+  | "context"
+  | "intent"
+  | "slot"
+  | "lang"
+  | "spell";
+
+type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
+  U[keyof U];
+
+type Dic<T> = {
+  [key: string]: T;
+};
+
+export type Label<T extends ProblemType> = T extends "misunderstood"
+  ? boolean
+  : T extends "context"
+  ? string
+  : T extends "intent"
+  ? string[]
+  : T extends "slot"
+  ? { name: string; start: number; end: number }
+  : string;
+
+export type Prediction<T extends ProblemType> = T extends "misunderstood"
+  ? Dic<number>
+  : T extends "context"
+  ? Dic<number>
+  : T extends "intent"
+  ? Dic<number>
+  : T extends "slot"
+  ? Dic<{ start: number; end: number; confidence: number }>
+  : string;
+
+export interface Problem<T extends ProblemType> {
+  type: ProblemType;
+  trainSet: DataSet<T>;
+  testSet: DataSet<T>;
+  lang: string;
+  scoreFunctions: ScoreFunction<T>[]; // threshold and elections are contained in these score-functions
+  visualisationFunction: VisualisationFunction<T>;
 }
-type MisunderstoodProblem = BaseProblem<
-  "misunderstood",
-  MisunderstoodPrediction,
-  MisunderstoodLabel
->;
-type MisunderstoodEngine = Engine<
-  "misunderstood",
-  MisunderstoodPrediction,
-  MisunderstoodLabel
->;
-type MisunderstoodDataSet = DataSet<"misunderstood", MisunderstoodLabel>;
 
-// #######################
-// ####### context #######
-// #######################
-type ContextLabel = string;
-interface ContextPrediction {
-  [ctx: string]: number;
+export interface Engine<T extends ProblemType> {
+  train: (input: DataSet<T>, seed: number) => void;
+  predict: (text: string, lang: string) => Prediction<T>;
 }
-type ContextProblem = BaseProblem<"context", ContextPrediction, ContextLabel>;
-type ContextEngine = Engine<"context", ContextPrediction, ContextLabel>;
-type ContextDataSet = DataSet<"context", ContextLabel>;
 
-// #######################
-// ####### intents #######
-// #######################
-type IntentLabel = string[];
-interface IntentPrediction {
-  [intent: string]: number;
+export type ScoreFunction<T extends ProblemType> = (
+  text: string,
+  prediction: Prediction<T>,
+  label: Label<T>
+) => number;
+
+export type VisualisationFunction<T extends ProblemType> = (
+  trainSet: DataSet<T>,
+  testSet: DataSet<T>,
+  results: {
+    text: string;
+    prediction: Prediction<T>;
+    label: Label<T>;
+  }[]
+) => void;
+
+export interface DataSet<T extends ProblemType> {
+  type: T;
+  lang: string;
+  rows: Row<T>[];
 }
-type IntentProblem = BaseProblem<"intent", IntentPrediction, IntentLabel>;
-type IntentEngine = Engine<"intent", IntentPrediction, IntentLabel>;
-type IntentDataSet = DataSet<"intent", IntentLabel>;
 
-// #######################
-// ######## slots ########
-// #######################
-type SlotLabel = { name: string; start: number; end: number }[];
-interface SlotPrediction {
-  [slot: string]: { start: number; end: number; confidence: number };
+interface Row<T extends ProblemType> {
+  text: string;
+  label: Label<T>;
 }
-type SlotProblem = BaseProblem<"slot", SlotPrediction, SlotLabel>;
-type SlotEngine = Engine<"slot", SlotPrediction, SlotLabel>;
-type SlotDataSet = DataSet<"slot", SlotLabel>;
-
-// ######################
-// ######## lang ########
-// ######################
-type LangLabel = string;
-type LangPrediction = string;
-type LangProblem = BaseProblem<"lang", LangPrediction, LangLabel>;
-type LangEngine = Engine<"lang", LangPrediction, LangLabel>;
-type LangDataSet = DataSet<"lang", LangLabel>;
-
-// #######################
-// ######## spell ########
-// #######################
-type SpellLabel = string;
-type SpellPrediction = string;
-type SpellProblem = BaseProblem<"spell", SpellPrediction, SpellLabel>;
-type SpellEngine = Engine<"spell", SpellPrediction, SpellLabel>;
-type spellDataSet = DataSet<"spell", SpellLabel>;
