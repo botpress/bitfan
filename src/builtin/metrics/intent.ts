@@ -6,9 +6,12 @@ export const binaryIntentScore: sdk.Metric<"intent"> = {
   eval: (res: sdk.Result<"intent">): number => {
     const { text, prediction, label } = res;
     const elected = _(prediction)
-      .orderBy(_.identity)
+      .toPairs()
+      .orderBy()
       .take(label.length)
+      .map((p) => p[0])
       .value();
+
     return _.isEqual(label.sort(), elected.sort()) ? 1 : 0;
   },
 };

@@ -33,6 +33,8 @@ const runSolution = <T extends sdk.ProblemType>(
           )
         );
       }
+
+      problem.visualisationFunction(problem.trainSet, problem.testSet, results);
     }
   }
 };
