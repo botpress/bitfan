@@ -1,23 +1,12 @@
-export function runSolution(solution: Solution): void;
+export function runSolution<T extends ProblemType>(
+  solutions: Solution<T>,
+  seeds: number[]
+): void;
 
-export type Solution = {
-  problems: (
-    | Problem<"misunderstood">
-    | Problem<"context">
-    | Problem<"intent">
-    | Problem<"slot">
-    | Problem<"spell">
-    | Problem<"lang">
-  )[];
-  seeds: number[];
-} & AtLeastOne<{
-  misunderstoodEngine: Engine<"misunderstood">;
-  contextEngine: Engine<"context">;
-  intentEngine: Engine<"intent">;
-  slotEngine: Engine<"slot">;
-  spellEngine: Engine<"spell">;
-  langEngine: Engine<"lang">;
-}>;
+export type Solution<T extends ProblemType> = {
+  problems: Problem<T>[];
+  engine: Engine<T>;
+};
 
 export namespace datasets {
   export const bpdsRegressionA: DataSet<"intent">;
@@ -39,34 +28,8 @@ export namespace datasets {
   export const bpdsSlotJ: DataSet<"slot">;
 }
 
-export namespace engines {
-  export class BpMisunderstoodEngine implements Engine<"misunderstood"> {
-    constructor(endpoint: string, password: string);
-    train: (input: DataSet<"misunderstood">, seed: number) => void;
-    predict: (text: string, lang: string) => Prediction<"misunderstood">;
-  }
-
-  export class BpContextEngine implements Engine<"context"> {
-    constructor(endpoint: string, password: string);
-    train: (input: DataSet<"context">, seed: number) => void;
-    predict: (text: string, lang: string) => Prediction<"context">;
-  }
-
-  export class BpIntentEngine implements Engine<"intent"> {
-    constructor(endpoint: string, password: string);
-    train: (input: DataSet<"intent">, seed: number) => void;
-    predict: (text: string, lang: string) => Prediction<"intent">;
-  }
-
-  export class BpSlotEngine implements Engine<"slot"> {
-    constructor(endpoint: string, password: string);
-    train: (input: DataSet<"slot">, seed: number) => void;
-    predict: (text: string, lang: string) => Prediction<"slot">;
-  }
-}
-
 export namespace metrics {
-  export const binaryIntentScore: ScoreFunction<"intent">;
+  export const binaryIntentScore: Metric<"intent">;
 }
 
 export type ProblemType =
@@ -109,20 +72,19 @@ export interface Problem<T extends ProblemType> {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  scoreFunctions: ScoreFunction<T>[]; // threshold and elections are contained in these score-functions
+  metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
   visualisationFunction: VisualisationFunction<T>;
 }
 
 export interface Engine<T extends ProblemType> {
-  train: (input: DataSet<T>, seed: number) => void;
-  predict: (text: string, lang: string) => Prediction<T>;
+  train: (trainSet: DataSet<T>, seed: number) => void;
+  predict: (testSet: DataSet<T>) => Result<T>[];
 }
 
-export type ScoreFunction<T extends ProblemType> = (
-  text: string,
-  prediction: Prediction<T>,
-  label: Label<T>
-) => number;
+export type Metric<T extends ProblemType> = {
+  name: string;
+  eval(res: Result<T>): number;
+};
 
 export type Result<T extends ProblemType> = {
   text: string;
