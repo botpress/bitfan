@@ -1,33 +1,13 @@
-import * as sdk from "src/bitfan";
-import _ from "lodash";
+import * as sdk from "bitfan/sdk";
 
-class BpMisunderstoodEngine implements sdk.MisunderstoodEngine {
-  train(input: sdk.MisunderstoodDataSet, seed: number) {}
-  predict(text: string, lang: string) {
-    return {} as sdk.MisunderstoodPrediction;
-  }
-}
+import {
+  BpMisunderstoodEngine,
+  BpContextEngine,
+  BpIntentEngine,
+  BpSlotEngine,
+} from "./builtin/engines/bp-engines";
 
-class BpContextEngine implements sdk.ContextEngine {
-  train(input: sdk.ContextDataSet, seed: number) {}
-  predict(text: string, lang: string) {
-    return {} as sdk.ContextPrediction;
-  }
-}
-
-class BpIntentEngine implements sdk.IntentEngine {
-  train(input: sdk.IntentDataSet, seed: number) {}
-  predict(text: string, lang: string) {
-    return {} as sdk.IntentPrediction;
-  }
-}
-
-class BpSlotEngine implements sdk.SlotEngine {
-  train(input: sdk.SlotDataSet, seed: number) {}
-  predict(text: string, lang: string) {
-    return {} as sdk.SlotPrediction;
-  }
-}
+import { binaryIntentScore } from "./builtin/metrics/intent";
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
@@ -63,14 +43,7 @@ const impl: typeof sdk = {
   },
 
   metrics: {
-    binaryIntentScore: (
-      text: string,
-      prediction: sdk.IntentPrediction,
-      label: string[]
-    ) => {
-      const predictions = Object.keys(prediction);
-      return _.isEqual(_.orderBy(label), _.orderBy(predictions)) ? 1 : 0;
-    },
+    binaryIntentScore,
   },
 };
 

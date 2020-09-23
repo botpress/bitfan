@@ -41,6 +41,7 @@ export type VisualisationFunction<T extends ProblemType, Prediction, Label> = (
 
 export interface DataSet<T extends ProblemType, Label> {
   type: T;
+  lang: string;
   rows: Row<Label>[];
 }
 

@@ -4,9 +4,12 @@ import {
   DataSet,
   ScoreFunction,
   Engine,
-} from "./base.d";
+  ProblemType as ProbTypes,
+} from "./base";
 
 export function runSolution(solution: Solution): void;
+
+export type ProblemType = ProbTypes;
 
 type Solution = {
   problems: Problem[];
