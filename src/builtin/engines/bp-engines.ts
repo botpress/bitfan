@@ -1,4 +1,4 @@
-import * as sdk from "bitfan/sdk";
+import * as sdk from "src/bitfan";
 
 export class BpMisunderstoodEngine implements sdk.Engine<"misunderstood"> {
   constructor(endpoint: string, password: string) {}

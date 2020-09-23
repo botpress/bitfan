@@ -1,4 +1,4 @@
-import * as sdk from "bitfan/sdk";
+import * as sdk from "src/bitfan";
 
 import {
   BpMisunderstoodEngine,
@@ -8,6 +8,9 @@ import {
 } from "./builtin/engines/bp-engines";
 
 import { binaryIntentScore } from "./builtin/metrics/intent";
+import DatasetRepository from "./services/dataset-repository";
+
+const dataRepo = new DatasetRepository();
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
@@ -16,7 +19,7 @@ const impl: typeof sdk = {
   },
 
   datasets: {
-    bpdsRegressionA: {} as sdk.DataSet<"intent">,
+    bpdsRegressionA: dataRepo.getDataset("intent", "en", "bpds-a"),
     bpdsRegressionB: {} as sdk.DataSet<"intent">,
     bpdsRegressionC: {} as sdk.DataSet<"intent">,
     bpdsRegressionD: {} as sdk.DataSet<"intent">,

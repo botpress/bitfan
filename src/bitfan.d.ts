@@ -124,14 +124,16 @@ export type ScoreFunction<T extends ProblemType> = (
   label: Label<T>
 ) => number;
 
+export type Result<T extends ProblemType> = {
+  text: string;
+  prediction: Prediction<T>;
+  label: Label<T>;
+};
+
 export type VisualisationFunction<T extends ProblemType> = (
   trainSet: DataSet<T>,
   testSet: DataSet<T>,
-  results: {
-    text: string;
-    prediction: Prediction<T>;
-    label: Label<T>;
-  }[]
+  results: Result<T>[]
 ) => void;
 
 export interface DataSet<T extends ProblemType> {

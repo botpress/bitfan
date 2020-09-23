@@ -1,5 +1,5 @@
 import _ from "lodash";
-import * as sdk from "bitfan/sdk";
+import * as sdk from "src/bitfan";
 
 export const binaryIntentScore: sdk.ScoreFunction<"intent"> = (
   text: string,
