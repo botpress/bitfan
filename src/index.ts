@@ -4,6 +4,7 @@ import chalk from "chalk";
 
 import { binaryIntentScore } from "./builtin/metrics/intent";
 import DatasetRepository from "./services/dataset-repository";
+import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
 const dataRepo = new DatasetRepository();
 
@@ -39,6 +40,10 @@ const runSolution = <T extends sdk.ProblemType>(
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
+
+  tools: {
+    trainTestSplit,
+  },
 
   datasets: {
     bpdsRegressionA: dataRepo.getDataset("intent", "en", "bpds-a"),

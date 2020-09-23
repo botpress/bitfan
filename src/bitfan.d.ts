@@ -32,6 +32,17 @@ export namespace metrics {
   export const binaryIntentScore: Metric<"intent">;
 }
 
+export namespace tools {
+  export const trainTestSplit: <T extends ProblemType>(
+    dataset: DataSet<T>,
+    trainPercent: number,
+    seed: number
+  ) => {
+    trainSet: DataSet<T>;
+    testSet: DataSet<T>;
+  };
+}
+
 export type ProblemType =
   | "misunderstood"
   | "context"
