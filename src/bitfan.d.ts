@@ -28,6 +28,10 @@ export namespace metrics {
   export const binaryIntentOOSScore: Metric<"intent-oos">;
 }
 
+export namespace engines {
+  export class BpIntentOOSEngine extends BpEngine<"intent-oos"> {}
+}
+
 export namespace tools {
   export const trainTestSplit: <T extends ProblemType>(
     dataset: DataSet<T>,
@@ -99,8 +103,14 @@ export interface Problem<T extends ProblemType> {
 }
 
 export interface Engine<T extends ProblemType> {
-  train: (trainSet: DataSet<T>, seed: number) => void;
-  predict: (testSet: DataSet<T>) => Result<T>[];
+  train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
+  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
+}
+
+export class BpEngine<T extends ProblemType> implements Engine<T> {
+  constructor(bpEndpoint: string, password: string);
+  train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
+  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
 }
 
 export type Metric<T extends ProblemType> = {
