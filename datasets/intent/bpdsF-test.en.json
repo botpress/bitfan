@@ -1,0 +1,734 @@
+{
+  "lang": "en",
+  "type": "intent",
+  "rows": [
+    {
+      "text": "Where can I find your ladnline?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with technical isseu",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about cnacelling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a probelm with login",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why is my screen lokced?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "hellpine please!",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "hellpine",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "isseu",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "teck isseu",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Where can I find your lsndline?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with technical issye",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about csncelling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a problen with login",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why is my screen lockef?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Got a ptobkem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "ptobkem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "teck ptobkem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Where can I find your lndline?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with technical ssue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about cncelling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a poblem with login",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why is my screen lcked?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "lgin problm",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "scren loked",
+      "label": ["f-none"]
+    },
+    {
+      "text": "problm",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "teck problm",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "What isthe contact number",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "contactnumber",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "I'm having some trouble tologin",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "trouble tologin",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "loginproblem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "screenlocked",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Whats the contactnumer",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "How can Icanncel",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "How can Icancerl",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "Where tofind your land line?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "teckproblem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Where can I find your landlines?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with technical issues",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about cancellings",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a problems with logins",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why are my screens locked?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Where can I find your landlinne?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with technnical issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go abbout cancelling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a problem with loggin",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why are my screen lockked",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Where can I find your lasndline?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with tecvhnical issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about cancellinfg",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a problem with logfin",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why are my screen lockerd",
+      "label": ["f-none"]
+    },
+    {
+      "text": "canbcel",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "Where can I find your land line?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "There's a problem with my screen",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "They're is a problem with my screen",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Theirs a problem with my screen",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I am experiencing difficulties using the system",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I need techniqual support",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I need technical support",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I'm experiencing dificulties using the system",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I'm experiencing difficuleties using the system",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Where can I fidn your ladnline?",
+      "label": ["f-contact-details"]
+    },
+    {
+      "text": "Please help with techniqual isseu",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "how do I go about cnaceling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I've got a probelm with loggin",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Why are my screens lokced?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can not unlock my screen",
+      "label": ["f-none"]
+    },
+    {
+      "text": "My screen is locked",
+      "label": ["f-none"]
+    },
+    {
+      "text": "My screen is locked for some reason",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Why is my screen locked?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can not login",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can't login in for some reason",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can not get the right results",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I expected a different result",
+      "label": ["f-none"]
+    },
+    {
+      "text": "how do I go about making more money",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Why is my results different?",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I got the wrong results for some reason",
+      "label": ["f-none"]
+    },
+    {
+      "text": "My results are not what it is supposed to be",
+      "label": ["f-none"]
+    },
+    {
+      "text": "There is a problem with my screen",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I've got a problem with login",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I've got an error when trying to loging",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I've got a problem with my results",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "There is a problem with the result",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "hpow do I go about getting help for an issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "There is an error in the result",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I can't continue with my subscription",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I have an inquiry about termination",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I am unsatisfied, I want to cancel my account",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "how can I cancel your service",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I want to stop my business relationship withyou",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "please help me cancel this service",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "how do I go about cancelling",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "please help end my subscription",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "help cancel contract",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "who do I contact to cancel",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "I need my bill amended",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Rectify my bill",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Details of my bill",
+      "label": ["f-none"]
+    },
+    {
+      "text": "terminate my monthly subscription",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Please give me my statement",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to amend my statement",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to verify a charge",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to amend my bill",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Please help with technical issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I need advice regarding my technical issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I want to resolve an IT issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I want to resolve a technical issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I want to solve a problem",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I have bugs",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I want to solve some bugs",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I am facing several bugs",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "there is a major bug",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "there is a major glitch",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "I have an inquiry about an IT issue",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "Tech help",
+      "label": ["f-problem"]
+    },
+    {
+      "text": "help cancellation",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "cancel",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "cancellation inquiry",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "termination inquiry",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "terminate",
+      "label": ["f-cancellation"]
+    },
+    {
+      "text": "help",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "I need assistance",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "give me assistance",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "I want help",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "give me help",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "I want assistance",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "How can I get help",
+      "label": ["f-disambiguation"]
+    },
+    {
+      "text": "hello",
+      "label": ["f-none"]
+    },
+    {
+      "text": "hello how are you going",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what is your name",
+      "label": ["f-none"]
+    },
+    {
+      "text": "how have you been",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what are your hobbies",
+      "label": ["f-none"]
+    },
+    {
+      "text": "Tell me a joke",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I need help getting motivated",
+      "label": ["f-none"]
+    },
+    {
+      "text": "how",
+      "label": ["f-none"]
+    },
+    {
+      "text": "who built you",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what",
+      "label": ["f-none"]
+    },
+    {
+      "text": "yes",
+      "label": ["f-none"]
+    },
+    {
+      "text": "no",
+      "label": ["f-none"]
+    },
+    {
+      "text": "please",
+      "label": ["f-none"]
+    },
+    {
+      "text": "where",
+      "label": ["f-none"]
+    },
+    {
+      "text": "menu",
+      "label": ["f-none"]
+    },
+    {
+      "text": "options",
+      "label": ["f-none"]
+    },
+    {
+      "text": "start",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what can you do",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what can you do for me",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what are your functionalities",
+      "label": ["f-none"]
+    },
+    {
+      "text": "list of options",
+      "label": ["f-none"]
+    },
+    {
+      "text": "choices",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I have",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I need",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can't",
+      "label": ["f-none"]
+    },
+    {
+      "text": "stop",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I can't continue",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I believe",
+      "label": ["f-none"]
+    },
+    {
+      "text": "please give me",
+      "label": ["f-none"]
+    },
+    {
+      "text": "tell me",
+      "label": ["f-none"]
+    },
+    {
+      "text": "say something funny",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to buy a car",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to find your website",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to find your headquarter",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to locate you CEO",
+      "label": ["f-none"]
+    },
+    {
+      "text": "How many employees work for your company",
+      "label": ["f-none"]
+    },
+    {
+      "text": "how many locations do you have",
+      "label": ["f-none"]
+    },
+    {
+      "text": "in what countries do you  operate",
+      "label": ["f-none"]
+    },
+    {
+      "text": "are you available near me",
+      "label": ["f-none"]
+    },
+    {
+      "text": "is there a location near me",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what is the street number of your HQ",
+      "label": ["f-none"]
+    },
+    {
+      "text": "what is your postal code",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I want to mail you something",
+      "label": ["f-none"]
+    },
+    {
+      "text": "i want to make a complaint",
+      "label": ["f-none"]
+    },
+    {
+      "text": "are you human",
+      "label": ["f-none"]
+    },
+    {
+      "text": "i have a complaint",
+      "label": ["f-none"]
+    },
+    {
+      "text": "complaint",
+      "label": ["f-none"]
+    },
+    {
+      "text": "wow",
+      "label": ["f-none"]
+    },
+    {
+      "text": "that's bad",
+      "label": ["f-none"]
+    },
+    {
+      "text": "that's sad",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I am really unhappy",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I am mad",
+      "label": ["f-none"]
+    },
+    {
+      "text": "I'm mad",
+      "label": ["f-none"]
+    }
+  ]
+}

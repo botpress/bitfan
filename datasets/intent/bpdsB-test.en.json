@@ -1,0 +1,222 @@
+{
+  "lang": "en",
+  "type": "intent",
+  "rows": [
+    {
+      "text": "hello",
+      "label": ["b-none"]
+    },
+    {
+      "text": "hello how are you going",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what is your name",
+      "label": ["b-none"]
+    },
+    {
+      "text": "how have you been",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what are your hobbies",
+      "label": ["b-none"]
+    },
+    {
+      "text": "Tell me a joke",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I need help getting motivated",
+      "label": ["b-none"]
+    },
+    {
+      "text": "how",
+      "label": ["b-none"]
+    },
+    {
+      "text": "who built you",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what",
+      "label": ["b-none"]
+    },
+    {
+      "text": "yes",
+      "label": ["b-none"]
+    },
+    {
+      "text": "no",
+      "label": ["b-none"]
+    },
+    {
+      "text": "please",
+      "label": ["b-none"]
+    },
+    {
+      "text": "where",
+      "label": ["b-none"]
+    },
+    {
+      "text": "menu",
+      "label": ["b-none"]
+    },
+    {
+      "text": "options",
+      "label": ["b-none"]
+    },
+    {
+      "text": "start",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what can you do",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what can you do for me",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what are your functionalities",
+      "label": ["b-none"]
+    },
+    {
+      "text": "list of options",
+      "label": ["b-none"]
+    },
+    {
+      "text": "choices",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I have",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I need",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I can't",
+      "label": ["b-none"]
+    },
+    {
+      "text": "stop",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I can't continue",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I believe",
+      "label": ["b-none"]
+    },
+    {
+      "text": "please give me",
+      "label": ["b-none"]
+    },
+    {
+      "text": "tell me",
+      "label": ["b-none"]
+    },
+    {
+      "text": "say something funny",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want to buy a car",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want to find your website",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want to find your headquarter",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want to locate you CEO",
+      "label": ["b-none"]
+    },
+    {
+      "text": "How many employees work for your company",
+      "label": ["b-none"]
+    },
+    {
+      "text": "how many locations do you have",
+      "label": ["b-none"]
+    },
+    {
+      "text": "in what countries do you  operate",
+      "label": ["b-none"]
+    },
+    {
+      "text": "are you available near me",
+      "label": ["b-none"]
+    },
+    {
+      "text": "is there a location near me",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what is the street number of your HQ",
+      "label": ["b-none"]
+    },
+    {
+      "text": "what is your postal code",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I want to mail you something",
+      "label": ["b-none"]
+    },
+    {
+      "text": "i want to make a complaint",
+      "label": ["b-none"]
+    },
+    {
+      "text": "are you human",
+      "label": ["b-none"]
+    },
+    {
+      "text": "i have a complaint",
+      "label": ["b-none"]
+    },
+    {
+      "text": "complaint",
+      "label": ["b-none"]
+    },
+    {
+      "text": "wow",
+      "label": ["b-none"]
+    },
+    {
+      "text": "that's bad",
+      "label": ["b-none"]
+    },
+    {
+      "text": "that's sad",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I am really unhappy",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I am mad",
+      "label": ["b-none"]
+    },
+    {
+      "text": "I'm mad",
+      "label": ["b-none"]
+    }
+  ]
+}

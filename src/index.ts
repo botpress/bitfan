@@ -48,23 +48,8 @@ const impl: typeof sdk = {
   },
 
   datasets: {
-    bpdsRegressionA: dataRepo.getDataset("intent", "en", "bpds-a"),
-    bpdsRegressionB: {} as sdk.DataSet<"intent">,
-    bpdsRegressionC: {} as sdk.DataSet<"intent">,
-    bpdsRegressionD: {} as sdk.DataSet<"intent">,
-    bpdsRegressionE: {} as sdk.DataSet<"intent">,
-    bpdsRegressionF: {} as sdk.DataSet<"intent">,
-
-    bpdsSlotA: {} as sdk.DataSet<"slot">,
-    bpdsSlotB: {} as sdk.DataSet<"slot">,
-    bpdsSlotC: {} as sdk.DataSet<"slot">,
-    bpdsSlotD: {} as sdk.DataSet<"slot">,
-    bpdsSlotE: {} as sdk.DataSet<"slot">,
-    bpdsSlotF: {} as sdk.DataSet<"slot">,
-    bpdsSlotG: {} as sdk.DataSet<"slot">,
-    bpdsSlotH: {} as sdk.DataSet<"slot">,
-    bpdsSlotI: {} as sdk.DataSet<"slot">,
-    bpdsSlotJ: {} as sdk.DataSet<"slot">,
+    bpdsRegressionA_train: dataRepo.getDataset("intent", "en", "bpdsA-train"),
+    bpdsRegressionA_test: dataRepo.getDataset("intent", "en", "bpdsA-test"),
   },
 
   metrics: {

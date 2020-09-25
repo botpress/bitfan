@@ -9,23 +9,10 @@ export type Solution<T extends ProblemType> = {
 };
 
 export namespace datasets {
-  export const bpdsRegressionA: DataSet<"intent">;
-  export const bpdsRegressionB: DataSet<"intent">;
-  export const bpdsRegressionC: DataSet<"intent">;
-  export const bpdsRegressionD: DataSet<"intent">;
-  export const bpdsRegressionE: DataSet<"intent">;
-  export const bpdsRegressionF: DataSet<"intent">;
-
-  export const bpdsSlotA: DataSet<"slot">;
-  export const bpdsSlotB: DataSet<"slot">;
-  export const bpdsSlotC: DataSet<"slot">;
-  export const bpdsSlotD: DataSet<"slot">;
-  export const bpdsSlotE: DataSet<"slot">;
-  export const bpdsSlotF: DataSet<"slot">;
-  export const bpdsSlotG: DataSet<"slot">;
-  export const bpdsSlotH: DataSet<"slot">;
-  export const bpdsSlotI: DataSet<"slot">;
-  export const bpdsSlotJ: DataSet<"slot">;
+  export const bpdsRegressionA_train: DataSet<"intent">;
+  export const bpdsRegressionA_test: DataSet<"intent">;
+  // export const bpdsSlotA_train: DataSet<"slot">;
+  // export const bpdsSlotA_test: DataSet<"slot">;
 }
 
 export namespace metrics {
