@@ -4,219 +4,219 @@
   "rows": [
     {
       "text": "hello",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "hello how are you going",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what is your name",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "how have you been",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what are your hobbies",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "Tell me a joke",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I need help getting motivated",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "how",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "who built you",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "yes",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "no",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "please",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "where",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "menu",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "options",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "start",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what can you do",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what can you do for me",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what are your functionalities",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "list of options",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "choices",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I have",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I need",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I can't",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "stop",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I can't continue",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I believe",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "please give me",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "tell me",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "say something funny",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want to buy a car",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want to find your website",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want to find your headquarter",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want to locate you CEO",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "How many employees work for your company",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "how many locations do you have",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "in what countries do you  operate",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "are you available near me",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "is there a location near me",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what is the street number of your HQ",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "what is your postal code",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I want to mail you something",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "i want to make a complaint",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "are you human",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "i have a complaint",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "complaint",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "wow",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "that's bad",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "that's sad",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I am really unhappy",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I am mad",
-      "label": ["b-none"]
+      "label": "oo-scope"
     },
     {
       "text": "I'm mad",
-      "label": ["b-none"]
+      "label": "oo-scope"
     }
   ]
 }

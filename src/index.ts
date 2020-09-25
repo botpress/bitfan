@@ -2,11 +2,14 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import chalk from "chalk";
 
-import { binaryIntentScore } from "./builtin/metrics/intent";
+import {
+  binaryIntentScore,
+  binaryIntentOOSScore,
+} from "./builtin/metrics/intent";
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
-const dataRepo = new DatasetRepository();
+const dsRepo = new DatasetRepository();
 
 const runSolution = <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
@@ -48,12 +51,23 @@ const impl: typeof sdk = {
   },
 
   datasets: {
-    bpdsRegressionA_train: dataRepo.getDataset("intent", "en", "bpdsA-train"),
-    bpdsRegressionA_test: dataRepo.getDataset("intent", "en", "bpdsA-test"),
+    bpdsRegressionA_train: dsRepo.getDataset("intent-oos", "en", "bpdsA-train"),
+    bpdsRegressionA_test: dsRepo.getDataset("intent-oos", "en", "bpdsA-test"),
+    bpdsRegressionB_train: dsRepo.getDataset("intent-oos", "en", "bpdsB-train"),
+    bpdsRegressionB_test: dsRepo.getDataset("intent-oos", "en", "bpdsB-test"),
+    bpdsRegressionC_train: dsRepo.getDataset("intent-oos", "en", "bpdsC-train"),
+    bpdsRegressionC_test: dsRepo.getDataset("intent-oos", "en", "bpdsC-test"),
+    bpdsRegressionD_train: dsRepo.getDataset("intent-oos", "en", "bpdsD-train"),
+    bpdsRegressionD_test: dsRepo.getDataset("intent-oos", "en", "bpdsD-test"),
+    bpdsRegressionE_train: dsRepo.getDataset("intent-oos", "en", "bpdsE-train"),
+    bpdsRegressionE_test: dsRepo.getDataset("intent-oos", "en", "bpdsE-test"),
+    bpdsRegressionF_train: dsRepo.getDataset("intent-oos", "en", "bpdsF-train"),
+    bpdsRegressionF_test: dsRepo.getDataset("intent-oos", "en", "bpdsF-test"),
   },
 
   metrics: {
     binaryIntentScore,
+    binaryIntentOOSScore,
   },
 };
 
