@@ -15,32 +15,31 @@ const dsRepo = new DatasetRepository();
 
 const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
-  seeds: number[]
+  seed: number
 ) => {
   const { engine } = solution;
 
-  for (const seed of seeds) {
-    for (const problem of solution.problems) {
-      await engine.train(problem.trainSet, seed);
-      const results = await engine.predict(problem.testSet);
-      const metricsName = problem.metrics.map((m) => m.name);
-      const scores = problem.metrics.map((m) => results.map(m.eval));
-      const scoresByMetrics = _.zipObject(metricsName, scores);
+  for (const problem of solution.problems) {
+    await engine.train(problem.trainSet, seed);
+    const results = await engine.predict(problem.testSet);
 
-      const avgByMetrics = _.mapValues(scoresByMetrics, (scores) => {
-        return _.sum(scores) / scores.length;
-      });
+    const metricsName = problem.metrics.map((m) => m.name);
+    const scores = problem.metrics.map((m) => results.map(m.eval));
+    const scoresByMetrics = _.zipObject(metricsName, scores);
 
-      for (const metricName of Object.keys(avgByMetrics)) {
-        console.log(
-          chalk.green(
-            `Average Score for Metric ${metricName}: ${avgByMetrics[metricName]}`
-          )
-        );
-      }
+    const avgByMetrics = _.mapValues(scoresByMetrics, (scores) => {
+      return _.sum(scores) / scores.length;
+    });
 
-      problem.visualisationFunction(problem.trainSet, problem.testSet, results);
+    for (const metricName of Object.keys(avgByMetrics)) {
+      console.log(
+        chalk.green(
+          `Average Score for Metric ${metricName}: ${avgByMetrics[metricName]}`
+        )
+      );
     }
+
+    await problem.cb(results, avgByMetrics);
   }
 };
 

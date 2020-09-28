@@ -1,6 +1,6 @@
 export function runSolution<T extends ProblemType>(
-  solutions: Solution<T>,
-  seeds: number[]
+  solution: Solution<T>,
+  seed: number
 ): Promise<void>;
 
 export type Solution<T extends ProblemType> = {
@@ -105,7 +105,7 @@ export interface Problem<T extends ProblemType> {
   testSet: DataSet<T>;
   lang: string;
   metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
-  visualisationFunction: VisualisationFunction<T>;
+  cb: ProblemCb<T>;
 }
 
 export interface Engine<T extends ProblemType> {
@@ -124,11 +124,12 @@ export type Result<T extends ProblemType> = {
   label: Label<T>;
 };
 
-export type VisualisationFunction<T extends ProblemType> = (
-  trainSet: DataSet<T>,
-  testSet: DataSet<T>,
-  results: Result<T>[]
-) => void;
+export type ProblemCb<T extends ProblemType> = (
+  results: Result<T>[],
+  metrics: {
+    [name: string]: number;
+  }
+) => Promise<void>;
 
 export interface DataSet<T extends ProblemType> {
   type: T;
