@@ -55,18 +55,18 @@ export interface Pattern {
   case_sensitive: boolean;
 }
 
-export type BpPredictOutput =
-  | { errored: true }
-  | {
-      errored: false;
-      language: string;
-      detectedLanguage: string;
-      spellChecked: string;
-      entities: Entity[];
-      slots: SlotCollection;
-      predictions: Predictions;
-      ms: number;
-    };
+export type BpPredictError = { errored: true };
+
+export type BpPredictOutput = {
+  errored: false;
+  language: string;
+  detectedLanguage: string;
+  spellChecked: string;
+  entities: Entity[];
+  slots: SlotCollection;
+  predictions: Predictions;
+  ms: number;
+};
 
 export type SlotCollection = {
   [slot: string]: Slot;
@@ -76,13 +76,15 @@ export interface Predictions {
   [context: string]: {
     confidence: number;
     oos: number;
-    intents: {
-      label: string;
-      confidence: number;
-      slots: SlotCollection;
-      extractor: "exact-matcher" | "classifier";
-    }[];
+    intents: IntentPred[];
   };
+}
+
+export interface IntentPred {
+  label: string;
+  confidence: number;
+  slots: SlotCollection;
+  extractor: "exact-matcher" | "classifier";
 }
 
 export interface Slot {

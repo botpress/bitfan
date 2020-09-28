@@ -9,9 +9,11 @@ import {
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
+import { BpIntentOOSEngine } from "./builtin/engines/intent";
+
 const dsRepo = new DatasetRepository();
 
-const runSolution = <T extends sdk.ProblemType>(
+const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
   seeds: number[]
 ) => {
@@ -19,8 +21,8 @@ const runSolution = <T extends sdk.ProblemType>(
 
   for (const seed of seeds) {
     for (const problem of solution.problems) {
-      engine.train(problem.trainSet, seed);
-      const results = engine.predict(problem.testSet);
+      await engine.train(problem.trainSet, seed);
+      const results = await engine.predict(problem.testSet);
       const metricsName = problem.metrics.map((m) => m.name);
       const scores = problem.metrics.map((m) => results.map(m.eval));
       const scoresByMetrics = _.zipObject(metricsName, scores);
@@ -68,6 +70,10 @@ const impl: typeof sdk = {
   metrics: {
     binaryIntentScore,
     binaryIntentOOSScore,
+  },
+
+  engines: {
+    BpIntentOOSEngine,
   },
 };
 

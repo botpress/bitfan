@@ -1,7 +1,7 @@
 export function runSolution<T extends ProblemType>(
   solutions: Solution<T>,
   seeds: number[]
-): void;
+): Promise<void>;
 
 export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
@@ -29,7 +29,13 @@ export namespace metrics {
 }
 
 export namespace engines {
-  export class BpIntentOOSEngine extends BpEngine<"intent-oos"> {}
+  export class BpIntentOOSEngine implements Engine<"intent-oos"> {
+    constructor(bpEndpoint?: string, password?: string);
+    train: (trainSet: DataSet<"intent-oos">, seed: number) => Promise<void>;
+    predict: (
+      testSet: DataSet<"intent-oos">
+    ) => Promise<Result<"intent-oos">[]>;
+  }
 }
 
 export namespace tools {
@@ -72,7 +78,7 @@ export type Label<T extends ProblemType> = T extends "oos"
   : T extends "intent"
   ? string[]
   : T extends "intent-oos"
-  ? string[] | OOSLabel
+  ? string[] | [OOSLabel]
   : T extends "context-oos"
   ? string | OOSLabel
   : T extends "slot"
@@ -103,12 +109,6 @@ export interface Problem<T extends ProblemType> {
 }
 
 export interface Engine<T extends ProblemType> {
-  train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
-  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
-}
-
-export class BpEngine<T extends ProblemType> implements Engine<T> {
-  constructor(bpEndpoint: string, password: string);
   train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
   predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
 }

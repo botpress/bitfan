@@ -1,7 +1,13 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { StanProvider } from "src/services/bp-provider/stan-provider";
-import { BpTrainInput } from "src/services/bp-provider/stan-typings";
+
+import { StanProvider } from "../../services/bp-provider/stan-provider";
+import {
+  BpTrainInput,
+  IntentPred,
+} from "../../services/bp-provider/stan-typings";
+
+const MAIN_TOPIC = "main";
 
 export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
   private _stanProvider: StanProvider;
@@ -19,7 +25,9 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
     const intents = allLabels.map((l) => ({
       name: l,
       variables: [],
-      examples: trainSet.rows.filter((r) => r.label === l).map((r) => r.text),
+      examples: trainSet.rows
+        .filter((r) => (r.label as string[]).includes(l))
+        .map((r) => r.text),
     }));
 
     const trainInput: BpTrainInput = {
@@ -29,7 +37,7 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
       seed,
       topics: [
         {
-          name: "main",
+          name: MAIN_TOPIC,
           intents,
         },
       ],
@@ -38,7 +46,35 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
     return this._stanProvider.train(trainInput);
   }
 
-  predict(testSet: sdk.DataSet<"intent-oos">) {
-    return [];
+  private _makePredictions(
+    intents: IntentPred[],
+    oos: number
+  ): sdk.Prediction<"intent-oos"> {
+    const prediction: sdk.Prediction<"intent"> = _(intents)
+      .map((i) => [i.label, i] as [string, IntentPred])
+      .fromPairs()
+      .mapValues((i) => i.confidence)
+      .value();
+    prediction["oo-scope"] = oos;
+    return prediction as sdk.Prediction<"intent-oos">;
+  }
+
+  async predict(testSet: sdk.DataSet<"intent-oos">) {
+    const results: sdk.Result<"intent-oos">[] = [];
+    for (const row of testSet.rows) {
+      const { text, label } = row;
+
+      const predictions = await this._stanProvider.predict(text);
+
+      const { intents, oos } = predictions[MAIN_TOPIC];
+      const prediction = this._makePredictions(intents, oos);
+
+      results.push({
+        text,
+        label,
+        prediction,
+      });
+    }
+    return results;
   }
 }

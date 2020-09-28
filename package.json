@@ -9,7 +9,6 @@
   "types": "./src/bitfan.d.ts",
   "scripts": {
     "build": "tsc",
-    "install": "tsc",
     "test": "jest"
   },
   "dependencies": {

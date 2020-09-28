@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { BpPredictOutput, BpTrainInput, TrainingSession } from "./stan-typings";
+import {
+  BpPredictError,
+  BpPredictOutput,
+  BpTrainInput,
+  Predictions,
+  TrainingSession,
+} from "./stan-typings";
 
 const POLLING_INTERVAL = 500;
 
@@ -68,9 +74,18 @@ export class StanProvider {
     return this._waitForTraining(modelId, loggingCb);
   }
 
-  public async predict(
+  private _isPredictError(
+    out: BpPredictError | BpPredictOutput
+  ): out is BpPredictError {
+    return !!out.errored;
+  }
+
+  private async _postPredict(
     text: string
-  ): Promise<{ success: boolean; prediction: BpPredictOutput }> {
+  ): Promise<{
+    success: boolean;
+    prediction: BpPredictOutput | BpPredictError;
+  }> {
     const { data } = await axios.post(
       `${this._stanEndpoint}/predict/${this._modelId}`,
       {
@@ -79,5 +94,24 @@ export class StanProvider {
       }
     );
     return data;
+  }
+
+  private async _fetchPrediction(
+    text: string
+  ): Promise<BpPredictOutput | BpPredictError> {
+    const { prediction } = await this._postPredict(text);
+    return prediction;
+  }
+
+  public async predict(text: string): Promise<Predictions> {
+    const predOutput = await this._fetchPrediction(text);
+    if (this._isPredictError(predOutput)) {
+      throw new Error(
+        "An error occured at prediction. The nature of the error is unknown."
+      );
+    }
+
+    const { predictions } = predOutput;
+    return predictions;
   }
 }

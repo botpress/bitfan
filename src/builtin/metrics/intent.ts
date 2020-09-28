@@ -25,7 +25,7 @@ export const binaryIntentScore: sdk.Metric<"intent"> = {
 function isIntentResult(
   res: sdk.Result<"intent"> | sdk.Result<"intent-oos">
 ): res is sdk.Result<"intent"> {
-  return res.label !== "oo-scope";
+  return res.label.length !== 1 || res.label[0] !== "oo-scope";
 }
 
 export const binaryIntentOOSScore: sdk.Metric<"intent-oos"> = {
