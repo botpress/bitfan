@@ -9,18 +9,27 @@ export type Solution<T extends ProblemType> = {
 };
 
 export namespace datasets {
-  export const bpdsRegressionA_train: DataSet<"intent-oos">;
-  export const bpdsRegressionA_test: DataSet<"intent-oos">;
-  export const bpdsRegressionB_train: DataSet<"intent-oos">;
-  export const bpdsRegressionB_test: DataSet<"intent-oos">;
-  export const bpdsRegressionC_train: DataSet<"intent-oos">;
-  export const bpdsRegressionC_test: DataSet<"intent-oos">;
-  export const bpdsRegressionD_train: DataSet<"intent-oos">;
-  export const bpdsRegressionD_test: DataSet<"intent-oos">;
-  export const bpdsRegressionE_train: DataSet<"intent-oos">;
-  export const bpdsRegressionE_test: DataSet<"intent-oos">;
-  export const bpdsRegressionF_train: DataSet<"intent-oos">;
-  export const bpdsRegressionF_test: DataSet<"intent-oos">;
+  export namespace bpds {
+    export namespace regression {
+      export namespace test {
+        const A: DataSet<"intent-oos">;
+        const B: DataSet<"intent-oos">;
+        const C: DataSet<"intent-oos">;
+        const D: DataSet<"intent-oos">;
+        const E: DataSet<"intent-oos">;
+        const F: DataSet<"intent-oos">;
+      }
+
+      export namespace train {
+        const A: DataSet<"intent-oos">;
+        const B: DataSet<"intent-oos">;
+        const C: DataSet<"intent-oos">;
+        const D: DataSet<"intent-oos">;
+        const E: DataSet<"intent-oos">;
+        const F: DataSet<"intent-oos">;
+      }
+    }
+  }
 }
 
 export namespace metrics {
@@ -100,6 +109,7 @@ export type Prediction<T extends ProblemType> = T extends "oos"
   : string;
 
 export interface Problem<T extends ProblemType> {
+  name: string;
   type: ProblemType;
   trainSet: DataSet<T>;
   testSet: DataSet<T>;

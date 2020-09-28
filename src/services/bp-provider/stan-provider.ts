@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { sleep } from "../../utils";
+
 import {
   BpPredictError,
   BpPredictOutput,
@@ -36,33 +38,26 @@ export class StanProvider {
     return data.session;
   }
 
-  private async _isTraining(modelId: string) {
-    const session = await this._getTrainingStatus(modelId);
-    return session.status === "training";
-  }
-
-  private _sleep(ms: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
   private async _waitForTraining(
     modelId: string,
-    loggingCb?: (time: number) => void
+    loggingCb?: (time: number, progress: number) => void
   ) {
     let time = 0;
-    while (await this._isTraining(modelId)) {
+
+    let session = await this._getTrainingStatus(modelId);
+    while (session.status === "training") {
       // TODO: add a max training time...
-      await this._sleep(POLLING_INTERVAL);
+      await sleep(POLLING_INTERVAL);
       time += POLLING_INTERVAL;
-      loggingCb && loggingCb(time);
+      loggingCb && loggingCb(time, session.progress);
+
+      session = await this._getTrainingStatus(modelId);
     }
   }
 
   public async train(
     trainInput: BpTrainInput,
-    loggingCb?: (time: number) => void
+    loggingCb?: (time: number, progress: number) => void
   ) {
     const { data } = await axios.post(
       `${this._stanEndpoint}/train`,

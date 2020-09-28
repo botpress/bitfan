@@ -1,5 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
+import Progress from "progress";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -43,7 +44,13 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
       ],
     };
 
-    return this._stanProvider.train(trainInput);
+    const progressBar = new Progress("Training: [:bar] (:current%), :times", {
+      total: 100,
+    });
+    return this._stanProvider.train(trainInput, (time, progress) => {
+      time = time / 1000;
+      progressBar.update(progress, { time });
+    });
   }
 
   private _makePredictions(
@@ -61,6 +68,11 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
 
   async predict(testSet: sdk.DataSet<"intent-oos">) {
     const results: sdk.Result<"intent-oos">[] = [];
+
+    const progressBar = new Progress("Prediction: [:bar] (:current/:total)", {
+      total: testSet.rows.length,
+    });
+
     for (const row of testSet.rows) {
       const { text, label } = row;
 
@@ -74,6 +86,8 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
         label,
         prediction,
       });
+
+      progressBar.tick();
     }
     return results;
   }
