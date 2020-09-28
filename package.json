@@ -9,21 +9,22 @@
   "types": "./src/bitfan.d.ts",
   "scripts": {
     "build": "tsc",
-    "install": "tsc",
     "test": "jest"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.20.0",
     "chalk": "^4.1.0",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.20",
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.161",
-    "jest": "^26.4.2",
-    "ts-jest": "^24.3.0",
     "@types/fs-extra": "^9.0.1",
     "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.2"
+    "@types/lodash": "^4.14.161",
+    "@types/node": "^14.11.2",
+    "jest": "^26.4.2",
+    "ts-jest": "^24.3.0"
   }
 }

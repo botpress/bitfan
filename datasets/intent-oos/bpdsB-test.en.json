@@ -1,0 +1,222 @@
+{
+  "lang": "en",
+  "type": "intent",
+  "rows": [
+    {
+      "text": "hello",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "hello how are you going",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what is your name",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "how have you been",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what are your hobbies",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "Tell me a joke",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I need help getting motivated",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "how",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "who built you",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "yes",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "no",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "please",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "where",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "menu",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "options",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "start",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what can you do",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what can you do for me",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what are your functionalities",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "list of options",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "choices",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I have",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I need",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I can't",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "stop",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I can't continue",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I believe",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "please give me",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "tell me",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "say something funny",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want to buy a car",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want to find your website",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want to find your headquarter",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want to locate you CEO",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "How many employees work for your company",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "how many locations do you have",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "in what countries do you  operate",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "are you available near me",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "is there a location near me",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what is the street number of your HQ",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "what is your postal code",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I want to mail you something",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "i want to make a complaint",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "are you human",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "i have a complaint",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "complaint",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "wow",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "that's bad",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "that's sad",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I am really unhappy",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I am mad",
+      "label": ["oo-scope"]
+    },
+    {
+      "text": "I'm mad",
+      "label": ["oo-scope"]
+    }
+  ]
+}

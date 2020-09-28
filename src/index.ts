@@ -2,13 +2,18 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import chalk from "chalk";
 
-import { binaryIntentScore } from "./builtin/metrics/intent";
+import {
+  binaryIntentScore,
+  binaryIntentOOSScore,
+} from "./builtin/metrics/intent";
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
-const dataRepo = new DatasetRepository();
+import { BpIntentOOSEngine } from "./builtin/engines/intent";
 
-const runSolution = <T extends sdk.ProblemType>(
+const dsRepo = new DatasetRepository();
+
+const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
   seeds: number[]
 ) => {
@@ -16,8 +21,8 @@ const runSolution = <T extends sdk.ProblemType>(
 
   for (const seed of seeds) {
     for (const problem of solution.problems) {
-      engine.train(problem.trainSet, seed);
-      const results = engine.predict(problem.testSet);
+      await engine.train(problem.trainSet, seed);
+      const results = await engine.predict(problem.testSet);
       const metricsName = problem.metrics.map((m) => m.name);
       const scores = problem.metrics.map((m) => results.map(m.eval));
       const scoresByMetrics = _.zipObject(metricsName, scores);
@@ -48,27 +53,27 @@ const impl: typeof sdk = {
   },
 
   datasets: {
-    bpdsRegressionA: dataRepo.getDataset("intent", "en", "bpds-a"),
-    bpdsRegressionB: {} as sdk.DataSet<"intent">,
-    bpdsRegressionC: {} as sdk.DataSet<"intent">,
-    bpdsRegressionD: {} as sdk.DataSet<"intent">,
-    bpdsRegressionE: {} as sdk.DataSet<"intent">,
-    bpdsRegressionF: {} as sdk.DataSet<"intent">,
-
-    bpdsSlotA: {} as sdk.DataSet<"slot">,
-    bpdsSlotB: {} as sdk.DataSet<"slot">,
-    bpdsSlotC: {} as sdk.DataSet<"slot">,
-    bpdsSlotD: {} as sdk.DataSet<"slot">,
-    bpdsSlotE: {} as sdk.DataSet<"slot">,
-    bpdsSlotF: {} as sdk.DataSet<"slot">,
-    bpdsSlotG: {} as sdk.DataSet<"slot">,
-    bpdsSlotH: {} as sdk.DataSet<"slot">,
-    bpdsSlotI: {} as sdk.DataSet<"slot">,
-    bpdsSlotJ: {} as sdk.DataSet<"slot">,
+    bpdsRegressionA_train: dsRepo.getDataset("intent-oos", "en", "bpdsA-train"),
+    bpdsRegressionA_test: dsRepo.getDataset("intent-oos", "en", "bpdsA-test"),
+    bpdsRegressionB_train: dsRepo.getDataset("intent-oos", "en", "bpdsB-train"),
+    bpdsRegressionB_test: dsRepo.getDataset("intent-oos", "en", "bpdsB-test"),
+    bpdsRegressionC_train: dsRepo.getDataset("intent-oos", "en", "bpdsC-train"),
+    bpdsRegressionC_test: dsRepo.getDataset("intent-oos", "en", "bpdsC-test"),
+    bpdsRegressionD_train: dsRepo.getDataset("intent-oos", "en", "bpdsD-train"),
+    bpdsRegressionD_test: dsRepo.getDataset("intent-oos", "en", "bpdsD-test"),
+    bpdsRegressionE_train: dsRepo.getDataset("intent-oos", "en", "bpdsE-train"),
+    bpdsRegressionE_test: dsRepo.getDataset("intent-oos", "en", "bpdsE-test"),
+    bpdsRegressionF_train: dsRepo.getDataset("intent-oos", "en", "bpdsF-train"),
+    bpdsRegressionF_test: dsRepo.getDataset("intent-oos", "en", "bpdsF-test"),
   },
 
   metrics: {
     binaryIntentScore,
+    binaryIntentOOSScore,
+  },
+
+  engines: {
+    BpIntentOOSEngine,
   },
 };
 

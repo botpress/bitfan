@@ -1,7 +1,7 @@
 export function runSolution<T extends ProblemType>(
   solutions: Solution<T>,
   seeds: number[]
-): void;
+): Promise<void>;
 
 export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
@@ -9,27 +9,33 @@ export type Solution<T extends ProblemType> = {
 };
 
 export namespace datasets {
-  export const bpdsRegressionA: DataSet<"intent">;
-  export const bpdsRegressionB: DataSet<"intent">;
-  export const bpdsRegressionC: DataSet<"intent">;
-  export const bpdsRegressionD: DataSet<"intent">;
-  export const bpdsRegressionE: DataSet<"intent">;
-  export const bpdsRegressionF: DataSet<"intent">;
-
-  export const bpdsSlotA: DataSet<"slot">;
-  export const bpdsSlotB: DataSet<"slot">;
-  export const bpdsSlotC: DataSet<"slot">;
-  export const bpdsSlotD: DataSet<"slot">;
-  export const bpdsSlotE: DataSet<"slot">;
-  export const bpdsSlotF: DataSet<"slot">;
-  export const bpdsSlotG: DataSet<"slot">;
-  export const bpdsSlotH: DataSet<"slot">;
-  export const bpdsSlotI: DataSet<"slot">;
-  export const bpdsSlotJ: DataSet<"slot">;
+  export const bpdsRegressionA_train: DataSet<"intent-oos">;
+  export const bpdsRegressionA_test: DataSet<"intent-oos">;
+  export const bpdsRegressionB_train: DataSet<"intent-oos">;
+  export const bpdsRegressionB_test: DataSet<"intent-oos">;
+  export const bpdsRegressionC_train: DataSet<"intent-oos">;
+  export const bpdsRegressionC_test: DataSet<"intent-oos">;
+  export const bpdsRegressionD_train: DataSet<"intent-oos">;
+  export const bpdsRegressionD_test: DataSet<"intent-oos">;
+  export const bpdsRegressionE_train: DataSet<"intent-oos">;
+  export const bpdsRegressionE_test: DataSet<"intent-oos">;
+  export const bpdsRegressionF_train: DataSet<"intent-oos">;
+  export const bpdsRegressionF_test: DataSet<"intent-oos">;
 }
 
 export namespace metrics {
   export const binaryIntentScore: Metric<"intent">;
+  export const binaryIntentOOSScore: Metric<"intent-oos">;
+}
+
+export namespace engines {
+  export class BpIntentOOSEngine implements Engine<"intent-oos"> {
+    constructor(bpEndpoint?: string, password?: string);
+    train: (trainSet: DataSet<"intent-oos">, seed: number) => Promise<void>;
+    predict: (
+      testSet: DataSet<"intent-oos">
+    ) => Promise<Result<"intent-oos">[]>;
+  }
 }
 
 export namespace tools {
@@ -44,9 +50,11 @@ export namespace tools {
 }
 
 export type ProblemType =
-  | "misunderstood"
+  | "oos"
   | "context"
+  | "context-oos"
   | "intent"
+  | "intent-oos"
   | "slot"
   | "lang"
   | "spell";
@@ -58,22 +66,35 @@ type Dic<T> = {
   [key: string]: T;
 };
 
-export type Label<T extends ProblemType> = T extends "misunderstood"
-  ? boolean
+type DicWithOOS<T> = Dic<T> & {
+  "oo-scope": number;
+};
+
+type OOSLabel = "oo-scope";
+export type Label<T extends ProblemType> = T extends "oos"
+  ? "in-scope" | OOSLabel
   : T extends "context"
   ? string
   : T extends "intent"
   ? string[]
+  : T extends "intent-oos"
+  ? string[] | [OOSLabel]
+  : T extends "context-oos"
+  ? string | OOSLabel
   : T extends "slot"
   ? { name: string; start: number; end: number }
   : string;
 
-export type Prediction<T extends ProblemType> = T extends "misunderstood"
+export type Prediction<T extends ProblemType> = T extends "oos"
   ? Dic<number>
   : T extends "context"
   ? Dic<number>
   : T extends "intent"
   ? Dic<number>
+  : T extends "intent-oos"
+  ? DicWithOOS<number>
+  : T extends "context-oos"
+  ? DicWithOOS<number>
   : T extends "slot"
   ? Dic<{ start: number; end: number; confidence: number }>
   : string;
@@ -88,8 +109,8 @@ export interface Problem<T extends ProblemType> {
 }
 
 export interface Engine<T extends ProblemType> {
-  train: (trainSet: DataSet<T>, seed: number) => void;
-  predict: (testSet: DataSet<T>) => Result<T>[];
+  train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
+  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
 }
 
 export type Metric<T extends ProblemType> = {
