@@ -2,10 +2,7 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import chalk from "chalk";
 
-import {
-  binaryIntentScore,
-  binaryIntentOOSScore,
-} from "./builtin/metrics/intent";
+import { binaryIntentScore } from "./builtin/metrics/intent";
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
@@ -80,7 +77,6 @@ const impl: typeof sdk = {
 
   metrics: {
     binaryIntentScore,
-    binaryIntentOOSScore,
   },
 
   engines: {

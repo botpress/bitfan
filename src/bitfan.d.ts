@@ -33,8 +33,7 @@ export namespace datasets {
 }
 
 export namespace metrics {
-  export const binaryIntentScore: Metric<"intent">;
-  export const binaryIntentOOSScore: Metric<"intent-oos">;
+  export const binaryIntentScore: Metric<"intent"> & Metric<"intent-oos">;
 }
 
 export namespace engines {
@@ -75,13 +74,13 @@ type Dic<T> = {
   [key: string]: T;
 };
 
-type DicWithOOS<T> = Dic<T> & {
-  "oo-scope": number;
-};
+type DicWithOOS<T> = Dic<T> & Record<OOSLabel, number>;
 
 type OOSLabel = "oo-scope";
+type INSLabel = "in-scope";
+
 export type Label<T extends ProblemType> = T extends "oos"
-  ? "in-scope" | OOSLabel
+  ? INSLabel | OOSLabel
   : T extends "context"
   ? string
   : T extends "intent"
