@@ -25,7 +25,7 @@ export class StanProvider {
       const { data } = await axios.get(`${this._stanEndpoint}/info`); // just to see if breaking
       return data;
     } catch (err) {
-      return;
+      this._mapErrorAndRethrow("INFO", err);
     }
   }
 
@@ -59,14 +59,18 @@ export class StanProvider {
     trainInput: BpTrainInput,
     loggingCb?: (time: number, progress: number) => void
   ) {
-    const { data } = await axios.post(
-      `${this._stanEndpoint}/train`,
-      trainInput
-    );
+    try {
+      const { data } = await axios.post(
+        `${this._stanEndpoint}/train`,
+        trainInput
+      );
 
-    const { modelId } = data;
-    this._modelId = modelId;
-    return this._waitForTraining(modelId, loggingCb);
+      const { modelId } = data;
+      this._modelId = modelId;
+      await this._waitForTraining(modelId, loggingCb);
+    } catch (err) {
+      this._mapErrorAndRethrow("TRAIN", err);
+    }
   }
 
   private _isPredictError(
@@ -99,14 +103,24 @@ export class StanProvider {
   }
 
   public async predict(text: string): Promise<Predictions> {
-    const predOutput = await this._fetchPrediction(text);
-    if (this._isPredictError(predOutput)) {
-      throw new Error(
-        "An error occured at prediction. The nature of the error is unknown."
-      );
-    }
+    try {
+      const predOutput = await this._fetchPrediction(text);
+      if (this._isPredictError(predOutput)) {
+        throw new Error(
+          "An error occured at prediction. The nature of the error is unknown."
+        );
+      }
 
-    const { predictions } = predOutput;
-    return predictions;
+      const { predictions } = predOutput;
+      return predictions;
+    } catch (err) {
+      this._mapErrorAndRethrow("PREDICT", err);
+    }
+  }
+
+  private _mapErrorAndRethrow(prefix: string, err: any): never {
+    let custom = err?.response?.data?.error ?? "http related error";
+    let msg = `[${prefix}] ${err.message}\n${custom}`;
+    throw new Error(msg);
   }
 }

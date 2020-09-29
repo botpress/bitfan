@@ -20,28 +20,37 @@ const runSolution = async <T extends sdk.ProblemType>(
   const metricHolder = new MetricHolder(metrics);
 
   for (const problem of solution.problems) {
-    console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
+    try {
+      console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
-    await engine.train(problem.trainSet, seed);
+      await engine.train(problem.trainSet, seed);
 
-    await sleep(1000);
+      await sleep(1000);
 
-    const results = await engine.predict(problem.testSet);
+      const results = await engine.predict(problem.testSet);
 
-    const scores = metrics.map((m) => results.map(m.eval));
-    const scoresByMetrics = _.zipObject(metricHolder.names, scores);
-    metricHolder.setScoresForProblem(problem, scoresByMetrics);
+      const scores = metrics.map((m) => results.map(m.eval));
+      const scoresByMetrics = _.zipObject(metricHolder.names, scores);
+      metricHolder.setScoresForProblem(problem, scoresByMetrics);
 
-    const avgByMetrics = metricHolder.getAvgForProblem(problem);
+      const avgByMetrics = metricHolder.getAvgForProblem(problem);
 
-    console.log(chalk.green(`Average Score By Metrics`));
-    console.table(
-      _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
-      ["metric", "score"]
-    );
-    console.log("\n");
+      console.log(chalk.green(`Average Score By Metrics`));
+      console.table(
+        _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
+        ["metric", "score"]
+      );
+      console.log("\n");
 
-    await problem.cb(results, avgByMetrics);
+      await problem.cb(results, avgByMetrics);
+    } catch (err) {
+      console.log(
+        chalk.red(
+          `The following error occured when running problem ${problem.name}:\n${err.message}`
+        )
+      );
+      process.exit(1);
+    }
   }
 
   console.log(chalk.green(chalk.bold("Summary For All Problems")));
