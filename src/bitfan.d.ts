@@ -1,31 +1,40 @@
 export function runSolution<T extends ProblemType>(
-  solutions: Solution<T>,
-  seeds: number[]
+  solution: Solution<T>,
+  seed: number
 ): Promise<void>;
 
 export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
   engine: Engine<T>;
+  metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
 };
 
 export namespace datasets {
-  export const bpdsRegressionA_train: DataSet<"intent-oos">;
-  export const bpdsRegressionA_test: DataSet<"intent-oos">;
-  export const bpdsRegressionB_train: DataSet<"intent-oos">;
-  export const bpdsRegressionB_test: DataSet<"intent-oos">;
-  export const bpdsRegressionC_train: DataSet<"intent-oos">;
-  export const bpdsRegressionC_test: DataSet<"intent-oos">;
-  export const bpdsRegressionD_train: DataSet<"intent-oos">;
-  export const bpdsRegressionD_test: DataSet<"intent-oos">;
-  export const bpdsRegressionE_train: DataSet<"intent-oos">;
-  export const bpdsRegressionE_test: DataSet<"intent-oos">;
-  export const bpdsRegressionF_train: DataSet<"intent-oos">;
-  export const bpdsRegressionF_test: DataSet<"intent-oos">;
+  export namespace bpds {
+    export namespace regression {
+      export namespace test {
+        const A: DataSet<"intent-oos">;
+        const B: DataSet<"intent-oos">;
+        const C: DataSet<"intent-oos">;
+        const D: DataSet<"intent-oos">;
+        const E: DataSet<"intent-oos">;
+        const F: DataSet<"intent-oos">;
+      }
+
+      export namespace train {
+        const A: DataSet<"intent-oos">;
+        const B: DataSet<"intent-oos">;
+        const C: DataSet<"intent-oos">;
+        const D: DataSet<"intent-oos">;
+        const E: DataSet<"intent-oos">;
+        const F: DataSet<"intent-oos">;
+      }
+    }
+  }
 }
 
 export namespace metrics {
-  export const binaryIntentScore: Metric<"intent">;
-  export const binaryIntentOOSScore: Metric<"intent-oos">;
+  export const binaryIntentScore: Metric<"intent"> & Metric<"intent-oos">;
 }
 
 export namespace engines {
@@ -66,13 +75,13 @@ type Dic<T> = {
   [key: string]: T;
 };
 
-type DicWithOOS<T> = Dic<T> & {
-  "oo-scope": number;
-};
+type DicWithOOS<T> = Dic<T> & Record<OOSLabel, number>;
 
 type OOSLabel = "oo-scope";
+type INSLabel = "in-scope";
+
 export type Label<T extends ProblemType> = T extends "oos"
-  ? "in-scope" | OOSLabel
+  ? INSLabel | OOSLabel
   : T extends "context"
   ? string
   : T extends "intent"
@@ -100,12 +109,12 @@ export type Prediction<T extends ProblemType> = T extends "oos"
   : string;
 
 export interface Problem<T extends ProblemType> {
+  name: string;
   type: ProblemType;
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
-  visualisationFunction: VisualisationFunction<T>;
+  cb: ProblemCb<T>;
 }
 
 export interface Engine<T extends ProblemType> {
@@ -124,11 +133,12 @@ export type Result<T extends ProblemType> = {
   label: Label<T>;
 };
 
-export type VisualisationFunction<T extends ProblemType> = (
-  trainSet: DataSet<T>,
-  testSet: DataSet<T>,
-  results: Result<T>[]
-) => void;
+export type ProblemCb<T extends ProblemType> = (
+  results: Result<T>[],
+  metrics: {
+    [name: string]: number;
+  }
+) => Promise<void>;
 
 export interface DataSet<T extends ProblemType> {
   type: T;

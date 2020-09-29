@@ -13,9 +13,10 @@ const _getMaxConfidence = (
     .value();
 };
 
-export const binaryIntentScore: sdk.Metric<"intent"> = {
+export const binaryIntentScore: sdk.Metric<"intent"> &
+  sdk.Metric<"intent-oos"> = {
   name: "binaryIntentScore",
-  eval: (res: sdk.Result<"intent">): number => {
+  eval: (res: sdk.Result<"intent"> | sdk.Result<"intent-oos">): number => {
     const { text, prediction, label } = res;
     const elected = _getMaxConfidence(prediction, label.length);
     return _.isEqual(label.sort(), elected.sort()) ? 1 : 0;

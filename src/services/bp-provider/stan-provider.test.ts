@@ -2,9 +2,11 @@ import { StanProvider } from "./stan-provider";
 
 test("small client for stan as", async () => {
   const stanProvider = new StanProvider();
-  const stanIsDown = !(await stanProvider.getVersion());
-  if (stanIsDown) {
-    return; // test pass
+
+  try {
+    await stanProvider.getVersion();
+  } catch {
+    return; // stan is simply down so test passes...
   }
 
   await stanProvider.train(

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { sleep } from "../../utils";
+
 import {
   BpPredictError,
   BpPredictOutput,
@@ -23,7 +25,7 @@ export class StanProvider {
       const { data } = await axios.get(`${this._stanEndpoint}/info`); // just to see if breaking
       return data;
     } catch (err) {
-      return;
+      this._mapErrorAndRethrow("INFO", err);
     }
   }
 
@@ -36,42 +38,41 @@ export class StanProvider {
     return data.session;
   }
 
-  private async _isTraining(modelId: string) {
-    const session = await this._getTrainingStatus(modelId);
-    return session.status === "training";
-  }
-
-  private _sleep(ms: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
   private async _waitForTraining(
     modelId: string,
-    loggingCb?: (time: number) => void
+    loggingCb?: (time: number, progress: number) => void
   ) {
     let time = 0;
-    while (await this._isTraining(modelId)) {
+
+    let session = await this._getTrainingStatus(modelId);
+    while (session.status === "training") {
       // TODO: add a max training time...
-      await this._sleep(POLLING_INTERVAL);
+      await sleep(POLLING_INTERVAL);
       time += POLLING_INTERVAL;
-      loggingCb && loggingCb(time);
+      loggingCb && loggingCb(time, session.progress);
+
+      session = await this._getTrainingStatus(modelId);
     }
   }
 
   public async train(
     trainInput: BpTrainInput,
-    loggingCb?: (time: number) => void
+    loggingCb?: (time: number, progress: number) => void
   ) {
-    const { data } = await axios.post(
-      `${this._stanEndpoint}/train`,
-      trainInput
-    );
+    const inputWithPassword = { ...trainInput, password: this._password };
 
-    const { modelId } = data;
-    this._modelId = modelId;
-    return this._waitForTraining(modelId, loggingCb);
+    try {
+      const { data } = await axios.post(
+        `${this._stanEndpoint}/train`,
+        inputWithPassword
+      );
+
+      const { modelId } = data;
+      this._modelId = modelId;
+      await this._waitForTraining(modelId, loggingCb);
+    } catch (err) {
+      this._mapErrorAndRethrow("TRAIN", err);
+    }
   }
 
   private _isPredictError(
@@ -104,14 +105,24 @@ export class StanProvider {
   }
 
   public async predict(text: string): Promise<Predictions> {
-    const predOutput = await this._fetchPrediction(text);
-    if (this._isPredictError(predOutput)) {
-      throw new Error(
-        "An error occured at prediction. The nature of the error is unknown."
-      );
-    }
+    try {
+      const predOutput = await this._fetchPrediction(text);
+      if (this._isPredictError(predOutput)) {
+        throw new Error(
+          "An error occured at prediction. The nature of the error is unknown."
+        );
+      }
 
-    const { predictions } = predOutput;
-    return predictions;
+      const { predictions } = predOutput;
+      return predictions;
+    } catch (err) {
+      this._mapErrorAndRethrow("PREDICT", err);
+    }
+  }
+
+  private _mapErrorAndRethrow(prefix: string, err: any): never {
+    let custom = err?.response?.data?.error ?? "http related error";
+    let msg = `[${prefix}] ${err.message}\n${custom}`;
+    throw new Error(msg);
   }
 }
