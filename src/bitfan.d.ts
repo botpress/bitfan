@@ -6,6 +6,7 @@ export function runSolution<T extends ProblemType>(
 export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
   engine: Engine<T>;
+  metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
 };
 
 export namespace datasets {
@@ -113,7 +114,6 @@ export interface Problem<T extends ProblemType> {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
   cb: ProblemCb<T>;
 }
 
