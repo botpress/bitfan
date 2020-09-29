@@ -59,10 +59,12 @@ export class StanProvider {
     trainInput: BpTrainInput,
     loggingCb?: (time: number, progress: number) => void
   ) {
+    const inputWithPassword = { ...trainInput, password: this._password };
+
     try {
       const { data } = await axios.post(
         `${this._stanEndpoint}/train`,
-        trainInput
+        inputWithPassword
       );
 
       const { modelId } = data;
