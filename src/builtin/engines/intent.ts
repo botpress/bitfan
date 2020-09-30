@@ -9,6 +9,7 @@ import {
 } from "../../services/bp-provider/stan-typings";
 
 const MAIN_TOPIC = "main";
+const NONE = "none";
 
 export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
   private _stanProvider: StanProvider;
@@ -57,12 +58,18 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
     intents: IntentPred[],
     oos: number
   ): sdk.Prediction<"intent-oos"> {
+    const noneIntent = intents.find((i) => i.label.toLowerCase() === NONE);
+
     const prediction: sdk.Prediction<"intent"> = _(intents)
       .map((i) => [i.label, i] as [string, IntentPred])
       .fromPairs()
       .mapValues((i) => i.confidence)
       .value();
-    prediction["oo-scope"] = oos;
+
+    delete prediction[NONE];
+    const noneConfidence = noneIntent?.confidence ?? 0;
+    prediction["oo-scope"] = Math.max(oos, noneConfidence);
+
     return prediction as sdk.Prediction<"intent-oos">;
   }
 
