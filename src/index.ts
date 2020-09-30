@@ -16,7 +16,10 @@ const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
   seed: number
 ) => {
-  const { engine, metrics } = solution;
+  const { engine, metrics, name } = solution;
+
+  console.log(chalk.green(chalk.bold(`Solution ${name} Started`)));
+
   const metricHolder = new MetricHolder(metrics);
 
   for (const problem of solution.problems) {

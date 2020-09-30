@@ -4,6 +4,7 @@ export function runSolution<T extends ProblemType>(
 ): Promise<void>;
 
 export type Solution<T extends ProblemType> = {
+  name: string;
   problems: Problem<T>[];
   engine: Engine<T>;
   metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
