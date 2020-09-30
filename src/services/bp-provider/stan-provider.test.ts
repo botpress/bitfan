@@ -29,7 +29,7 @@ test("small client for stan as", async () => {
               variables: [
                 {
                   name: "moldy_fruit",
-                  variableType: "fruits",
+                  type: "fruits",
                 },
               ],
             },
@@ -77,7 +77,7 @@ test("small client for stan as", async () => {
               variables: [
                 {
                   name: "thing_to_search",
-                  variableType: "fruits",
+                  type: "fruits",
                 },
               ],
             },

@@ -35,7 +35,7 @@ export interface IntentDef {
 
 export interface Variable {
   name: string;
-  variableType: string;
+  type: string;
 }
 
 export interface Enum {
