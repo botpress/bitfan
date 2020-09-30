@@ -13,37 +13,35 @@ export namespace datasets {
   export namespace bpds {
     export namespace regression {
       export namespace test {
-        const A: DataSet<"intent-oos">;
-        const B: DataSet<"intent-oos">;
-        const C: DataSet<"intent-oos">;
-        const D: DataSet<"intent-oos">;
-        const E: DataSet<"intent-oos">;
-        const F: DataSet<"intent-oos">;
+        const A: DataSet<"intent">;
+        const B: DataSet<"intent">;
+        const C: DataSet<"intent">;
+        const D: DataSet<"intent">;
+        const E: DataSet<"intent">;
+        const F: DataSet<"intent">;
       }
 
       export namespace train {
-        const A: DataSet<"intent-oos">;
-        const B: DataSet<"intent-oos">;
-        const C: DataSet<"intent-oos">;
-        const D: DataSet<"intent-oos">;
-        const E: DataSet<"intent-oos">;
-        const F: DataSet<"intent-oos">;
+        const A: DataSet<"intent">;
+        const B: DataSet<"intent">;
+        const C: DataSet<"intent">;
+        const D: DataSet<"intent">;
+        const E: DataSet<"intent">;
+        const F: DataSet<"intent">;
       }
     }
   }
 }
 
 export namespace metrics {
-  export const binaryIntentScore: Metric<"intent"> & Metric<"intent-oos">;
+  export const binaryIntentScore: Metric<"intent">;
 }
 
 export namespace engines {
-  export class BpIntentOOSEngine implements Engine<"intent-oos"> {
+  export class BpIntentEngine implements Engine<"intent"> {
     constructor(bpEndpoint?: string, password?: string);
-    train: (trainSet: DataSet<"intent-oos">, seed: number) => Promise<void>;
-    predict: (
-      testSet: DataSet<"intent-oos">
-    ) => Promise<Result<"intent-oos">[]>;
+    train: (trainSet: DataSet<"intent">, seed: number) => Promise<void>;
+    predict: (testSet: DataSet<"intent">) => Promise<Result<"intent">[]>;
   }
 }
 
@@ -59,51 +57,29 @@ export namespace tools {
 }
 
 export type ProblemType =
-  | "oos"
-  | "context"
-  | "context-oos"
+  | "intent-topic"
+  | "topic"
   | "intent"
-  | "intent-oos"
   | "slot"
   | "lang"
   | "spell";
-
-type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U];
 
 type Dic<T> = {
   [key: string]: T;
 };
 
-type DicWithOOS<T> = Dic<T> & Record<OOSLabel, number>;
-
-type OOSLabel = "oo-scope";
-type INSLabel = "in-scope";
-
-export type Label<T extends ProblemType> = T extends "oos"
-  ? INSLabel | OOSLabel
-  : T extends "context"
-  ? string
+export type Label<T extends ProblemType> = T extends "topic"
+  ? string[]
   : T extends "intent"
   ? string[]
-  : T extends "intent-oos"
-  ? string[] | [OOSLabel]
-  : T extends "context-oos"
-  ? string | OOSLabel
   : T extends "slot"
   ? { name: string; start: number; end: number }
   : string;
 
-export type Prediction<T extends ProblemType> = T extends "oos"
-  ? Dic<number>
-  : T extends "context"
+export type Prediction<T extends ProblemType> = T extends "topic"
   ? Dic<number>
   : T extends "intent"
   ? Dic<number>
-  : T extends "intent-oos"
-  ? DicWithOOS<number>
-  : T extends "context-oos"
-  ? DicWithOOS<number>
   : T extends "slot"
   ? Dic<{ start: number; end: number; confidence: number }>
   : string;

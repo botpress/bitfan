@@ -9,7 +9,7 @@
   "types": "./src/bitfan.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest ./out"
   },
   "dependencies": {
     "axios": "^0.20.0",

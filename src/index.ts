@@ -2,14 +2,11 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import chalk from "chalk";
 
-import {
-  binaryIntentScore,
-  binaryIntentOOSScore,
-} from "./builtin/metrics/intent";
+import { binaryIntentScore } from "./builtin/metrics/intent";
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
-import { BpIntentOOSEngine } from "./builtin/engines/intent";
+import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
 import { MetricHolder } from "./services/metricHolder";
 
@@ -78,20 +75,20 @@ const impl: typeof sdk = {
     bpds: {
       regression: {
         train: {
-          A: dsRepo.getDataset("intent-oos", "en", "bpdsA-train"),
-          B: dsRepo.getDataset("intent-oos", "en", "bpdsB-train"),
-          C: dsRepo.getDataset("intent-oos", "en", "bpdsC-train"),
-          D: dsRepo.getDataset("intent-oos", "en", "bpdsD-train"),
-          E: dsRepo.getDataset("intent-oos", "en", "bpdsE-train"),
-          F: dsRepo.getDataset("intent-oos", "en", "bpdsF-train"),
+          A: dsRepo.getDataset("intent", "en", "bpdsA-train"),
+          B: dsRepo.getDataset("intent", "en", "bpdsB-train"),
+          C: dsRepo.getDataset("intent", "en", "bpdsC-train"),
+          D: dsRepo.getDataset("intent", "en", "bpdsD-train"),
+          E: dsRepo.getDataset("intent", "en", "bpdsE-train"),
+          F: dsRepo.getDataset("intent", "en", "bpdsF-train"),
         },
         test: {
-          A: dsRepo.getDataset("intent-oos", "en", "bpdsA-test"),
-          B: dsRepo.getDataset("intent-oos", "en", "bpdsB-test"),
-          C: dsRepo.getDataset("intent-oos", "en", "bpdsC-test"),
-          D: dsRepo.getDataset("intent-oos", "en", "bpdsD-test"),
-          E: dsRepo.getDataset("intent-oos", "en", "bpdsE-test"),
-          F: dsRepo.getDataset("intent-oos", "en", "bpdsF-test"),
+          A: dsRepo.getDataset("intent", "en", "bpdsA-test"),
+          B: dsRepo.getDataset("intent", "en", "bpdsB-test"),
+          C: dsRepo.getDataset("intent", "en", "bpdsC-test"),
+          D: dsRepo.getDataset("intent", "en", "bpdsD-test"),
+          E: dsRepo.getDataset("intent", "en", "bpdsE-test"),
+          F: dsRepo.getDataset("intent", "en", "bpdsF-test"),
         },
       },
     },
@@ -102,7 +99,7 @@ const impl: typeof sdk = {
   },
 
   engines: {
-    BpIntentOOSEngine,
+    BpIntentEngine,
   },
 };
 

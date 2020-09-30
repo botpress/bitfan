@@ -23,17 +23,15 @@ What are problem types? Problem types can refer to any of theses:
 
 ```ts
 type ProblemType =
-  | "oos" // out of scope
-  | "context"
-  | "context-oos"
-  | "intent"
-  | "intent-oos" // either predicting an intent or oos
-  | "slot"
+  | "intent-topic" // either predicting a pair of topic and intent or oos
+  | "topic" // either predicting a topic or oos
+  | "intent" // either predicting an intent or oos
+  | "slot" // extract correct information from a text input
   | "lang" // identifying the user language
   | "spell"; // spelling correction of user language
 ```
 
-For instance, a problem of type `Problem<"slot">` contains a train set and a test set of type `DataSet<"slot">` which itself has for label an array of `{ name: string; start: number; end: number }`. A dataset of type `DataSet<"context">` however has for label a `string` representing the expected context.
+For instance, a problem of type `Problem<"slot">` contains a train set and a test set of type `DataSet<"slot">` which itself has for label an array of `{ name: string; start: number; end: number }`. A dataset of type `DataSet<"topic">` however has for label a `string` representing the expected topic.
 
 To try solving a `Problem`, a user must define a `Solution` and run his solution using the `runSolution` function.
 
@@ -59,7 +57,7 @@ interface Engine<T extends ProblemType> {
 }
 ```
 
-The `Metric` abstraction exists because `Engine`s are not responsible for electing a label. All they do is outputing a language comprehension datastructure. For instance an `Engine<"oos">` prediction outputs a number reprensenting the confidence that the input is out of scope. A `Metric<"oos">` is then responsible for mapping this confidence to a score. Does an oos confidence of 0.2 should be considered as a failed test, a passed test or maybe something in between?
+The `Metric` abstraction exists because `Engine`s are not responsible for electing a label. All they do is outputing a language comprehension datastructure. For instance an `Engine<"topic">` prediction outputs a number reprensenting the confidence that the input is a certain topic. A `Metric<"topic">` is then responsible for mapping this confidence to a score. Does a confidence of 0.2 should be considered as a failed test, a passed test or maybe something in between? That's the metric's job to find out.
 
 ```ts
 interface Metric<T extends ProblemType> {
@@ -77,12 +75,12 @@ import bitfan, { Problem, Result, Solution } from "bitfan";
 
 const problem = {
   name: `bpds regression A`,
-  type: "intent-oos",
+  type: "intent",
   trainSet: bitfan.datasets.bpds.regression.train.A,
   testSet: bitfan.datasets.bpds.regression.test.A,
   lang: "en",
   cb: async (
-    results: Result<"intent-oos">[],
+    results: Result<"intent">[],
     metrics: { [metric: string]: number }
   ) => {}, // implement this to visualize data after problem has run
 };
@@ -94,7 +92,7 @@ const password = "123456";
 const engine = new bitfan.engines.BpIntentOOSEngine(stanEndpoint, password);
 
 const metrics = [bitfan.metrics.binaryIntentScore];
-const solution: Solution<"intent-oos"> = { problems, engine, metrics };
+const solution: Solution<"intent"> = { problems, engine, metrics };
 
 async function main() {
   for (const seed of [42, 666]) {

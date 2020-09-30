@@ -17,7 +17,7 @@ export class StanProvider {
 
   constructor(
     private _stanEndpoint: string = "http://localhost:3200",
-    private _password: string = ""
+    private _password: string = "123456"
   ) {}
 
   public async getVersion(): Promise<{ version: string } | undefined> {

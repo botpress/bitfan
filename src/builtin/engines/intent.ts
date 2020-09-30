@@ -11,14 +11,14 @@ import {
 const MAIN_TOPIC = "main";
 const NONE = "none";
 
-export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
+export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _stanProvider: StanProvider;
 
   constructor(bpEndpoint?: string, password?: string) {
     this._stanProvider = new StanProvider(bpEndpoint, password);
   }
 
-  train(trainSet: sdk.DataSet<"intent-oos">, seed: number) {
+  train(trainSet: sdk.DataSet<"intent">, seed: number) {
     const allLabels = _(trainSet.rows)
       .flatMap((r) => r.label)
       .uniq()
@@ -57,7 +57,7 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
   private _makePredictions(
     intents: IntentPred[],
     oos: number
-  ): sdk.Prediction<"intent-oos"> {
+  ): sdk.Prediction<"intent"> {
     const noneIntent = intents.find((i) => i.label.toLowerCase() === NONE);
 
     const prediction: sdk.Prediction<"intent"> = _(intents)
@@ -68,13 +68,13 @@ export class BpIntentOOSEngine implements sdk.Engine<"intent-oos"> {
 
     delete prediction[NONE];
     const noneConfidence = noneIntent?.confidence ?? 0;
-    prediction["oo-scope"] = Math.max(oos, noneConfidence);
+    prediction["oos"] = Math.max(oos, noneConfidence);
 
-    return prediction as sdk.Prediction<"intent-oos">;
+    return prediction as sdk.Prediction<"intent">;
   }
 
-  async predict(testSet: sdk.DataSet<"intent-oos">) {
-    const results: sdk.Result<"intent-oos">[] = [];
+  async predict(testSet: sdk.DataSet<"intent">) {
+    const results: sdk.Result<"intent">[] = [];
 
     const progressBar = new Progress("Prediction: [:bar] (:current/:total)", {
       total: testSet.rows.length,

@@ -4,879 +4,879 @@
   "rows": [
     {
       "text": "Where can I find your ladnline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with technical isseu",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my staetment",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about cnacelling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a probelm with login",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why is my screen lokced?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "hellpine please!",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "hellpine",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "isseu",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "teck isseu",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Where can I find your lsndline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with technical issye",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my statrment",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about csncelling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a problen with login",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why is my screen lockef?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Got a ptobkem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "ptobkem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "teck ptobkem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Where can I find your lndline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with technical ssue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my statment",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about cncelling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a poblem with login",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why is my screen lcked?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "lgin problm",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "scren loked",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "problm",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "teck problm",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "What isthe contact number",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "contactnumber",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I'm having some trouble tologin",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "trouble tologin",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "loginproblem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "screenlocked",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Whats the contactnumer",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "How can Icanncel",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "How can Icancerl",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "Where tofind your land line?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "teckproblem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Where can I find your landlines?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with technical issues",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my statements",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about cancellings",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a problems with logins",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why are my screens locked?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Where can I find your landlinne?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with technnical issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my statemment",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go abbout cancelling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a problem with loggin",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why are my screen lockked",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Where can I find your lasndline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with tecvhnical issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to amend my statrement",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about cancellinfg",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a problem with logfin",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why are my screen lockerd",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "canbcel",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "Where can I find your land line?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "There's a problem with my screen",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "They're is a problem with my screen",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Theirs a problem with my screen",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I am experiencing difficulties using the system",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I need techniqual support",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I need technical support",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I'm experiencing dificulties using the system",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I'm experiencing difficuleties using the system",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Where can I fidn your ladnline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Please help with techniqual isseu",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to ammend my staetment",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "how do I go about cnaceling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I've got a probelm with loggin",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Why are my screens lokced?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can not unlock my screen",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "My screen is locked",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "My screen is locked for some reason",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Why is my screen locked?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can not login",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can't login in for some reason",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can not get the right results",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I expected a different result",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "how do I go about making more money",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Why is my results different?",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I got the wrong results for some reason",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "My results are not what it is supposed to be",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "There is a problem with my screen",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I've got a problem with login",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I've got an error when trying to loging",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I've got a problem with my results",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "There is a problem with the result",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "hpow do I go about getting help for an issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "There is an error in the result",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I can't continue with my subscription",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I have an inquiry about termination",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I am unsatisfied, I want to cancel my account",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "how can I cancel your service",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I want to stop my business relationship withyou",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "please help me cancel this service",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "how do I go about cancelling",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "please help end my subscription",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "help cancel contract",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "who do I contact to cancel",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "I need my bill amended",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "Rectify my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "Details of my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I got an error on my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I am facing an issue with my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "something is not working with my statement",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "terminate my monthly subscription",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "Please give me my statement",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I want to resolve a billing issue",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I want to amend my statement",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I want to verify a charge",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I want to amend my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "I believe there is an error on my bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "technical problem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Please help with technical support",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Please help with technical issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I need advice regarding my technical issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Please give me your tech support",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to resolve an IT issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to resolve a technical issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to solve a problem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I have bugs",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I want to solve some bugs",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I am facing several bugs",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "there is a major bug",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "there is a major glitch",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "I have an inquiry about an IT issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "Tech help",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "contract number",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "how can I reach you",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I need to talk to someone",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Where can I find your landline?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Do you have an 1-800 number?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I want to find your phone line",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I want to find your number",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I can't seem to locate your help line",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I want to locate your toll free line",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "May I inquire about your contact number",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "I inquire your contact number",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "how do I go about reaching out to you",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "how do I go about contacting you",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "What number can I call to make an inquiry",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Do you have toll free line?",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "Is there someone I can talk to",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "contact",
-      "label": ["c-contact-details"]
+      "label": ["d-contact-details"]
     },
     {
       "text": "IT issue",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "IT problem",
-      "label": ["c-problem"]
+      "label": ["d-problem"]
     },
     {
       "text": "help with bill",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "help statement",
-      "label": ["c-bill-inquiry"]
+      "label": ["d-bill-inquiry"]
     },
     {
       "text": "help cancellation",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "cancel",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "cancellation inquiry",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "termination inquiry",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "terminate",
-      "label": ["c-cancellation"]
+      "label": ["d-cancellation"]
     },
     {
       "text": "help",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "I need assistance",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "give me assistance",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "I want help",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "give me help",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "I want assistance",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "How can I get help",
-      "label": ["c-disambiguation"]
+      "label": ["d-disambiguation"]
     },
     {
       "text": "hello",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "hello how are you going",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what is your name",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "how have you been",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what are your hobbies",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "Tell me a joke",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I need help getting motivated",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "how",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "who built you",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "yes",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "no",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "please",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "where",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "menu",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "options",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "start",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what can you do",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what can you do for me",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what are your functionalities",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "list of options",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "choices",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I have",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I need",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can't",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "stop",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I can't continue",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I believe",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "please give me",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "tell me",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "say something funny",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want to buy a car",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want to find your website",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want to find your headquarter",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want to locate you CEO",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "How many employees work for your company",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "how many locations do you have",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "in what countries do you  operate",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "are you available near me",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "is there a location near me",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what is the street number of your HQ",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "what is your postal code",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I want to mail you something",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "i want to make a complaint",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "are you human",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "i have a complaint",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "complaint",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "wow",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "that's bad",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "that's sad",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I am really unhappy",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I am mad",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     },
     {
       "text": "I'm mad",
-      "label": ["oo-scope"]
+      "label": ["oos"]
     }
   ]
 }

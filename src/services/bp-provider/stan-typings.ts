@@ -73,7 +73,7 @@ export type SlotCollection = {
 };
 
 export interface Predictions {
-  [context: string]: {
+  [topic: string]: {
     confidence: number;
     oos: number;
     intents: IntentPred[];
@@ -100,7 +100,7 @@ export interface Slot {
 export interface Intent {
   name: string;
   confidence: number;
-  context: string;
+  topic: string;
   matches?: (intentPattern: string) => boolean;
 }
 

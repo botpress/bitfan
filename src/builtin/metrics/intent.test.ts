@@ -1,5 +1,5 @@
 import * as sdk from "bitfan/sdk";
-import { binaryIntentOOSScore, binaryIntentScore } from "./intent";
+import { binaryIntentScore } from "./intent";
 
 test("test binary intent scoring", () => {
   const prediction = {
@@ -38,20 +38,20 @@ test("test binary intent scoring with two intents", () => {
 });
 
 test("test binary intent scoring with oos", () => {
-  const prediction: sdk.Prediction<"intent-oos"> = {
+  const prediction: sdk.Prediction<"intent"> = {
     A: 0.7,
     B: 0.8,
     C: 0,
-    "oo-scope": 0.99,
+    oos: 0.99,
   };
 
-  const result: sdk.Result<"intent-oos"> = {
+  const result: sdk.Result<"intent"> = {
     text: "some nice utterance",
     prediction,
-    label: "oo-scope",
+    label: ["oos"],
   };
 
-  const score = binaryIntentOOSScore.eval(result);
+  const score = binaryIntentScore.eval(result);
 
   expect(score).toBe(1);
 });
