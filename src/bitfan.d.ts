@@ -69,7 +69,9 @@ type Dic<T> = {
   [key: string]: T;
 };
 
-export type Label<T extends ProblemType> = T extends "topic"
+export type Label<T extends ProblemType> = T extends "intent-topic"
+  ? { intent: string; topic: string }[]
+  : T extends "topic"
   ? string[]
   : T extends "intent"
   ? string[]
@@ -77,7 +79,9 @@ export type Label<T extends ProblemType> = T extends "topic"
   ? { name: string; start: number; end: number }
   : string;
 
-export type Prediction<T extends ProblemType> = T extends "topic"
+export type Prediction<T extends ProblemType> = T extends "intent-topic"
+  ? Dic<Dic<number>> // confidence for each intent of each topic
+  : T extends "topic"
   ? Dic<number>
   : T extends "intent"
   ? Dic<number>

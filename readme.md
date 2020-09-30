@@ -37,6 +37,7 @@ To try solving a `Problem`, a user must define a `Solution` and run his solution
 
 ```ts
 interface Solution<T extends ProblemType> {
+  name: string;
   problems: Problem<T>[];
   engine: Engine<T>; // actual classifier that solves problems of type T
   metrics: Metric<T>[]; // metric that outputs a score between 0 and 1 for a given test (row)
