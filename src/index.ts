@@ -2,7 +2,13 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import chalk from "chalk";
 
-import { binaryIntentScore } from "./builtin/metrics/intent";
+import {
+  mostConfidentBinaryScore,
+  oosBinaryScore,
+} from "./builtin/metrics/intent";
+
+import { showOOSConfusion } from "./builtin/visualisation/oos";
+
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 
@@ -18,9 +24,12 @@ const runSolution = async <T extends sdk.ProblemType>(
 ) => {
   const { engine, metrics, name } = solution;
 
-  console.log(chalk.green(chalk.bold(`Solution ${name} Started`)));
+  console.log(
+    chalk.green(chalk.bold(`Running Solution ${name} with seed ${seed}`))
+  );
 
   const metricHolder = new MetricHolder(metrics);
+  const solutionResults: sdk.Result<T>[] = [];
 
   for (const problem of solution.problems) {
     try {
@@ -31,6 +40,7 @@ const runSolution = async <T extends sdk.ProblemType>(
       await sleep(1000);
 
       const results = await engine.predict(problem.testSet);
+      solutionResults.push(...results);
 
       const scores = metrics.map((m) => results.map(m.eval));
       const scoresByMetrics = _.zipObject(metricHolder.names, scores);
@@ -43,9 +53,10 @@ const runSolution = async <T extends sdk.ProblemType>(
         _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
         ["metric", "score"]
       );
-      console.log("\n");
 
-      await problem.cb(results, avgByMetrics);
+      await problem.cb?.(results, avgByMetrics);
+
+      console.log("\n"); // to space out logging
     } catch (err) {
       console.log(
         chalk.red(
@@ -64,6 +75,9 @@ const runSolution = async <T extends sdk.ProblemType>(
     _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
     ["metric", "score"]
   );
+
+  await solution.cb?.(solutionResults, avgByMetrics);
+  console.log("\n"); // to space out logging
 };
 
 // TODO: write actual implementation
@@ -98,7 +112,12 @@ const impl: typeof sdk = {
   },
 
   metrics: {
-    binaryIntentScore,
+    mostConfidentBinaryScore,
+    oosBinaryScore,
+  },
+
+  visualisation: {
+    showOOSConfusion,
   },
 
   engines: {

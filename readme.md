@@ -72,32 +72,41 @@ Bitfan is shipped with builtin `datasets`, `metrics` and `engine`, but any user 
 Here's a full example:
 
 ```ts
-import bitfan, { Problem, Result, Solution } from "bitfan";
+import bitfan, { Problem, Solution } from "bitfan";
 
-const problem = {
-  name: `bpds regression A`,
-  type: "intent",
-  trainSet: bitfan.datasets.bpds.regression.train.A,
-  testSet: bitfan.datasets.bpds.regression.test.A,
-  lang: "en",
-  cb: async (
-    results: Result<"intent">[],
-    metrics: { [metric: string]: number }
-  ) => {}, // implement this to visualize data after problem has run
-};
+type BpdsTopics = "A" | "B" | "C" | "D" | "E" | "F";
 
-const problems = [problem];
+function makeProblem(topic: BpdsTopics): Problem<"intent"> {
+  return {
+    name: `bpds regression ${topic}`,
+    type: "intent",
+    trainSet: bitfan.datasets.bpds.regression.train[topic],
+    testSet: bitfan.datasets.bpds.regression.test[topic],
+    lang: "en",
+  };
+}
+
+const allTopics: BpdsTopics[] = ["A", "B", "C", "D", "E", "F"];
+const problems = allTopics.map(makeProblem);
 
 const stanEndpoint = "http://localhost:3200";
 const password = "123456";
-const engine = new bitfan.engines.BpIntentOOSEngine(stanEndpoint, password);
+const engine = new bitfan.engines.BpIntentEngine(stanEndpoint, password);
 
-const metrics = [bitfan.metrics.binaryIntentScore];
-const solution: Solution<"intent"> = { problems, engine, metrics };
+const metrics = [
+  bitfan.metrics.mostConfidentBinaryScore,
+  bitfan.metrics.oosBinaryScore,
+];
+const solution: Solution<"intent"> = {
+  name: "bpds regression",
+  problems,
+  engine,
+  metrics,
+  cb: bitfan.visualisation.showOOSConfusion,
+};
 
 async function main() {
-  for (const seed of [42, 666]) {
-    console.log(`Running solution with seed ${seed}`);
+  for (const seed of [42, 69]) {
     await bitfan.runSolution(solution, seed);
   }
 }

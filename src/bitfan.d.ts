@@ -8,6 +8,7 @@ export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
   engine: Engine<T>;
   metrics: Metric<T>[]; // threshold and elections are contained in these score-functions
+  cb?: ResultsCb<T>;
 };
 
 export namespace datasets {
@@ -35,7 +36,12 @@ export namespace datasets {
 }
 
 export namespace metrics {
-  export const binaryIntentScore: Metric<"intent">;
+  export const mostConfidentBinaryScore: Metric<"intent"> & Metric<"topic">;
+  export const oosBinaryScore: Metric<"intent"> & Metric<"topic">;
+}
+
+export namespace visualisation {
+  export const showOOSConfusion: ResultsCb<"intent"> & ResultsCb<"topic">;
 }
 
 export namespace engines {
@@ -95,7 +101,7 @@ export interface Problem<T extends ProblemType> {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  cb: ProblemCb<T>;
+  cb?: ResultsCb<T>;
 }
 
 export interface Engine<T extends ProblemType> {
@@ -114,7 +120,7 @@ export type Result<T extends ProblemType> = {
   label: Label<T>;
 };
 
-export type ProblemCb<T extends ProblemType> = (
+export type ResultsCb<T extends ProblemType> = (
   results: Result<T>[],
   metrics: {
     [name: string]: number;

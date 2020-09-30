@@ -1,5 +1,5 @@
 import * as sdk from "bitfan/sdk";
-import { binaryIntentScore } from "./intent";
+import { mostConfidentBinaryScore } from "./intent";
 
 test("test binary intent scoring", () => {
   const prediction = {
@@ -14,7 +14,7 @@ test("test binary intent scoring", () => {
     label: ["A"],
   };
 
-  const score = binaryIntentScore.eval(result);
+  const score = mostConfidentBinaryScore.eval(result);
 
   expect(score).toBe(1);
 });
@@ -32,7 +32,7 @@ test("test binary intent scoring with two intents", () => {
     label: ["A", "B"],
   };
 
-  const score = binaryIntentScore.eval(result);
+  const score = mostConfidentBinaryScore.eval(result);
 
   expect(score).toBe(1);
 });
@@ -51,7 +51,7 @@ test("test binary intent scoring with oos", () => {
     label: ["oos"],
   };
 
-  const score = binaryIntentScore.eval(result);
+  const score = mostConfidentBinaryScore.eval(result);
 
   expect(score).toBe(1);
 });
