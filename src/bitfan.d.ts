@@ -33,6 +33,11 @@ export namespace datasets {
       }
     }
   }
+
+  export namespace covid {
+    const en: DataSet<"intent">;
+    const fr: DataSet<"intent">;
+  }
 }
 
 export namespace metrics {
@@ -61,7 +66,18 @@ export namespace tools {
     trainSet: DataSet<T>;
     testSet: DataSet<T>;
   };
+
+  // export const splitAndMakeOOS: <T extends ProblemType>(
+  //   dataset: DataSet<T>,
+  //   seed: number,
+  //   options?: { labels: string[] } | { count: number }
+  // ) => {
+  //   trainSet: DataSet<T>;
+  //   testSet: DataSet<T>;
+  // };
 }
+
+// export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
 
 export type ProblemType =
   | "intent-topic"

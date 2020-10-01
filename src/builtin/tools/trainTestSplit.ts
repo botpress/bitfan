@@ -1,5 +1,5 @@
 import { DataSet, ProblemType, tools } from "bitfan/sdk";
-import _ from "lodash";
+import SeededLodashProvider from "../../services/seeded-lodash";
 
 export const trainTestSplit: typeof tools.trainTestSplit = <
   T extends ProblemType
@@ -20,7 +20,11 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
   const N = dataset.rows.length;
   const trainSize = Math.floor((trainPercent * N) / 100);
 
-  const allIdx = _.shuffle(_.range(N));
+  const seededLodashProvider = new SeededLodashProvider();
+  seededLodashProvider.setSeed(seed);
+  const lo = seededLodashProvider.getSeededLodash();
+
+  const allIdx = lo.shuffle(lo.range(N));
   const trainIdx = allIdx.slice(0, trainSize);
   const testIdx = allIdx.slice(trainSize);
 
@@ -29,6 +33,8 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
 
   const testSet = { ...dataset };
   testSet.rows = testSet.rows.filter((r, i) => testIdx.includes(i));
+
+  seededLodashProvider.resetSeed();
 
   return {
     trainSet,
