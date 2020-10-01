@@ -1,21 +1,22 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
+import { isOOS } from "../../services/labels";
 
-import { electMostConfident } from "../metrics/intent";
+import { IntentOrTopic, electMostConfident } from "../metrics/intent";
 
-export const showOOSConfusion = async <T extends "intent" | "topic">(
+export const showOOSConfusion = async <T extends IntentOrTopic>(
   results: sdk.Result<T>[],
   metrics: {
     [name: string]: number;
   }
 ) => {
   const oosResults = results.map((r) => {
-    const elected = electMostConfident(r.prediction, r.label.length);
+    const elected = electMostConfident(r.prediction);
     const expected = r.label;
 
     return {
-      electedIsOOS: elected.length === 1 && elected[0] === "oos",
-      expectedIsOOS: expected.length === 1 && expected[0] === "oos",
+      electedIsOOS: isOOS(elected),
+      expectedIsOOS: isOOS(expected),
     };
   });
 

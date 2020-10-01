@@ -28,7 +28,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
       name: l,
       variables: [],
       examples: trainSet.rows
-        .filter((r) => (r.label as string[]).includes(l))
+        .filter((r) => (r.label as string) === l)
         .map((r) => r.text),
     }));
 

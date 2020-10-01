@@ -16,6 +16,8 @@ import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
 import { MetricHolder } from "./services/metricHolder";
 
+import { areSame, isOOS } from "./services/labels";
+
 const dsRepo = new DatasetRepository();
 
 const runSolution = async <T extends sdk.ProblemType>(
@@ -83,6 +85,8 @@ const runSolution = async <T extends sdk.ProblemType>(
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
+  areSame,
+  isOOS,
 
   tools: {
     trainTestSplit,

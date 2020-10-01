@@ -3,6 +3,13 @@ export function runSolution<T extends ProblemType>(
   seed: number
 ): Promise<void>;
 
+export function areSame<T extends ProblemType>(
+  label1: Label<T>,
+  label2: Label<T>
+): boolean;
+
+export function isOOS<T extends ProblemType>(label: Label<T>): boolean;
+
 export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
@@ -81,6 +88,7 @@ export namespace tools {
 
 export type ProblemType =
   | "intent-topic"
+  | "multi-intent"
   | "topic"
   | "intent"
   | "slot"
@@ -92,13 +100,15 @@ type Dic<T> = {
 };
 
 export type Label<T extends ProblemType> = T extends "intent-topic"
-  ? { intent: string; topic: string }[]
+  ? { intent: string; topic: string }
+  : T extends "multi-intent"
+  ? string[]
   : T extends "topic"
-  ? string[]
+  ? string // single intent for now
   : T extends "intent"
-  ? string[]
+  ? string
   : T extends "slot"
-  ? { name: string; start: number; end: number }
+  ? { name: string; start: number; end: number }[]
   : string;
 
 export type Prediction<T extends ProblemType> = T extends "intent-topic"

@@ -4,219 +4,219 @@
   "rows": [
     {
       "text": "hello",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "hello how are you going",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what is your name",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "how have you been",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what are your hobbies",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "Tell me a joke",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I need help getting motivated",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "how",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "who built you",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "yes",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "no",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "please",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "where",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "menu",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "options",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "start",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what can you do",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what can you do for me",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what are your functionalities",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "list of options",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "choices",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I have",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I need",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I can't",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "stop",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I can't continue",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I believe",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "please give me",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "tell me",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "say something funny",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want to buy a car",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want to find your website",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want to find your headquarter",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want to locate you CEO",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "How many employees work for your company",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "how many locations do you have",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "in what countries do you  operate",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "are you available near me",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "is there a location near me",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what is the street number of your HQ",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "what is your postal code",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I want to mail you something",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "i want to make a complaint",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "are you human",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "i have a complaint",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "complaint",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "wow",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "that's bad",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "that's sad",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I am really unhappy",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I am mad",
-      "label": ["oos"]
+      "label": "oos"
     },
     {
       "text": "I'm mad",
-      "label": ["oos"]
+      "label": "oos"
     }
   ]
 }
