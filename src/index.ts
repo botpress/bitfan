@@ -18,69 +18,87 @@ import { sleep } from "./utils";
 import { MetricHolder } from "./services/metricHolder";
 
 import { areSame, isOOS } from "./services/labels";
+import { SolutionMetricHolder } from "./services/solutionMetricHolder";
 
 const dsRepo = new DatasetRepository();
 
 const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
-  seed: number
+  seeds: number[]
 ) => {
-  const { engine, metrics, name } = solution;
+  const { engine, metrics, name, problems } = solution;
 
-  console.log(
-    chalk.green(chalk.bold(`Running Solution ${name} with seed ${seed}`))
-  );
+  const allResults: sdk.Result<T>[] = [];
+  const solutionMetricHolder = new SolutionMetricHolder(problems, metrics);
 
-  const metricHolder = new MetricHolder(metrics);
-  const solutionResults: sdk.Result<T>[] = [];
+  for (const seed of seeds) {
+    console.log(
+      chalk.green(chalk.bold(`Running Solution ${name} with seed ${seed}`))
+    );
 
-  for (const problem of solution.problems) {
-    try {
-      console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
+    const metricHolder = new MetricHolder(metrics);
+    const solutionResults: sdk.Result<T>[] = [];
 
-      await engine.train(problem.trainSet, seed);
+    for (const problem of problems) {
+      try {
+        console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
-      await sleep(1000);
+        await engine.train(problem.trainSet, seed);
 
-      const results = await engine.predict(problem.testSet);
-      solutionResults.push(...results);
+        await sleep(1000);
 
-      const scores = metrics.map((m) => results.map(m.eval));
-      const scoresByMetrics = _.zipObject(metricHolder.names, scores);
-      metricHolder.setScoresForProblem(problem, scoresByMetrics);
+        const results = await engine.predict(problem.testSet);
+        solutionResults.push(...results);
 
-      const avgByMetrics = metricHolder.getAvgForProblem(problem);
+        const scores = metrics.map((m) => results.map(m.eval));
+        const scoresByMetrics = _.zipObject(
+          metrics.map((m) => m.name),
+          scores
+        );
+        metricHolder.setScoresForProblem(problem, scoresByMetrics);
 
-      console.log(chalk.green(`Average Score By Metrics`));
-      console.table(
-        _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
-        ["metric", "score"]
-      );
+        const avgByMetrics = metricHolder.getAvgForProblem(problem);
 
-      await problem.cb?.(results, avgByMetrics);
+        console.log(chalk.green(`Average Score By Metrics`));
+        console.table(
+          _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
+          ["metric", "score"]
+        );
 
-      console.log("\n"); // to space out logging
-    } catch (err) {
-      console.log(
-        chalk.red(
-          `The following error occured when running problem ${problem.name}:\n${err.message}`
-        )
-      );
-      process.exit(1);
+        await problem.cb?.(results, avgByMetrics);
+
+        console.log("\n"); // to space out logging
+      } catch (err) {
+        console.log(
+          chalk.red(
+            `The following error occured when running problem ${problem.name}:\n${err.message}`
+          )
+        );
+        process.exit(1);
+      }
     }
+
+    console.log(chalk.green(chalk.bold("Summary For All Problems")));
+    const avgByMetrics = metricHolder.getAvg();
+
+    console.log(chalk.green(`Average Score By Metrics`));
+    console.table(
+      _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
+      ["metric", "score"]
+    );
+
+    solutionMetricHolder.setScoresForSeed(seed, metricHolder);
+
+    allResults.push(...solutionResults);
+    await solution.cb?.(solutionResults, avgByMetrics);
+    console.log("\n"); // to space out logging
   }
 
-  console.log(chalk.green(chalk.bold("Summary For All Problems")));
-  const avgByMetrics = metricHolder.getAvg();
-
-  console.log(chalk.green(`Average Score By Metrics`));
-  console.table(
-    _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
-    ["metric", "score"]
-  );
-
-  await solution.cb?.(solutionResults, avgByMetrics);
-  console.log("\n"); // to space out logging
+  const avgForAllSeeds = solutionMetricHolder.getAvg();
+  return {
+    results: allResults,
+    metrics: avgForAllSeeds,
+  };
 };
 
 // TODO: write actual implementation

@@ -6,8 +6,54 @@ export class MetricHolder<T extends ProblemType> {
 
   constructor(private _metrics: Metric<T>[]) {}
 
-  get names() {
-    return this._metrics.map((m) => m.name);
+  get metrics() {
+    return this._metrics;
+  }
+
+  static empty<T extends ProblemType>(
+    problems: Problem<T>[],
+    metrics: Metric<T>[]
+  ) {
+    const problemNames = problems.map((p) => p.name);
+    const newHolder = new MetricHolder(metrics);
+    newHolder._byProblems = _.zipObject(
+      problemNames,
+      problemNames.map((p) => ByMetric.empty(metrics))
+    );
+    return newHolder;
+  }
+
+  static mergeWith<T extends ProblemType>(
+    holder1: MetricHolder<T>,
+    holder2: MetricHolder<T>
+  ): MetricHolder<T> {
+    const allProblems = _.uniq([
+      ...Object.keys(holder1._byProblems),
+      ...Object.keys(holder2._byProblems),
+    ]);
+
+    const newByProblem: { [problem: string]: ByMetric } = {};
+
+    for (const prob of allProblems) {
+      if (!!holder1._byProblems[prob] && !!holder2._byProblems[prob]) {
+        newByProblem[prob] = ByMetric.merge(
+          holder1._byProblems[prob],
+          holder2._byProblems[prob]
+        );
+      } else if (!!holder1._byProblems[prob]) {
+        newByProblem[prob] = holder1._byProblems[prob];
+      } else {
+        newByProblem[prob] = holder2._byProblems[prob];
+      }
+    }
+
+    const newHolder = new MetricHolder(holder1._metrics);
+    newHolder._byProblems = newByProblem;
+    return newHolder;
+  }
+
+  public mergeWith(other: MetricHolder<T>): MetricHolder<T> {
+    return MetricHolder.mergeWith(this, other);
   }
 
   public setScoresForProblem(
@@ -26,7 +72,7 @@ export class MetricHolder<T extends ProblemType> {
   }
 
   private _mergeAll() {
-    const emptyByMetric = ByMetric.empty(this.names);
+    const emptyByMetric = ByMetric.empty(this._metrics);
     return Object.values(this._byProblems).reduce(
       (acc, curr) => acc.merge(curr),
       emptyByMetric
@@ -35,7 +81,8 @@ export class MetricHolder<T extends ProblemType> {
 }
 
 class ByMetric {
-  static empty(metricsNames: string[]): ByMetric {
+  static empty<T extends ProblemType>(metrics: Metric<T>[]): ByMetric {
+    const metricsNames = metrics.map((m) => m.name);
     return new ByMetric(
       _.zipObject(
         metricsNames,

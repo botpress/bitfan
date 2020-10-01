@@ -1,7 +1,12 @@
 export function runSolution<T extends ProblemType>(
   solution: Solution<T>,
-  seed: number
-): Promise<void>;
+  seeds: number[]
+): Promise<{
+  results: Result<T>[];
+  metrics: {
+    [name: string]: number;
+  };
+}>;
 
 export function areSame<T extends ProblemType>(
   label1: Label<T>,
