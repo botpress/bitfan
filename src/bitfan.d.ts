@@ -74,23 +74,24 @@ export namespace tools {
     testSet: DataSet<T>;
   };
 
-  // export const splitAndMakeOOS: <T extends ProblemType>(
-  //   dataset: DataSet<T>,
-  //   seed: number,
-  //   options?: { labels: string[] } | { count: number }
-  // ) => {
-  //   trainSet: DataSet<T>;
-  //   testSet: DataSet<T>;
-  // };
+  export const splitAndMakeOOS: <T extends IntentOrTopic>(
+    dataset: DataSet<T>,
+    trainPercent: number,
+    seed: number,
+    options?: { count: number } | { labels: string[] }
+  ) => {
+    trainSet: DataSet<T>;
+    testSet: DataSet<T>;
+  };
 }
 
 // export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
 
+export type IntentOrTopic = "intent" | "topic";
 export type ProblemType =
+  | IntentOrTopic
   | "intent-topic"
   | "multi-intent"
-  | "topic"
-  | "intent"
   | "slot"
   | "lang"
   | "spell";

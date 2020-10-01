@@ -11,6 +11,7 @@ import { showOOSConfusion } from "./builtin/visualisation/oos";
 
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
+import { splitAndMakeOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
@@ -90,6 +91,7 @@ const impl: typeof sdk = {
 
   tools: {
     trainTestSplit,
+    splitAndMakeOOS,
   },
 
   datasets: {

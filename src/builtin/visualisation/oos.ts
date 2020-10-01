@@ -2,9 +2,9 @@ import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import { isOOS } from "../../services/labels";
 
-import { IntentOrTopic, electMostConfident } from "../metrics/intent";
+import { electMostConfident } from "../metrics/intent";
 
-export const showOOSConfusion = async <T extends IntentOrTopic>(
+export const showOOSConfusion = async <T extends sdk.IntentOrTopic>(
   results: sdk.Result<T>[],
   metrics: {
     [name: string]: number;

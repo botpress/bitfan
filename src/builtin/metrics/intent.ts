@@ -3,9 +3,7 @@ import * as sdk from "src/bitfan";
 
 import { areSame, isOOS } from "../../services/labels";
 
-export type IntentOrTopic = "intent" | "topic";
-
-const _electMostConfidents = <T extends IntentOrTopic>(
+const _electMostConfidents = <T extends sdk.IntentOrTopic>(
   dict: _.Dictionary<number>,
   electedCount: number
 ): sdk.Label<T>[] => {
@@ -17,29 +15,29 @@ const _electMostConfidents = <T extends IntentOrTopic>(
     .value() as sdk.Label<T>[];
 };
 
-export const electMostConfident = <T extends IntentOrTopic>(
+export const electMostConfident = <T extends sdk.IntentOrTopic>(
   dict: _.Dictionary<number>
 ): sdk.Label<T> => {
   return _electMostConfidents(dict, 1)[0] as sdk.Label<T>;
 };
 
-export const mostConfidentBinaryScore: sdk.Metric<IntentOrTopic> = {
+export const mostConfidentBinaryScore: sdk.Metric<sdk.IntentOrTopic> = {
   name: "mostConfidentBinaryScore",
-  eval: <T extends IntentOrTopic>(res: sdk.Result<T>): number => {
+  eval: <T extends sdk.IntentOrTopic>(res: sdk.Result<T>): number => {
     const { text, prediction, label } = res;
     const elected = electMostConfident(prediction);
-    return areSame<IntentOrTopic>(label, elected) ? 1 : 0;
+    return areSame<sdk.IntentOrTopic>(label, elected) ? 1 : 0;
   },
 };
 
-export const oosBinaryScore: sdk.Metric<IntentOrTopic> = {
+export const oosBinaryScore: sdk.Metric<sdk.IntentOrTopic> = {
   name: "oosBinaryScore",
-  eval: <T extends IntentOrTopic>(res: sdk.Result<T>): number => {
+  eval: <T extends sdk.IntentOrTopic>(res: sdk.Result<T>): number => {
     const { text, prediction, label } = res;
     const elected = electMostConfident(prediction);
 
-    const expectedIsOOS = isOOS<IntentOrTopic>(label);
-    const actualIsOOS = isOOS<IntentOrTopic>(elected);
+    const expectedIsOOS = isOOS<sdk.IntentOrTopic>(label);
+    const actualIsOOS = isOOS<sdk.IntentOrTopic>(elected);
     const testPass =
       (expectedIsOOS && actualIsOOS) || (!expectedIsOOS && !actualIsOOS);
 
