@@ -8,7 +8,13 @@ export const areSame = <T extends sdk.ProblemType>(
   label2: sdk.Label<T>
 ): boolean => {
   if (typeof label1 !== typeof label2) {
-    throw new Error("Both labels must share the same types");
+    throw new Error(
+      `Both labels must share the same types.\nlabel1=${JSON.stringify(
+        label1,
+        undefined,
+        2
+      )}, label2=${JSON.stringify(label2, undefined, 2)}`
+    );
   }
   if (typeof label1 === "string") {
     return label1 === label2;
