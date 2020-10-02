@@ -4,6 +4,10 @@
 
 Bitfan is a nodejs framework/ library that contains multiple builtin functions to benchmark Botpress NLU or any custom NLU implementation.
 
+<img  src="./bitfan.png"/>
+
+### Main Concepts
+
 Bitfan allows the user to solve `Problems`:
 
 ```ts
@@ -13,7 +17,7 @@ interface Problem<T extends ProblemType> {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  cb: ProblemCb<T>; // cb func to visualize results
+  cb: ProblemCb<T>; // cb func to visualize results of this problem
 }
 ```
 
@@ -41,12 +45,13 @@ interface Solution<T extends ProblemType> {
   problems: Problem<T>[];
   engine: Engine<T>; // actual classifier that solves problems of type T
   metrics: Metric<T>[]; // metric that outputs a score between 0 and 1 for a given test (row)
+  cb: ProblemCb<T>; // cb func to visualize results of this solution
 }
 
 function runSolution<T extends ProblemType>(
   solution: Solution<T>,
-  seed: number
-): Promise<void>;
+  seeds: number[]
+): Promise<Result<T>[]>; // returns results for all problems and all seeds
 ```
 
 The `Engine` abstraction is also specific to one problem type. It stands for the actual classifier implementation that predicts a label for a given text input.
@@ -54,7 +59,7 @@ The `Engine` abstraction is also specific to one problem type. It stands for the
 ```ts
 interface Engine<T extends ProblemType> {
   train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
-  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
+  predict: (testSet: DataSet<T>) => Promise<PredictOutput<T>[]>;
 }
 ```
 
@@ -67,7 +72,7 @@ interface Metric<T extends ProblemType> {
 }
 ```
 
-Bitfan is shipped with builtin `datasets`, `metrics` and `engine`, but any user is also free to implement his own custom code injection point.
+Bitfan is shipped with builtin `datasets`, `metrics`, `engine` and `visualisation` function, but any user is also free to implement his own custom code, and pass it to injections points.
 
 Here's a full example:
 
@@ -86,29 +91,28 @@ function makeProblem(topic: BpdsTopics): Problem<"intent"> {
   };
 }
 
-const allTopics: BpdsTopics[] = ["A", "B", "C", "D", "E", "F"];
-const problems = allTopics.map(makeProblem);
-
-const stanEndpoint = "http://localhost:3200";
-const password = "123456";
-const engine = new bitfan.engines.BpIntentEngine(stanEndpoint, password);
-
-const metrics = [
-  bitfan.metrics.mostConfidentBinaryScore,
-  bitfan.metrics.oosBinaryScore,
-];
-const solution: Solution<"intent"> = {
-  name: "bpds regression",
-  problems,
-  engine,
-  metrics,
-  cb: bitfan.visualisation.showOOSConfusion,
-};
-
 async function main() {
-  for (const seed of [42, 69]) {
-    await bitfan.runSolution(solution, seed);
-  }
+  const allTopics: BpdsTopics[] = ["A", "B", "C", "D", "E", "F"];
+  const problems = allTopics.map(makeProblem);
+
+  const stanEndpoint = "http://localhost:3200";
+  const password = "123456";
+  const engine = new bitfan.engines.BpIntentEngine(stanEndpoint, password);
+
+  const metrics = [
+    bitfan.metrics.mostConfidentBinaryScore,
+    bitfan.metrics.oosBinaryScore,
+  ];
+  const solution: Solution<"intent"> = {
+    name: "bpds regression",
+    problems,
+    engine,
+    metrics,
+    cb: bitfan.visualisation.showOOSConfusion,
+  };
+
+  const seeds = [42, 666];
+  const results = await bitfan.runSolution(solution, seed);
 }
 main().then(() => {});
 ```
