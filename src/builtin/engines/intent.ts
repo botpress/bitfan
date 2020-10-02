@@ -57,10 +57,10 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _makePredictions(
     intents: IntentPred[],
     oos: number
-  ): sdk.Prediction<"intent"> {
+  ): sdk.Understanding<"intent"> {
     const noneIntent = intents.find((i) => i.label.toLowerCase() === NONE);
 
-    const prediction: sdk.Prediction<"intent"> = _(intents)
+    const prediction: sdk.Understanding<"intent"> = _(intents)
       .map((i) => [i.label, i] as [string, IntentPred])
       .fromPairs()
       .mapValues((i) => i.confidence)
@@ -70,11 +70,11 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     const noneConfidence = noneIntent?.confidence ?? 0;
     prediction["oos"] = Math.max(oos, noneConfidence);
 
-    return prediction as sdk.Prediction<"intent">;
+    return prediction as sdk.Understanding<"intent">;
   }
 
   async predict(testSet: sdk.DataSet<"intent">) {
-    const results: sdk.Result<"intent">[] = [];
+    const results: sdk.PredictOutput<"intent">[] = [];
 
     const progressBar = new Progress("Prediction: [:bar] (:current/:total)", {
       total: testSet.rows.length,

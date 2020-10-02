@@ -8,6 +8,7 @@ import {
 } from "./builtin/metrics/intent";
 
 import { showOOSConfusion } from "./builtin/visualisation/oos";
+import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
 
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
@@ -15,10 +16,8 @@ import { splitAndMakeOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
-import { MetricHolder } from "./services/metricHolder";
 
 import { areSame, isOOS } from "./services/labels";
-import { SolutionMetricHolder } from "./services/solutionMetricHolder";
 
 const dsRepo = new DatasetRepository();
 
@@ -29,14 +28,12 @@ const runSolution = async <T extends sdk.ProblemType>(
   const { engine, metrics, name, problems } = solution;
 
   const allResults: sdk.Result<T>[] = [];
-  const solutionMetricHolder = new SolutionMetricHolder(problems, metrics);
 
   for (const seed of seeds) {
     console.log(
       chalk.green(chalk.bold(`Running Solution ${name} with seed ${seed}`))
     );
 
-    const metricHolder = new MetricHolder(metrics);
     const solutionResults: sdk.Result<T>[] = [];
 
     for (const problem of problems) {
@@ -47,58 +44,49 @@ const runSolution = async <T extends sdk.ProblemType>(
 
         await sleep(1000);
 
-        const results = await engine.predict(problem.testSet);
+        const predictOutputs = await engine.predict(problem.testSet);
+        const results: sdk.Result<T>[] = predictOutputs.map((p) => {
+          const metricsNames = metrics.map((m) => m.name);
+          const metricsScores = metrics.map((m) => m.eval(p));
+          return {
+            ...p,
+            scores: _.zipObject(metricsNames, metricsScores),
+            metadata: {
+              seed,
+              problem: problem.name,
+            },
+          };
+        });
+
         solutionResults.push(...results);
 
-        const scores = metrics.map((m) => results.map(m.eval));
-        const scoresByMetrics = _.zipObject(
-          metrics.map((m) => m.name),
-          scores
-        );
-        metricHolder.setScoresForProblem(problem, scoresByMetrics);
-
-        const avgByMetrics = metricHolder.getAvgForProblem(problem);
-
-        console.log(chalk.green(`Average Score By Metrics`));
-        console.table(
-          _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
-          ["metric", "score"]
-        );
-
-        await problem.cb?.(results, avgByMetrics);
-
-        console.log("\n"); // to space out logging
+        if (!!problem.cb) {
+          console.log(
+            chalk.green(chalk.bold(`Results for Problem ${problem.name}`))
+          );
+          await problem.cb(results);
+          console.log("\n");
+        }
       } catch (err) {
         console.log(
           chalk.red(
-            `The following error occured when running problem ${problem.name}:\n${err.message}`
+            `The following error occured when solving problem ${problem.name} with seed ${seed}:\n${err.message}`
           )
         );
         process.exit(1);
       }
     }
 
-    console.log(chalk.green(chalk.bold("Summary For All Problems")));
-    const avgByMetrics = metricHolder.getAvg();
-
-    console.log(chalk.green(`Average Score By Metrics`));
-    console.table(
-      _.map(avgByMetrics, (v, k) => ({ metric: k, score: v })),
-      ["metric", "score"]
-    );
-
-    solutionMetricHolder.setScoresForSeed(seed, metricHolder);
-
     allResults.push(...solutionResults);
-    await solution.cb?.(solutionResults, avgByMetrics);
-    console.log("\n"); // to space out logging
+
+    if (!!solution.cb) {
+      console.log(chalk.green(chalk.bold(`Results for All Problems`)));
+      await solution.cb(solutionResults);
+      console.log("\n");
+    }
   }
 
-  const avgForAllSeeds = solutionMetricHolder.getAvg();
-  return {
-    results: allResults,
-    metrics: avgForAllSeeds,
-  };
+  return allResults;
 };
 
 // TODO: write actual implementation
@@ -146,6 +134,7 @@ const impl: typeof sdk = {
 
   visualisation: {
     showOOSConfusion,
+    showAverageScoreByMetric,
   },
 
   engines: {

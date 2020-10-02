@@ -4,11 +4,10 @@ import { isOOS } from "../../services/labels";
 
 import { electMostConfident } from "../metrics/intent";
 
-export const showOOSConfusion = async <T extends sdk.IntentOrTopic>(
-  results: sdk.Result<T>[],
-  metrics: {
-    [name: string]: number;
-  }
+export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async <
+  T extends sdk.IntentOrTopic
+>(
+  results: sdk.Result<T>[]
 ) => {
   const oosResults = results.map((r) => {
     const elected = electMostConfident(r.prediction);

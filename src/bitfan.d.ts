@@ -1,12 +1,7 @@
 export function runSolution<T extends ProblemType>(
   solution: Solution<T>,
   seeds: number[]
-): Promise<{
-  results: Result<T>[];
-  metrics: {
-    [name: string]: number;
-  };
-}>;
+): Promise<Result<T>[]>;
 
 export function areSame<T extends ProblemType>(
   label1: Label<T>,
@@ -53,19 +48,27 @@ export namespace datasets {
 }
 
 export namespace metrics {
-  export const mostConfidentBinaryScore: Metric<"intent"> & Metric<"topic">;
-  export const oosBinaryScore: Metric<"intent"> & Metric<"topic">;
+  export const mostConfidentBinaryScore: Metric<IntentOrTopic>;
+  export const oosBinaryScore: Metric<IntentOrTopic>;
 }
 
+type AggregationOption = {
+  aggregateBy: "seed" | "problem" | "all";
+};
+
 export namespace visualisation {
-  export const showOOSConfusion: ResultsCb<"intent"> & ResultsCb<"topic">;
+  export const showOOSConfusion: ResultsCb<IntentOrTopic>;
+  export const showAverageScoreByMetric: <T extends ProblemType>(
+    metrics: Metric<T>[],
+    options?: Partial<AggregationOption>
+  ) => ResultsCb<T>;
 }
 
 export namespace engines {
   export class BpIntentEngine implements Engine<"intent"> {
     constructor(bpEndpoint?: string, password?: string);
     train: (trainSet: DataSet<"intent">, seed: number) => Promise<void>;
-    predict: (testSet: DataSet<"intent">) => Promise<Result<"intent">[]>;
+    predict: (testSet: DataSet<"intent">) => Promise<PredictOutput<"intent">[]>;
   }
 }
 
@@ -117,7 +120,7 @@ export type Label<T extends ProblemType> = T extends "intent-topic"
   ? { name: string; start: number; end: number }[]
   : string;
 
-export type Prediction<T extends ProblemType> = T extends "intent-topic"
+export type Understanding<T extends ProblemType> = T extends "intent-topic"
   ? Dic<Dic<number>> // confidence for each intent of each topic
   : T extends "topic"
   ? Dic<number>
@@ -138,25 +141,32 @@ export interface Problem<T extends ProblemType> {
 
 export interface Engine<T extends ProblemType> {
   train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
-  predict: (testSet: DataSet<T>) => Promise<Result<T>[]>;
+  predict: (testSet: DataSet<T>) => Promise<PredictOutput<T>[]>;
 }
 
-export type Metric<T extends ProblemType> = {
-  name: string;
-  eval(res: Result<T>): number;
-};
-
-export type Result<T extends ProblemType> = {
+export type PredictOutput<T extends ProblemType> = {
   text: string;
-  prediction: Prediction<T>;
+  prediction: Understanding<T>;
   label: Label<T>;
 };
 
+export type Metric<T extends ProblemType> = {
+  name: string;
+  eval(res: PredictOutput<T>): number;
+};
+
+export type Result<T extends ProblemType> = PredictOutput<T> & {
+  scores: {
+    [metric: string]: number;
+  };
+  metadata: {
+    seed: number;
+    problem: string;
+  };
+};
+
 export type ResultsCb<T extends ProblemType> = (
-  results: Result<T>[],
-  metrics: {
-    [name: string]: number;
-  }
+  results: Result<T>[]
 ) => Promise<void>;
 
 export interface DataSet<T extends ProblemType> {
