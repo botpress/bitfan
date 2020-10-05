@@ -24,7 +24,10 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
   seededLodashProvider.setSeed(seed);
   const lo = seededLodashProvider.getSeededLodash();
 
-  const allClasses = lo.uniq(dataset.rows.map((r) => r.label));
+  const allClasses = lo.uniqWith(
+    dataset.rows.map((r) => r.label),
+    areSame
+  );
 
   const trainSamples: Row<T>[] = [];
   const testSamples: Row<T>[] = [];

@@ -37,3 +37,12 @@ export const isOOS = <T extends sdk.ProblemType>(
   }
   return false;
 };
+
+export const makeKey = <T extends sdk.ProblemType>(
+  label: sdk.Label<T>
+): string => {
+  if (typeof label === "string") {
+    return label;
+  }
+  return JSON.stringify(label);
+};

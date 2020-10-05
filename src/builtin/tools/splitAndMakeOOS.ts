@@ -42,7 +42,10 @@ export const pickOOS: typeof tools.pickOOS = <T extends IntentOrTopic>(
   seededLodashProvider.setSeed(seed);
   const lo = seededLodashProvider.getSeededLodash();
 
-  const allLabels = lo.uniq(rows.map((r) => r.label));
+  const allLabels = lo.uniqWith(
+    rows.map((r) => r.label),
+    areSame
+  );
   const shuffledLabels = lo.shuffle(allLabels);
 
   let i = 0;

@@ -9,6 +9,7 @@ import {
 
 import { showOOSConfusion } from "./builtin/visualisation/oos";
 import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
+import { showClassDistribution } from "./builtin/visualisation/class-distribution";
 
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
@@ -136,6 +137,7 @@ const impl: typeof sdk = {
   visualisation: {
     showOOSConfusion,
     showAverageScoreByMetric,
+    showClassDistribution,
   },
 
   engines: {

@@ -62,6 +62,10 @@ export namespace visualisation {
     metrics: Metric<T>[],
     options?: Partial<AggregationOption>
   ) => ResultsCb<T>;
+
+  export const showClassDistribution: <T extends ProblemType>(
+    ...datasets: (DataSet<T> & { name: string })[]
+  ) => void;
 }
 
 export namespace engines {
