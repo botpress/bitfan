@@ -82,15 +82,15 @@ export class StanProvider {
   }
 
   private async _postPredict(
-    text: string
+    texts: string[]
   ): Promise<{
     success: boolean;
-    prediction: BpPredictOutput | BpPredictError;
+    predictions: (BpPredictOutput | BpPredictError)[];
   }> {
     const { data } = await axios.post(
       `${this._stanEndpoint}/predict/${this._modelId}`,
       {
-        sentence: text,
+        texts,
         password: this._password,
       }
     );
@@ -98,23 +98,22 @@ export class StanProvider {
   }
 
   private async _fetchPrediction(
-    text: string
-  ): Promise<BpPredictOutput | BpPredictError> {
-    const { prediction } = await this._postPredict(text);
-    return prediction;
+    texts: string[]
+  ): Promise<(BpPredictOutput | BpPredictError)[]> {
+    const { predictions } = await this._postPredict(texts);
+    return predictions;
   }
 
-  public async predict(text: string): Promise<Predictions> {
+  public async predict(texts: string[]): Promise<Predictions[]> {
     try {
-      const predOutput = await this._fetchPrediction(text);
-      if (this._isPredictError(predOutput)) {
+      const predOutput = await this._fetchPrediction(texts);
+      if (predOutput.some(this._isPredictError)) {
         throw new Error(
           "An error occured at prediction. The nature of the error is unknown."
         );
       }
 
-      const { predictions } = predOutput;
-      return predictions;
+      return (predOutput as BpPredictOutput[]).map((p) => p.predictions);
     } catch (err) {
       this._mapErrorAndRethrow("PREDICT", err);
     }

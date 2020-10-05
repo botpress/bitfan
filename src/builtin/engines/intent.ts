@@ -11,6 +11,8 @@ import {
 const MAIN_TOPIC = "main";
 const NONE = "none";
 
+const BATCH_SIZE = 10;
+
 export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _stanProvider: StanProvider;
 
@@ -80,21 +82,24 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
       total: testSet.rows.length,
     });
 
-    for (const row of testSet.rows) {
-      const { text, label } = row;
+    for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
+      const predictions = await this._stanProvider.predict(
+        batch.map((r) => r.label)
+      );
 
-      const predictions = await this._stanProvider.predict(text);
+      for (const [pred, row] of _.zip(predictions, batch)) {
+        const { text, label } = row!;
+        const { intents, oos } = pred![MAIN_TOPIC];
+        const prediction = this._makePredictions(intents, oos);
 
-      const { intents, oos } = predictions[MAIN_TOPIC];
-      const prediction = this._makePredictions(intents, oos);
+        results.push({
+          text,
+          label,
+          prediction,
+        });
 
-      results.push({
-        text,
-        label,
-        prediction,
-      });
-
-      progressBar.tick();
+        progressBar.tick();
+      }
     }
     return results;
   }
