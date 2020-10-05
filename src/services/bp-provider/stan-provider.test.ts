@@ -103,8 +103,17 @@ test("small client for stan as", async () => {
     }
   );
 
-  const predictions = await stanProvider.predict("theses bananas are modly");
+  try {
+    const predictions = await stanProvider.predict([
+      "theses bananas are modly",
+      "can I talk to the person in charge?",
+      "yoo aren't you the guy from the TV show?",
+    ]);
 
-  expect(predictions).toBeDefined();
-  console.log(predictions);
+    expect(predictions).toBeDefined();
+    console.log(predictions);
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 });
