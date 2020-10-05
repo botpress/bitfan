@@ -3,13 +3,6 @@ export function runSolution<T extends ProblemType>(
   seeds: number[]
 ): Promise<Result<T>[]>;
 
-export function areSame<T extends ProblemType>(
-  label1: Label<T>,
-  label2: Label<T>
-): boolean;
-
-export function isOOS<T extends ProblemType>(label: Label<T>): boolean;
-
 export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
@@ -66,6 +59,10 @@ export namespace visualisation {
   export const showClassDistribution: <T extends ProblemType>(
     ...datasets: (DataSet<T> & { name: string })[]
   ) => void;
+
+  export const showDatasetsSummary: <T extends ProblemType>(
+    ...datasets: (DataSet<T> & { name: string })[]
+  ) => void;
 }
 
 export namespace engines {
@@ -97,6 +94,17 @@ export namespace tools {
     dataset: DataSet<T>,
     labels: Label<T>[]
   ) => { inScopeSet: DataSet<T>; ooScopeSet: DataSet<T> };
+}
+
+export namespace labels {
+  export function areSame<T extends ProblemType>(
+    label1: Label<T>,
+    label2: Label<T>
+  ): boolean;
+
+  export function isOOS<T extends ProblemType>(label: Label<T>): boolean;
+
+  export function makeKey<T extends ProblemType>(label: Label<T>): string;
 }
 
 // export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];

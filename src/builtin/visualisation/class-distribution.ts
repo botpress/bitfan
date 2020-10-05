@@ -1,7 +1,8 @@
 import { DataSet, ProblemType, visualisation } from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
-import { areSame, makeKey } from "../../services/labels";
+import { flipTable, roundNumbers } from "../../services/logging";
+import { areSame, isOOS, makeKey } from "../../services/labels";
 
 type NamedDataSet<T extends ProblemType> = DataSet<T> & { name: string };
 
@@ -10,14 +11,55 @@ export const showClassDistribution: typeof visualisation.showClassDistribution =
 >(
   ...datasets: NamedDataSet<T>[]
 ) => {
-  const distributions: _.Dictionary<_.Dictionary<number>> = {};
+  const distributions: _.Dictionary<_.Dictionary<number | boolean>> = {};
   for (const ds of datasets) {
     const distribution = _getClassDistributionForOneSet(ds);
-    distributions[ds.name] = distribution;
+    distributions[ds.name] = roundNumbers(distribution, 4);
   }
 
   console.log(chalk.green(`Class Distribution`));
-  console.table(_flipTable(distributions));
+  console.table(flipTable(distributions));
+};
+
+export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
+  T extends ProblemType
+>(
+  ...datasets: NamedDataSet<T>[]
+) => {
+  const summaries: _.Dictionary<_.Dictionary<number | boolean>> = {};
+  for (const ds of datasets) {
+    const amountOfSamples = ds.rows.length;
+    const classes = _.uniqWith(
+      ds.rows.map((r) => r.label),
+      areSame
+    ).filter((c) => !isOOS(c));
+
+    const amountOfSamplesPerClass = classes.map(
+      (c) => ds.rows.filter((r) => areSame(r.label, c)).length
+    );
+    const avgSamplesPerClass =
+      _.sum(amountOfSamplesPerClass) / amountOfSamplesPerClass.length;
+
+    const maxSamplesPerClass = _.max(amountOfSamplesPerClass) ?? 0;
+    const minSamplesPerClass = _.min(amountOfSamplesPerClass) ?? 0;
+
+    const amountOfClass = classes.length;
+
+    const hasOOS = ds.rows.some((r) => isOOS(r.label));
+
+    const summary = {
+      amountOfSamples,
+      amountOfClass,
+      avgSamplesPerClass,
+      maxSamplesPerClass,
+      minSamplesPerClass,
+      hasOOS,
+    };
+    summaries[ds.name] = roundNumbers(summary, 4);
+  }
+
+  console.log(chalk.green(`Dataset summary`));
+  console.table(flipTable(summaries));
 };
 
 const _getClassDistributionForOneSet = <T extends ProblemType>(
@@ -42,28 +84,4 @@ const _getClassDistributionForOneSet = <T extends ProblemType>(
   }
 
   return distribution;
-};
-
-const _flipTable = (table: _.Dictionary<_.Dictionary<number>>) => {
-  const columns = Object.keys(table);
-
-  let rows: string[] = [];
-  for (const col of columns) {
-    rows = [...rows, ...Object.keys(table[col])];
-  }
-  rows = _.uniq(rows);
-
-  const flipped = _.zipObject(
-    rows,
-    rows.map((r) => ({}))
-  );
-
-  for (const row of rows) {
-    flipped[row] = _.zipObject(
-      columns,
-      columns.map((c) => table[c][row])
-    );
-  }
-
-  return flipped;
 };

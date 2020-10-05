@@ -9,7 +9,10 @@ import {
 
 import { showOOSConfusion } from "./builtin/visualisation/oos";
 import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
-import { showClassDistribution } from "./builtin/visualisation/class-distribution";
+import {
+  showClassDistribution,
+  showDatasetsSummary,
+} from "./builtin/visualisation/class-distribution";
 
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
@@ -18,7 +21,7 @@ import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
 
-import { areSame, isOOS } from "./services/labels";
+import { areSame, isOOS, makeKey } from "./services/labels";
 
 const dsRepo = new DatasetRepository();
 
@@ -93,8 +96,12 @@ const runSolution = async <T extends sdk.ProblemType>(
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
-  areSame,
-  isOOS,
+
+  labels: {
+    isOOS,
+    areSame,
+    makeKey,
+  },
 
   tools: {
     trainTestSplit,
@@ -102,6 +109,7 @@ const impl: typeof sdk = {
     pickOOS,
   },
 
+  // TODO lazy load these...
   datasets: {
     bpds: {
       regression: {
@@ -138,6 +146,7 @@ const impl: typeof sdk = {
     showOOSConfusion,
     showAverageScoreByMetric,
     showClassDistribution,
+    showDatasetsSummary,
   },
 
   engines: {
