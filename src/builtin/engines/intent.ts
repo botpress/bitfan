@@ -84,7 +84,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
 
     for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
-        batch.map((r) => r.label)
+        batch.map((r) => r.text)
       );
 
       for (const [pred, row] of _.zip(predictions, batch)) {
