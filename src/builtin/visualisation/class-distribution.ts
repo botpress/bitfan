@@ -1,6 +1,6 @@
-import { DataSet, Label, ProblemType, visualisation } from "bitfan/sdk";
+import { DataSet, ProblemType, visualisation } from "bitfan/sdk";
 import chalk from "chalk";
-import _, { extend } from "lodash";
+import _ from "lodash";
 import { areSame, makeKey } from "../../services/labels";
 
 type NamedDataSet<T extends ProblemType> = DataSet<T> & { name: string };
