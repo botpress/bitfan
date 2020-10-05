@@ -76,21 +76,23 @@ export namespace tools {
   export const trainTestSplit: <T extends ProblemType>(
     dataset: DataSet<T>,
     trainPercent: number,
-    seed: number
+    seed: number,
+    options?: { stratificate: boolean }
   ) => {
     trainSet: DataSet<T>;
     testSet: DataSet<T>;
   };
 
-  export const splitAndMakeOOS: <T extends IntentOrTopic>(
+  export const pickOOS: <T extends IntentOrTopic>(
     dataset: DataSet<T>,
-    trainPercent: number,
-    seed: number,
-    options?: { count: number } | { labels: string[] }
-  ) => {
-    trainSet: DataSet<T>;
-    testSet: DataSet<T>;
-  };
+    oosPercent: number,
+    seed: number
+  ) => Label<T>[];
+
+  export const splitOOS: <T extends IntentOrTopic>(
+    dataset: DataSet<T>,
+    labels: Label<T>[]
+  ) => { trainSet: DataSet<T>; oosSet: DataSet<T> };
 }
 
 // export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];

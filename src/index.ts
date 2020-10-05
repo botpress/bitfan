@@ -12,7 +12,7 @@ import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
 
 import DatasetRepository from "./services/dataset-repository";
 import { trainTestSplit } from "./builtin/tools/trainTestSplit";
-import { splitAndMakeOOS } from "./builtin/tools/splitAndMakeOOS";
+import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { sleep } from "./utils";
@@ -97,7 +97,8 @@ const impl: typeof sdk = {
 
   tools: {
     trainTestSplit,
-    splitAndMakeOOS,
+    splitOOS,
+    pickOOS,
   },
 
   datasets: {

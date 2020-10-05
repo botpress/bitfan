@@ -1,88 +1,59 @@
-import { DataSet, IntentOrTopic, Row } from "bitfan/sdk";
+import { DataSet, IntentOrTopic, Row, tools, Label } from "bitfan/sdk";
 import _ from "lodash";
+import { areSame } from "../../services/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
-import { trainTestSplit } from "./trainTestSplit";
 
-type Count = { count: number };
-type Labels = { labels: string[] };
-
-const DEFAULT_OPTIONS: Count = {
-  count: 1,
-};
-
-export const splitAndMakeOOS = <T extends IntentOrTopic>(
+export const splitOOS: typeof tools.splitOOS = <T extends IntentOrTopic>(
   dataset: DataSet<T>,
-  trainPercent: number,
-  seed: number,
-  options?: Count | Labels
+  labels: Label<T>[]
 ) => {
-  options = options ?? DEFAULT_OPTIONS;
-  if (_isLabels(options)) {
-    return _splitAndMakeOOSFromLabels(
-      dataset,
-      trainPercent,
-      seed,
-      options.labels
-    );
-  }
-  return _splitAndMakeOOSRandomly(dataset, trainPercent, seed, options.count);
-};
+  const { rows } = dataset;
 
-const _splitAndMakeOOSFromLabels = <T extends IntentOrTopic>(
-  dataset: DataSet<T>,
-  trainPercent: number,
-  seed: number,
-  labels: string[]
-) => {
-  const { lang, type, rows } = dataset;
+  const rowsOfLabels = rows.filter((r) =>
+    labels.some((l) => areSame(r.label, l))
+  );
 
-  const rowsOfLabels = rows.filter((r) => labels.includes(r.label));
-  const otherRows = rows.filter((r) => !labels.includes(r.label));
-
-  const { trainSet, testSet } = trainTestSplit(
-    { lang, type, rows: otherRows },
-    trainPercent,
-    seed
+  const otherRows = rows.filter(
+    (r) => !labels.some((l) => areSame(r.label, l))
   );
 
   const oosRows: Row<IntentOrTopic>[] = rowsOfLabels.map((r) => ({
     ...r,
     label: "oos",
   }));
-  testSet.rows.push(...oosRows);
 
-  return { trainSet, testSet };
+  const trainSet = { ...dataset, rows: otherRows };
+  const oosSet = { ...dataset, rows: oosRows };
+
+  return { trainSet, oosSet };
 };
 
-// picks N labels to make them oos in the test set
-const _splitAndMakeOOSRandomly = <T extends IntentOrTopic>(
+export const pickOOS: typeof tools.pickOOS = <T extends IntentOrTopic>(
   dataset: DataSet<T>,
-  trainPercent: number,
-  seed: number,
-  count: number
+  oosPercent: number,
+  seed: number
 ) => {
   const { rows } = dataset;
-  const allLabels = _.uniq(rows.map((r) => r.label));
+
+  const N = rows.length;
+  const oosSize = oosPercent * N;
 
   const seededLodashProvider = new SeededLodashProvider();
   seededLodashProvider.setSeed(seed);
   const lo = seededLodashProvider.getSeededLodash();
 
-  const suffled = lo.shuffle(allLabels);
-  const pickedLabels = lo.take(allLabels, count);
+  const allLabels = lo.uniq(rows.map((r) => r.label));
+  const shuffledLabels = lo.shuffle(allLabels);
 
-  const split = _splitAndMakeOOSFromLabels(
-    dataset,
-    trainPercent,
-    seed,
-    pickedLabels
-  );
+  let i = 0;
+  const testRows: Row<T>[] = [];
+  const pickedLabels: Label<T>[] = [];
+  while (testRows.length <= oosSize) {
+    const label = shuffledLabels[i++];
+    const rowsOfLabel = rows.filter((r) => areSame(r.label, label));
+    testRows.push(...rowsOfLabel);
+    pickedLabels.push(label);
+  }
 
-  seededLodashProvider.resetSeed();
-
-  return split;
-};
-
-const _isLabels = (options: Labels | Count): options is Labels => {
-  return !!(options as Labels).labels;
+  return pickedLabels;
 };
