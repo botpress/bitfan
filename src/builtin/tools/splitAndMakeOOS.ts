@@ -22,10 +22,10 @@ export const splitOOS: typeof tools.splitOOS = <T extends IntentOrTopic>(
     label: "oos",
   }));
 
-  const trainSet = { ...dataset, rows: otherRows };
-  const oosSet = { ...dataset, rows: oosRows };
+  const inScopeSet = { ...dataset, rows: otherRows };
+  const ooScopeSet = { ...dataset, rows: oosRows };
 
-  return { trainSet, oosSet };
+  return { inScopeSet, ooScopeSet };
 };
 
 export const pickOOS: typeof tools.pickOOS = <T extends IntentOrTopic>(

@@ -1,6 +1,6 @@
 import { DataSet, ProblemType, Row, tools } from "bitfan/sdk";
 import { LoDashStatic } from "lodash";
-import { areSame } from "src/services/labels";
+import { areSame } from "../../services/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
 export const trainTestSplit: typeof tools.trainTestSplit = <

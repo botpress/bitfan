@@ -92,7 +92,7 @@ export namespace tools {
   export const splitOOS: <T extends IntentOrTopic>(
     dataset: DataSet<T>,
     labels: Label<T>[]
-  ) => { trainSet: DataSet<T>; oosSet: DataSet<T> };
+  ) => { inScopeSet: DataSet<T>; ooScopeSet: DataSet<T> };
 }
 
 // export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
