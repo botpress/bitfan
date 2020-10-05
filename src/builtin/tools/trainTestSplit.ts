@@ -1,13 +1,15 @@
-import { DataSet, ProblemType, tools } from "bitfan/sdk";
+import { DataSet, ProblemType, Row, tools } from "bitfan/sdk";
+import { LoDashStatic } from "lodash";
+import { areSame } from "src/services/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
-// TODO: make this one preserve the classes proportions of whole set
 export const trainTestSplit: typeof tools.trainTestSplit = <
   T extends ProblemType
 >(
   dataset: DataSet<T>,
   trainPercent: number,
-  seed: number
+  seed: number,
+  options = { stratificate: true }
 ): {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
@@ -18,27 +20,59 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
     );
   }
 
-  const N = dataset.rows.length;
-  const trainSize = Math.floor(trainPercent * N);
-
   const seededLodashProvider = new SeededLodashProvider();
   seededLodashProvider.setSeed(seed);
   const lo = seededLodashProvider.getSeededLodash();
 
-  const allIdx = lo.shuffle(lo.range(N));
-  const trainIdx = allIdx.slice(0, trainSize);
-  const testIdx = allIdx.slice(trainSize);
+  const allClasses = lo.uniq(dataset.rows.map((r) => r.label));
 
-  const trainSet = { ...dataset };
-  trainSet.rows = trainSet.rows.filter((r, i) => trainIdx.includes(i));
+  const trainSamples: Row<T>[] = [];
+  const testSamples: Row<T>[] = [];
 
-  const testSet = { ...dataset };
-  testSet.rows = testSet.rows.filter((r, i) => testIdx.includes(i));
+  if (options.stratificate) {
+    // preserve proportions of each class
+    for (const c of allClasses) {
+      const samplesOfClass = dataset.rows.filter((r) => areSame(r.label, c));
+      const split = _splitOneClass(samplesOfClass, trainPercent, lo);
+      trainSamples.push(...split.trainSamples);
+      testSamples.push(...split.testSamples);
+    }
+  } else {
+    const split = _splitOneClass(dataset.rows, trainPercent, lo);
+    trainSamples.push(...split.trainSamples);
+    testSamples.push(...split.testSamples);
+  }
 
   seededLodashProvider.resetSeed();
 
+  const trainSet = { ...dataset, rows: trainSamples };
+  const testSet = { ...dataset, rows: testSamples };
   return {
     trainSet,
     testSet,
+  };
+};
+
+const _splitOneClass = <T extends ProblemType>(
+  samplesOfClass: Row<T>[],
+  trainPercent: number,
+  seededLodash: LoDashStatic
+): {
+  trainSamples: Row<T>[];
+  testSamples: Row<T>[];
+} => {
+  const N = samplesOfClass.length;
+  const trainSize = Math.floor(trainPercent * N);
+
+  const allIdx = seededLodash.shuffle(seededLodash.range(N));
+  const trainIdx = allIdx.slice(0, trainSize);
+  const testIdx = allIdx.slice(trainSize);
+
+  const trainSamples = samplesOfClass.filter((r, i) => trainIdx.includes(i));
+  const testSamples = samplesOfClass.filter((r, i) => testIdx.includes(i));
+
+  return {
+    trainSamples,
+    testSamples,
   };
 };
