@@ -31,7 +31,7 @@ export const flipTable = (
 
 export const roundNumbers = (
   table: _.Dictionary<number | boolean>,
-  precision = 2
+  precision = 4
 ) => {
   return _.mapValues(table, (v) => (_.isNumber(v) ? _.round(v, precision) : v));
 };

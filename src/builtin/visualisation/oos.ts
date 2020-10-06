@@ -1,5 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
+import { roundNumbers } from "../../services/logging";
 import { isOOS } from "../../services/labels";
 
 import { electMostConfident } from "../metrics/intent";
@@ -29,7 +30,7 @@ export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async
   const recall = truePos.length / (truePos.length + falseNeg.length);
 
   console.log(chalk.green("OOS Accuracy, Precision and Recall"));
-  console.table({ accuracy, precision, recall });
+  console.table(roundNumbers({ accuracy, precision, recall }, 4));
 
   const confusionMatrix = {
     electedIsOOScope: {
