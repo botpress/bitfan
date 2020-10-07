@@ -6,7 +6,7 @@ import { isOOS } from "../../services/labels";
 import { electMostConfident } from "../metrics/intent";
 
 export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async <
-  T extends sdk.IntentOrTopic
+  T extends sdk.SingleLabel
 >(
   results: sdk.Result<T>[]
 ) => {

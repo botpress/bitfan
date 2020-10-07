@@ -1,9 +1,9 @@
-import { DataSet, IntentOrTopic, Row, tools, Label } from "bitfan/sdk";
+import { DataSet, SingleLabel, Row, tools, Label } from "bitfan/sdk";
 import _ from "lodash";
 import { areSame } from "../../services/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
-export const splitOOS: typeof tools.splitOOS = <T extends IntentOrTopic>(
+export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   labels: Label<T>[]
 ) => {
@@ -17,7 +17,7 @@ export const splitOOS: typeof tools.splitOOS = <T extends IntentOrTopic>(
     (r) => !labels.some((l) => areSame(r.label, l))
   );
 
-  const oosRows: Row<IntentOrTopic>[] = rowsOfLabels.map((r) => ({
+  const oosRows: Row<SingleLabel>[] = rowsOfLabels.map((r) => ({
     ...r,
     label: "oos",
   }));
@@ -28,7 +28,7 @@ export const splitOOS: typeof tools.splitOOS = <T extends IntentOrTopic>(
   return { inScopeSet, ooScopeSet };
 };
 
-export const pickOOS: typeof tools.pickOOS = <T extends IntentOrTopic>(
+export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   oosPercent: number,
   seed: number

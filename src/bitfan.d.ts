@@ -41,8 +41,8 @@ export namespace datasets {
 }
 
 export namespace metrics {
-  export const mostConfidentBinaryScore: Metric<IntentOrTopic>;
-  export const oosBinaryScore: Metric<IntentOrTopic>;
+  export const mostConfidentBinaryScore: Metric<SingleLabel>;
+  export const oosBinaryScore: Metric<SingleLabel>;
 }
 
 type AggregationOption = {
@@ -50,7 +50,7 @@ type AggregationOption = {
 };
 
 export namespace visualisation {
-  export const showOOSConfusion: ResultsCb<IntentOrTopic>;
+  export const showOOSConfusion: ResultsCb<SingleLabel>;
   export const showAverageScoreByMetric: <T extends ProblemType>(
     metrics: Metric<T>[],
     options?: Partial<AggregationOption>
@@ -84,13 +84,13 @@ export namespace tools {
     testSet: DataSet<T>;
   };
 
-  export const pickOOS: <T extends IntentOrTopic>(
+  export const pickOOS: <T extends SingleLabel>(
     dataset: DataSet<T>,
     oosPercent: number,
     seed: number
   ) => Label<T>[];
 
-  export const splitOOS: <T extends IntentOrTopic>(
+  export const splitOOS: <T extends SingleLabel>(
     dataset: DataSet<T>,
     labels: Label<T>[]
   ) => { inScopeSet: DataSet<T>; ooScopeSet: DataSet<T> };
@@ -109,36 +109,25 @@ export namespace labels {
 
 // export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
 
-export type IntentOrTopic = "intent" | "topic";
-export type ProblemType =
-  | IntentOrTopic
-  | "intent-topic"
-  | "multi-intent"
-  | "slot"
-  | "lang"
-  | "spell";
+export type SingleLabel = "intent" | "topic" | "intent-topic"; // label of an "intent-topic" problem is "topic/intent"
+export type MultiLabel = "multi-intent" | "multi-intent-topic";
+export type ProblemType = SingleLabel | MultiLabel | "slot" | "lang" | "spell";
 
 type Dic<T> = {
   [key: string]: T;
 };
 
-export type Label<T extends ProblemType> = T extends "intent-topic"
-  ? { intent: string; topic: string }
-  : T extends "multi-intent"
-  ? string[]
-  : T extends "topic"
-  ? string // single intent for now
-  : T extends "intent"
+export type Label<T extends ProblemType> = T extends SingleLabel
   ? string
+  : T extends MultiLabel
+  ? string[]
   : T extends "slot"
   ? { name: string; start: number; end: number }[]
   : string;
 
-export type Understanding<T extends ProblemType> = T extends "intent-topic"
-  ? Dic<Dic<number>> // confidence for each intent of each topic
-  : T extends "topic"
+export type Understanding<T extends ProblemType> = T extends SingleLabel
   ? Dic<number>
-  : T extends "intent"
+  : T extends MultiLabel
   ? Dic<number>
   : T extends "slot"
   ? Dic<{ start: number; end: number; confidence: number }>
