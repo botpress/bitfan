@@ -1,6 +1,7 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 import Progress from "progress";
+import { areSame, makeKey } from "../../services/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -27,10 +28,10 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
       .value();
 
     const intents = allLabels.map((l) => ({
-      name: l,
+      name: makeKey(l),
       variables: [],
       examples: trainSet.rows
-        .filter((r) => (r.label as string) === l)
+        .filter((r) => areSame(r.label, l))
         .map((r) => r.text),
     }));
 
