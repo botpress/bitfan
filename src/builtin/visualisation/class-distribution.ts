@@ -11,7 +11,7 @@ export const showClassDistribution: typeof visualisation.showClassDistribution =
 >(
   ...datasets: NamedDataSet<T>[]
 ) => {
-  const distributions: _.Dictionary<_.Dictionary<number | boolean>> = {};
+  const distributions: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
     const distribution = _getClassDistributionForOneSet(ds);
     distributions[ds.name] = roundNumbers(distribution, 4);
@@ -26,7 +26,7 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
 >(
   ...datasets: NamedDataSet<T>[]
 ) => {
-  const summaries: _.Dictionary<_.Dictionary<number | boolean>> = {};
+  const summaries: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
     const amountOfSamples = ds.rows.length;
     const classes = _.uniqWith(
@@ -45,7 +45,7 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
 
     const amountOfClass = classes.length;
 
-    const hasOOS = ds.rows.some((r) => isOOS(r.label));
+    const oosSamples = ds.rows.filter((r) => isOOS(r.label)).length;
 
     const summary = {
       amountOfSamples,
@@ -53,7 +53,7 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
       avgSamplesPerClass,
       maxSamplesPerClass,
       minSamplesPerClass,
-      hasOOS,
+      oosSamples,
     };
     summaries[ds.name] = roundNumbers(summary, 4);
   }

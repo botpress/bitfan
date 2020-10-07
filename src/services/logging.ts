@@ -3,9 +3,7 @@ import _ from "lodash";
 /**
  * could have been named transposeTable
  */
-export const flipTable = (
-  table: _.Dictionary<_.Dictionary<number | boolean>>
-) => {
+export const flipTable = (table: _.Dictionary<_.Dictionary<number>>) => {
   const columns = Object.keys(table);
 
   let rows: string[] = [];
@@ -29,9 +27,6 @@ export const flipTable = (
   return flipped;
 };
 
-export const roundNumbers = (
-  table: _.Dictionary<number | boolean>,
-  precision = 4
-) => {
+export const roundNumbers = (table: _.Dictionary<number>, precision = 4) => {
   return _.mapValues(table, (v) => (_.isNumber(v) ? _.round(v, precision) : v));
 };
