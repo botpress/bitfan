@@ -1,6 +1,5 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import Progress from "progress";
 import { areSame, makeKey } from "../../services/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
@@ -21,7 +20,11 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     this._stanProvider = new StanProvider(bpEndpoint, password);
   }
 
-  train(trainSet: sdk.DataSet<"intent">, seed: number) {
+  train(
+    trainSet: sdk.DataSet<"intent">,
+    seed: number,
+    progress: sdk.ProgressCb
+  ) {
     const allLabels = _(trainSet.rows)
       .flatMap((r) => r.label)
       .uniq()
@@ -48,12 +51,8 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
       ],
     };
 
-    const progressBar = new Progress("Training: [:bar] (:current%), :times", {
-      total: 100,
-    });
-    return this._stanProvider.train(trainInput, (time, progress) => {
-      time = time / 1000;
-      progressBar.update(progress, { time });
+    return this._stanProvider.train(trainInput, (_time, progressPercent) => {
+      progress(progressPercent);
     });
   }
 
@@ -76,12 +75,10 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     return prediction as sdk.Understanding<"intent">;
   }
 
-  async predict(testSet: sdk.DataSet<"intent">) {
+  async predict(testSet: sdk.DataSet<"intent">, progress: sdk.ProgressCb) {
     const results: sdk.PredictOutput<"intent">[] = [];
 
-    const progressBar = new Progress("Prediction: [:bar] (:current/:total)", {
-      total: testSet.rows.length,
-    });
+    let done = 0;
 
     for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
@@ -99,7 +96,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
           prediction,
         });
 
-        progressBar.tick();
+        progress(done++ / testSet.rows.length);
       }
     }
     return results;

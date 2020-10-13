@@ -68,8 +68,15 @@ export namespace visualisation {
 export namespace engines {
   export class BpIntentEngine implements Engine<"intent"> {
     constructor(bpEndpoint?: string, password?: string);
-    train: (trainSet: DataSet<"intent">, seed: number) => Promise<void>;
-    predict: (testSet: DataSet<"intent">) => Promise<PredictOutput<"intent">[]>;
+    train: (
+      trainSet: DataSet<"intent">,
+      seed: number,
+      progress: ProgressCb
+    ) => Promise<void>;
+    predict: (
+      testSet: DataSet<"intent">,
+      progress: ProgressCb
+    ) => Promise<PredictOutput<"intent">[]>;
   }
 }
 
@@ -142,9 +149,18 @@ export interface Problem<T extends ProblemType> {
   cb?: ResultsCb<T>;
 }
 
+export type ProgressCb = (p: number) => void;
+
 export interface Engine<T extends ProblemType> {
-  train: (trainSet: DataSet<T>, seed: number) => Promise<void>;
-  predict: (testSet: DataSet<T>) => Promise<PredictOutput<T>[]>;
+  train: (
+    trainSet: DataSet<T>,
+    seed: number,
+    progress: ProgressCb
+  ) => Promise<void>;
+  predict: (
+    testSet: DataSet<T>,
+    progress: ProgressCb
+  ) => Promise<PredictOutput<T>[]>;
 }
 
 export type PredictOutput<T extends ProblemType> = {

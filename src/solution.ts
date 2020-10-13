@@ -2,6 +2,7 @@ import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
 import { sleep } from "./utils";
+import Progress from "progress";
 
 const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
@@ -69,11 +70,25 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
 
   console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
-  await engine.train(problem.trainSet, seed);
+  const trainProgressBar = new Progress(
+    "Training: [:bar] (:current%), :elapseds",
+    { total: 100 }
+  );
+  await engine.train(problem.trainSet, seed, (p: number) =>
+    trainProgressBar.update(p)
+  );
 
   await sleep(500);
 
-  const predictOutputs = await engine.predict(problem.testSet);
+  const predictProgressBar = new Progress(
+    "Prediction: [:bar] (:current%), :elapseds",
+    { total: 100 }
+  );
+  const predictOutputs = await engine.predict(problem.testSet, (p: number) =>
+    predictProgressBar.update(p)
+  );
+  console.log("");
+
   const results: sdk.Result<T>[] = predictOutputs.map((p) => {
     const metricsNames = metrics.map((m) => m.name);
     const metricsScores = metrics.map((m) => m.eval(p));
