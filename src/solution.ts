@@ -74,19 +74,25 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
     "Training: [:bar] (:current%), :elapseds",
     { total: 100 }
   );
-  await engine.train(problem.trainSet, seed, (p: number) =>
-    trainProgressBar.update(p)
-  );
-
-  await sleep(500);
+  await engine.train(problem.trainSet, seed, (p: number) => {
+    if (p === 1) {
+      p = 0.99;
+    }
+    trainProgressBar.update(p);
+  });
+  trainProgressBar.update(1);
 
   const predictProgressBar = new Progress(
     "Prediction: [:bar] (:current%), :elapseds",
     { total: 100 }
   );
-  const predictOutputs = await engine.predict(problem.testSet, (p: number) =>
-    predictProgressBar.update(p)
-  );
+  const predictOutputs = await engine.predict(problem.testSet, (p: number) => {
+    if (p === 1) {
+      p = 0.99;
+    }
+    predictProgressBar.update(p);
+  });
+  predictProgressBar.update(1);
   console.log("");
 
   const results: sdk.Result<T>[] = predictOutputs.map((p) => {
