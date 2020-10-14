@@ -33,7 +33,9 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
       .value();
 
     const topics = allTopics.map((t) => {
-      const allIntents = _(samples)
+      const samplesOfTopic = samples.filter((s) => s.topic === t);
+
+      const allIntents = _(samplesOfTopic)
         .flatMap((r) => r.intent)
         .uniq()
         .value();
@@ -44,9 +46,7 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
           return {
             name: i,
             variables: [],
-            examples: samples
-              .filter((s) => s.topic === t && s.intent === i)
-              .map((s) => s.text),
+            examples: samples.filter((s) => s.intent === i).map((s) => s.text),
           };
         }),
       };
