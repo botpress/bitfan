@@ -92,6 +92,19 @@ export namespace engines {
       progress: ProgressCb
     ) => Promise<PredictOutput<"intent-topic">[]>;
   }
+
+  export class BpTopicEngine implements Engine<"topic"> {
+    constructor(bpEndpoint?: string, password?: string);
+    train: (
+      trainSet: DataSet<"topic">,
+      seed: number,
+      progress: ProgressCb
+    ) => Promise<void>;
+    predict: (
+      testSet: DataSet<"topic">,
+      progress: ProgressCb
+    ) => Promise<PredictOutput<"topic">[]>;
+  }
 }
 
 export namespace tools {
