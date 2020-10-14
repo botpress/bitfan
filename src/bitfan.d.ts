@@ -43,6 +43,7 @@ export namespace datasets {
 export namespace metrics {
   export const mostConfidentBinaryScore: Metric<SingleLabel>;
   export const oosBinaryScore: Metric<SingleLabel>;
+  export const topicBinaryScore: Metric<"intent-topic">;
 }
 
 type AggregationOption = {

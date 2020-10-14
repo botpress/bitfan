@@ -53,7 +53,7 @@ export const splitIntentTopic = (
   const splitted = label.split("/");
   if (splitted.length < 2) {
     throw new Error(
-      "intent-topic problems ask for the label to be formated as `topic/intent`"
+      `intent-topic problems ask for the label to be formated as "topic/intent".\nLabel "${label}" as no forward slash...`
     );
   }
   const topic = splitted.shift()!;

@@ -4,6 +4,7 @@ import * as sdk from "src/bitfan";
 import {
   mostConfidentBinaryScore,
   oosBinaryScore,
+  topicBinaryScore,
 } from "./builtin/metrics/intent";
 
 import { showOOSConfusion } from "./builtin/visualisation/oos";
@@ -71,6 +72,7 @@ const impl: typeof sdk = {
   metrics: {
     mostConfidentBinaryScore,
     oosBinaryScore,
+    topicBinaryScore,
   },
 
   visualisation: {
