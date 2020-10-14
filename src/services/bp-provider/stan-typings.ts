@@ -73,11 +73,13 @@ export type SlotCollection = {
 };
 
 export interface Predictions {
-  [topic: string]: {
-    confidence: number;
-    oos: number;
-    intents: IntentPred[];
-  };
+  [topic: string]: PredictedTopic;
+}
+
+export interface PredictedTopic {
+  confidence: number;
+  oos: number;
+  intents: IntentPred[];
 }
 
 export interface IntentPred {

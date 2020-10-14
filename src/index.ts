@@ -18,6 +18,7 @@ import { trainTestSplit } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
+import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { areSame, isOOS, makeKey } from "./services/labels";
 import runSolution from "./solution";
 
@@ -81,6 +82,7 @@ const impl: typeof sdk = {
 
   engines: {
     BpIntentEngine,
+    BpIntentTopicEngine,
   },
 };
 

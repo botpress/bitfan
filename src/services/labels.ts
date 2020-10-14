@@ -1,7 +1,7 @@
 import * as sdk from "src/bitfan";
 import _ from "lodash";
 
-const OOS = "oos";
+export const OOS = "oos";
 
 export const areSame = <T extends sdk.ProblemType>(
   label1: sdk.Label<T>,
@@ -45,4 +45,18 @@ export const makeKey = <T extends sdk.ProblemType>(
     return label;
   }
   return JSON.stringify(label);
+};
+
+export const splitIntentTopic = (
+  label: sdk.Label<"intent-topic">
+): { intent: string; topic: string } => {
+  const splitted = label.split("/");
+  if (splitted.length < 2) {
+    throw new Error(
+      "intent-topic problems ask for the label to be formated as `topic/intent`"
+    );
+  }
+  const topic = splitted.shift()!;
+  const intent = splitted.join("");
+  return { topic, intent };
 };

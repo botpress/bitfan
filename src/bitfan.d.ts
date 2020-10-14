@@ -78,6 +78,19 @@ export namespace engines {
       progress: ProgressCb
     ) => Promise<PredictOutput<"intent">[]>;
   }
+
+  export class BpIntentTopicEngine implements Engine<"intent-topic"> {
+    constructor(bpEndpoint?: string, password?: string);
+    train: (
+      trainSet: DataSet<"intent-topic">,
+      seed: number,
+      progress: ProgressCb
+    ) => Promise<void>;
+    predict: (
+      testSet: DataSet<"intent-topic">,
+      progress: ProgressCb
+    ) => Promise<PredictOutput<"intent-topic">[]>;
+  }
 }
 
 export namespace tools {
