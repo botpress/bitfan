@@ -18,7 +18,7 @@ export interface BpTrainInput {
   language: string;
   topics: Topic[];
   enums: Enum[];
-  patterns: Pattern[]; // TODO: add complexs
+  patterns: Pattern[];
   seed?: number;
 }
 
@@ -35,7 +35,7 @@ export interface IntentDef {
 
 export interface Variable {
   name: string;
-  type: string;
+  types: string[];
 }
 
 export interface Enum {
