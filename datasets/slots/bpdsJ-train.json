@@ -1,0 +1,77 @@
+{
+  "name": "bpdsJ-slot-train",
+  "type": "slot",
+  "lang": "en",
+  "rows": [
+    {
+      "text": "I really want to eat my grape",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 24,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "A chile pepper is what i want to eat",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 2,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "text": "I can't resist this big apple",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 24,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "about to eat this japanese plum right now",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 18,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "I eat my lemon now",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 9,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "text": "going to eat a berry",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 15,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "I wanna eat a banana",
+      "label": [
+        {
+          "name": "fruit_to_eat",
+          "start": 14,
+          "end": 20
+        }
+      ]
+    }
+  ]
+}

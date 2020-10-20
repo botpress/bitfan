@@ -1,0 +1,121 @@
+{
+  "name": "bpdsI-slot-train",
+  "type": "slot",
+  "lang": "en",
+  "rows": [
+    {
+      "text": "I'm gonna fire my AK47 at 8pm",
+      "label": [
+        {
+          "name": "thing_to_fire",
+          "start": 18,
+          "end": 22
+        },
+        {
+          "name": "time_or_place",
+          "start": 26,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "I'm going to fire apples in quebec city tonight",
+      "label": [
+        {
+          "name": "thing_to_fire",
+          "start": 18,
+          "end": 24
+        },
+        {
+          "name": "time_or_place",
+          "start": 40,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "text": "There's an orange shooting planned next tuesday",
+      "label": [
+        {
+          "name": "thing_to_fire",
+          "start": 11,
+          "end": 17
+        },
+        {
+          "name": "time_or_place",
+          "start": 35,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "text": "I'm heading to quebec city shooting lane to test my M16",
+      "label": [
+        {
+          "name": "time_or_place",
+          "start": 15,
+          "end": 26
+        },
+        {
+          "name": "thing_to_fire",
+          "start": 52,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "text": "let's shoot some G36 at christmas",
+      "label": [
+        {
+          "name": "thing_to_fire",
+          "start": 17,
+          "end": 20
+        },
+        {
+          "name": "time_or_place",
+          "start": 24,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "at 5pm is the time I will fire apples",
+      "label": [
+        {
+          "name": "time_or_place",
+          "start": 3,
+          "end": 6
+        },
+        {
+          "name": "thing_to_fire",
+          "start": 31,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "text": "Go to paris to shoot some fruits!",
+      "label": [
+        {
+          "name": "thing_to_fire",
+          "start": 6,
+          "end": 11
+        }
+      ]
+    },
+    {
+      "text": "Fire your AK47 at some place or time!",
+      "label": [
+        {
+          "name": "time_or_place",
+          "start": 10,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "text": "I'm going to fire fruits ora gun at some place or time",
+      "label": []
+    }
+  ]
+}

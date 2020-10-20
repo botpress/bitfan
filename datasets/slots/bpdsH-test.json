@@ -1,0 +1,112 @@
+{
+  "name": "bpdsH-slot-test",
+  "type": "slot",
+  "lang": "en",
+  "rows": [
+    {
+      "text": "Bring a WD-40 on my trip to tokyo HG-45",
+      "label": [
+        {
+          "name": "slot:gun",
+          "start": 8,
+          "end": 13
+        },
+        {
+          "name": "slot:flight",
+          "start": 34,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "I want to carry my PP-90 on my air canada RE-9856 flight ",
+      "label": [
+        {
+          "name": "slot:gun",
+          "start": 19,
+          "end": 24
+        },
+        {
+          "name": "slot:flight",
+          "start": 42,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "text": "I want to carry my PP-90 on my air canada PP-90 flight ",
+      "label": [
+        {
+          "name": "slot:gun",
+          "start": 19,
+          "end": 24
+        },
+        {
+          "name": "slot:flight",
+          "start": 41,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "text": "Is it possible to board the TR7856 flight with an UT-22 ? ",
+      "label": [
+        {
+          "name": "slot:flight",
+          "start": 28,
+          "end": 34
+        },
+        {
+          "name": "slot:gun",
+          "start": 50,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "text": "I want to bring my DF-78 on the air france FR8956 flight to Tokyo",
+      "label": [
+        {
+          "name": "slot:gun",
+          "start": 19,
+          "end": 24
+        },
+        {
+          "name": "slot:flight",
+          "start": 43,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "text": "I can't go on KH-4571 with a JH-03",
+      "label": [
+        {
+          "name": "slot:flight",
+          "start": 14,
+          "end": 21
+        },
+        {
+          "name": "slot:gun",
+          "start": 29,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "I have one TY-89 that I want to take on the flight AF-879",
+      "label": [
+        {
+          "name": "slot:gun",
+          "start": 11,
+          "end": 16
+        },
+        {
+          "name": "slot:flight",
+          "start": 51,
+          "end": 57
+        }
+      ]
+    }
+  ]
+}
