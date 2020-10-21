@@ -7,7 +7,7 @@
       "text": "fire employe #426661",
       "label": [
         {
-          "name": "slot:employe_to_fire",
+          "name": "employe_to_fire",
           "start": 14,
           "end": 20
         }
@@ -17,7 +17,7 @@
       "text": "Jean-Bernard, you're fired!",
       "label": [
         {
-          "name": "slot:employe_to_fire",
+          "name": "employe_to_fire",
           "start": 0,
           "end": 12
         }
@@ -27,7 +27,7 @@
       "text": "fire employe from email: jean-bernard@botpress.com",
       "label": [
         {
-          "name": "slot:employe_to_fire",
+          "name": "employe_to_fire",
           "start": 25,
           "end": 50
         }
@@ -37,7 +37,7 @@
       "text": "get rid of JB right now",
       "label": [
         {
-          "name": "slot:employe_to_fire",
+          "name": "employe_to_fire",
           "start": 11,
           "end": 13
         }
@@ -47,7 +47,7 @@
       "text": "fire employe Sylvain next monday",
       "label": [
         {
-          "name": "slot:employe_to_fire",
+          "name": "employe_to_fire",
           "start": 13,
           "end": 20
         }

@@ -13,7 +13,7 @@ export type Solution<T extends ProblemType> = {
 
 export namespace datasets {
   export namespace bpds {
-    export namespace regression {
+    export namespace intents {
       export namespace test {
         const A: DataSet<"intent">;
         const B: DataSet<"intent">;
@@ -32,6 +32,34 @@ export namespace datasets {
         const F: DataSet<"intent">;
       }
     }
+
+    export namespace slots {
+      export namespace test {
+        const A: DataSet<"slot">;
+        const B: DataSet<"slot">;
+        const C: DataSet<"slot">;
+        const D: DataSet<"slot">;
+        const E: DataSet<"slot">;
+        const F: DataSet<"slot">;
+        const G: DataSet<"slot">;
+        const H: DataSet<"slot">;
+        const I: DataSet<"slot">;
+        const J: DataSet<"slot">;
+      }
+
+      export namespace train {
+        const A: DataSet<"slot">;
+        const B: DataSet<"slot">;
+        const C: DataSet<"slot">;
+        const D: DataSet<"slot">;
+        const E: DataSet<"slot">;
+        const F: DataSet<"slot">;
+        const G: DataSet<"slot">;
+        const H: DataSet<"slot">;
+        const I: DataSet<"slot">;
+        const J: DataSet<"slot">;
+      }
+    }
   }
 
   export namespace covid {
@@ -44,6 +72,9 @@ export namespace metrics {
   export const mostConfidentBinaryScore: Metric<SingleLabel>;
   export const oosBinaryScore: Metric<SingleLabel>;
   export const topicBinaryScore: Metric<"intent-topic">;
+  export const slotBinaryScore: Metric<"slot">;
+  export const slotScore: Metric<"slot">;
+  export const slotCount: Metric<"slot">;
 }
 
 type AggregationOption = {
@@ -52,6 +83,7 @@ type AggregationOption = {
 
 export namespace visualisation {
   export const showOOSConfusion: ResultsCb<SingleLabel>;
+  export const showSlotsResults: ResultsCb<"slot">;
   export const showAverageScoreByMetric: <T extends ProblemType>(
     metrics: Metric<T>[],
     options?: Partial<AggregationOption>
@@ -104,6 +136,19 @@ export namespace engines {
       testSet: DataSet<"topic">,
       progress: ProgressCb
     ) => Promise<PredictOutput<"topic">[]>;
+  }
+
+  export class BpSlotEngine implements Engine<"slot"> {
+    constructor(bpEndpoint?: string, password?: string);
+    train: (
+      trainSet: DataSet<"slot">,
+      seed: number,
+      progress: ProgressCb
+    ) => Promise<void>;
+    predict: (
+      testSet: DataSet<"slot">,
+      progress: ProgressCb
+    ) => Promise<PredictOutput<"slot">[]>;
   }
 }
 
@@ -215,10 +260,29 @@ export type ResultsCb<T extends ProblemType> = (
   results: Result<T>[]
 ) => Promise<void>;
 
-export interface DataSet<T extends ProblemType> {
+export type DataSet<T extends ProblemType> = {
   type: T;
   lang: string;
   rows: Row<T>[];
+} & (T extends "slot"
+  ? { variables?: Variable[]; patterns?: Pattern[]; enums?: Enum[] }
+  : {});
+
+type Variable = {
+  name: string;
+  types: string[];
+};
+
+interface Enum {
+  name: string;
+  values: { name: string; synonyms: string[] }[];
+  fuzzy: number;
+}
+
+interface Pattern {
+  name: string;
+  regex: string;
+  case_sensitive: boolean;
 }
 
 interface Row<T extends ProblemType> {

@@ -51,7 +51,7 @@ export interface EnumOccurence {
 
 export interface Pattern {
   name: string;
-  positive_regexes: string[];
+  regex: string;
   case_sensitive: boolean;
 }
 

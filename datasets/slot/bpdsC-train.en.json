@@ -2,6 +2,10 @@
   "name": "bpdsC-slot-train",
   "type": "slot",
   "lang": "en",
+  "variables": [
+      { "name": "holiday_start", "types": ["time"] },
+      { "name": "holiday_duration", "types": ["duration"] }
+    ],
   "rows": [
     {
       "text": "I want to take holidays now",

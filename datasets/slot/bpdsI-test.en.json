@@ -7,12 +7,12 @@
       "text": "I'm heading to montreal to fire cherries on buildings",
       "label": [
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 15,
           "end": 23
         },
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 32,
           "end": 40
         }
@@ -22,12 +22,12 @@
       "text": "I will try out my AK47 at the party monday",
       "label": [
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 18,
           "end": 22
         },
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 36,
           "end": 42
         }
@@ -37,12 +37,12 @@
       "text": "I will try out my AK47 at the party tonight",
       "label": [
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 18,
           "end": 22
         },
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 36,
           "end": 43
         }
@@ -52,12 +52,12 @@
       "text": "fire melons in new-york",
       "label": [
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 5,
           "end": 11
         },
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 15,
           "end": 23
         }
@@ -67,12 +67,12 @@
       "text": "let's go fire melons in montreal",
       "label": [
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 14,
           "end": 20
         },
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 24,
           "end": 32
         }
@@ -82,7 +82,7 @@
       "text": "I'm going to fire cherries on buildings",
       "label": [
         {
-          "name": "slot:thing_to_fire",
+          "name": "thing_to_fire",
           "start": 18,
           "end": 26
         }
@@ -92,7 +92,7 @@
       "text": "I'm going to fire things at 8am!",
       "label": [
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 28,
           "end": 31
         }
@@ -102,7 +102,7 @@
       "text": "Let shoot on London!",
       "label": [
         {
-          "name": "slot:time_or_place",
+          "name": "time_or_place",
           "start": 13,
           "end": 19
         }

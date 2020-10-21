@@ -2,6 +2,7 @@
   "name": "bpdsD-slot-train",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "restaurant", "types": ["any"] }],
   "rows": [
     {
       "text": "I'm ready to vote for a restaurant",

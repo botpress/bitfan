@@ -7,7 +7,7 @@
       "text": "buy pinaple",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 4,
           "end": 11
         }
@@ -17,7 +17,7 @@
       "text": "I'm looking for some tesguino to buy",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 21,
           "end": 29
         }
@@ -27,7 +27,7 @@
       "text": "Can I buy some goji beries from your shop ? ",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 15,
           "end": 26
         }
@@ -37,7 +37,7 @@
       "text": "a bell peper is what I need please",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 2,
           "end": 12
         }
@@ -47,7 +47,7 @@
       "text": "purchase some of red nectarines from online shop",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 21,
           "end": 31
         }
@@ -57,7 +57,7 @@
       "text": "sell me a kiwi !",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 10,
           "end": 14
         }
@@ -67,7 +67,7 @@
       "text": "Can I purchase a galia melon ?",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 17,
           "end": 28
         }
@@ -81,7 +81,7 @@
       "text": "buy an aple",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 7,
           "end": 11
         }
@@ -91,7 +91,7 @@
       "text": "I wana buy ornage",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 11,
           "end": 17
         }
@@ -101,7 +101,7 @@
       "text": "Please give em abanana",
       "label": [
         {
-          "name": "slot:fruit-to-buy",
+          "name": "fruit-to-buy",
           "start": 16,
           "end": 22
         }

@@ -7,7 +7,7 @@
       "text": "Cherry-pick your way to your favorite grape",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 38,
           "end": 43
         }
@@ -17,7 +17,7 @@
       "text": "I'm going banana about the tought of eating this orange",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 49,
           "end": 55
         }
@@ -27,7 +27,7 @@
       "text": "Apple computer's make me wanna eat some cherries!!!",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 40,
           "end": 48
         }
@@ -37,7 +37,7 @@
       "text": "I really want to eat a banana in the big apple",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 23,
           "end": 29
         }
@@ -47,7 +47,7 @@
       "text": "In the big apple I wanna eat cherries",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 29,
           "end": 37
         }
@@ -57,7 +57,7 @@
       "text": "I'm going banana about eating this orange in the big apple tonight",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 35,
           "end": 41
         }
@@ -67,7 +67,7 @@
       "text": "I'm going banana about eating this chile pepper in the big apple tonight",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 35,
           "end": 47
         }
@@ -77,7 +77,7 @@
       "text": "about to eat my lemon at the big apple right now",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 16,
           "end": 21
         }
@@ -87,7 +87,7 @@
       "text": "eating na aple at banana republic",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 10,
           "end": 14
         }
@@ -97,7 +97,7 @@
       "text": "On my trip to lemon cove I ate anorange",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 33,
           "end": 39
         }
@@ -107,7 +107,7 @@
       "text": "eat an Orange Vale's lemon",
       "label": [
         {
-          "name": "slot:fruit_to_eat",
+          "name": "fruit_to_eat",
           "start": 21,
           "end": 26
         }

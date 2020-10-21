@@ -7,12 +7,12 @@
       "text": "info BK-8754 to tataouine",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 5,
           "end": 12
         },
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 16,
           "end": 25
         }
@@ -22,7 +22,7 @@
       "text": "Could you give me informations about the AT-8886 flight ?",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 41,
           "end": 48
         }
@@ -32,12 +32,12 @@
       "text": "I want informations about the TK-89 flight to Chaï",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 30,
           "end": 35
         },
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 46,
           "end": 50
         }
@@ -47,7 +47,7 @@
       "text": "I think QW6621 is delayed ",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 8,
           "end": 14
         }
@@ -57,7 +57,7 @@
       "text": "Details about my trip to Tataouine",
       "label": [
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 25,
           "end": 34
         }
@@ -67,12 +67,12 @@
       "text": "info AB008 incoming in Quebec",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 5,
           "end": 10
         },
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 23,
           "end": 29
         }
@@ -82,12 +82,12 @@
       "text": "I want informations about the TK-89 flight to montrael",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 30,
           "end": 35
         },
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 46,
           "end": 54
         }
@@ -97,12 +97,12 @@
       "text": "I want informations about the TK-69 flight tomontreal",
       "label": [
         {
-          "name": "slot:flight-number",
+          "name": "flight-number",
           "start": 30,
           "end": 35
         },
         {
-          "name": "slot:arrival-city",
+          "name": "arrival-city",
           "start": 45,
           "end": 53
         }
