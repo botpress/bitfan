@@ -4,12 +4,10 @@ import _ from "lodash";
 import { flipTable, roundNumbers } from "../../services/logging";
 import { areSame, isOOS, makeKey } from "../../services/labels";
 
-type NamedDataSet<T extends ProblemType> = DataSet<T> & { name: string };
-
 export const showClassDistribution: typeof visualisation.showClassDistribution = <
   T extends ProblemType
 >(
-  ...datasets: NamedDataSet<T>[]
+  ...datasets: DataSet<T>[]
 ) => {
   const distributions: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
@@ -24,7 +22,7 @@ export const showClassDistribution: typeof visualisation.showClassDistribution =
 export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
   T extends ProblemType
 >(
-  ...datasets: NamedDataSet<T>[]
+  ...datasets: DataSet<T>[]
 ) => {
   const summaries: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {

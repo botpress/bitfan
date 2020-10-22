@@ -1,4 +1,5 @@
 {
+  "name": "covid.fr",
   "type": "intent",
   "lang": "fr",
   "rows": [

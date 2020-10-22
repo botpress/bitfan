@@ -261,6 +261,7 @@ export type ResultsCb<T extends ProblemType> = (
 ) => Promise<void>;
 
 export type DataSet<T extends ProblemType> = {
+  name: string;
   type: T;
   lang: string;
   rows: Row<T>[];
