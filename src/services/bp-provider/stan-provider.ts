@@ -53,6 +53,10 @@ export class StanProvider {
 
       session = await this._getTrainingStatus(modelId);
     }
+
+    if (session.status !== "done") {
+      throw new Error(`Training is done, but status is ${session.status}`);
+    }
   }
 
   public async train(
