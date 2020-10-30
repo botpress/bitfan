@@ -1,6 +1,6 @@
 {
   "name": "@botpress/bitfan",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Botpress Internal Testing Framework for Algorithms of NLU",
   "main": "out/index.js",
   "author": "<francois.levasseur@botpress.com>",
@@ -10,6 +10,9 @@
   "scripts": {
     "build": "tsc",
     "test": "jest"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
   },
   "dependencies": {
     "axios": "^0.20.0",
