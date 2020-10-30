@@ -1,8 +1,7 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
-import { sleep } from "./utils";
-import Progress from "progress";
+import cliProgress from "cli-progress";
 
 const runSolution = async <T extends sdk.ProblemType>(
   solution: sdk.Solution<T>,
@@ -70,29 +69,37 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
 
   console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
-  const trainProgressBar = new Progress(
-    "Training: [:bar] (:current%), :elapseds",
-    { total: 100 }
-  );
+  const trainProgressBar = new cliProgress.Bar({
+    format: "Training: [{bar}] ({percentage}%), {duration}s",
+    stream: process.stdout,
+    noTTYOutput: true,
+  });
+  trainProgressBar.start(100, 0);
+
   await engine.train(problem.trainSet, seed, (p: number) => {
     if (p === 1) {
       p = 0.99;
     }
-    trainProgressBar.update(p);
+    trainProgressBar.update(p * 100);
   });
-  trainProgressBar.update(1);
+  trainProgressBar.update(100);
+  trainProgressBar.stop();
 
-  const predictProgressBar = new Progress(
-    "Prediction: [:bar] (:current%), :elapseds",
-    { total: 100 }
-  );
+  const predictProgressBar = new cliProgress.Bar({
+    format: "Prediction: [{bar}] ({percentage}%), {duration}s",
+    stream: process.stdout,
+    noTTYOutput: true,
+  });
+  predictProgressBar.start(100, 0);
+
   const predictOutputs = await engine.predict(problem.testSet, (p: number) => {
     if (p === 1) {
       p = 0.99;
     }
-    predictProgressBar.update(p);
+    predictProgressBar.update(p * 100);
   });
-  predictProgressBar.update(1);
+  predictProgressBar.update(100);
+  predictProgressBar.stop();
   console.log("");
 
   const results: sdk.Result<T>[] = predictOutputs.map((p) => {

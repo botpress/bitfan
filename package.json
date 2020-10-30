@@ -1,6 +1,6 @@
 {
   "name": "@botpress/bitfan",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Botpress Internal Testing Framework for Algorithms of NLU",
   "main": "out/index.js",
   "author": "<francois.levasseur@botpress.com>",
@@ -12,18 +12,19 @@
     "test": "jest"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
     "axios": "^0.20.0",
     "chalk": "^4.1.0",
+    "cli-progress": "^3.8.2",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.20",
     "path": "^0.12.7",
-    "progress": "^2.0.3",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
+    "@types/cli-progress": "^3.8.0",
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-env": "^7.11.5",
@@ -33,7 +34,6 @@
     "@types/jest": "^26.0.14",
     "@types/lodash": "^4.14.161",
     "@types/node": "^14.11.2",
-    "@types/progress": "^2.0.3",
     "@types/seedrandom": "^2.4.28",
     "babel-jest": "^24.0.0",
     "jest": "^24.0.0",
