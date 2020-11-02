@@ -38,7 +38,7 @@ type ProblemType =
 
 For instance, a problem of type `Problem<"slot">` contains a train set and a test set of type `DataSet<"slot">`.
 
-Two different problem types have different labels associated.
+Two different problem types have different labels format:
 
 ```ts
 type Label<"Slot"> = { name: string, start: number, end: number }
@@ -52,9 +52,9 @@ To try solving a `Problem`, a user must define a `Solution` and run his solution
 interface Solution<T extends ProblemType> {
   name: string;
   problems: Problem<T>[];
-  engine: Engine<T>; // actual classifier that solves problems of type T
-  metrics: Metric<T>[]; // metric that outputs a score between 0 and 1 for a given test (row)
-  cb: ProblemCb<T>; // cb func to visualize results of this solution
+  engine: Engine<T>;
+  metrics: Metric<T>[];
+  cb: ProblemCb<T>;
 }
 
 function runSolution<T extends ProblemType>(
@@ -72,12 +72,21 @@ interface Engine<T extends ProblemType> {
 }
 ```
 
-The `Criteria` abstraction act as a decision function that compute weither or not the test is failing or passing. It exists because engines are not responsible for electing a label.
+The `Criteria` abstraction act as a decision function that decides weither or not the test is failing or passing. It exists because engines are not responsible for electing a label.
 
 ```ts
 interface Criteria<T extends ProblemType> {
   name: string;
-  eval(res: Result<T>): number;
+  eval(result: Result<T>): number;
+}
+```
+
+The `Metric` abstraction computes a score for all results. Computing the average score for a given `criteria`, is a metric.
+
+```ts
+interface Metric<T extends ProblemType> {
+  name: string;
+  eval(results: Result<T>[]): number;
 }
 ```
 
@@ -105,29 +114,36 @@ async function main() {
 
   const allTopics: BpdsTopics[] = ["A", "B", "C", "D", "E", "F"];
 
-  const criterias = [bitfan.criterias.labelIs];
-
   const problems = allTopics.map(makeProblem);
 
   const stanEndpoint = "http://localhost:3200";
   const password = "123456";
   const engine = bitfan.engines.makeBpIntentEngine(stanEndpoint, password);
 
+  const metrics = [
+    bitfan.metrics.averageScore(bitfan.criterias.labelIs),
+    bitfan.metrics.oosAccuracy,
+    bitfan.metrics.oosPrecision,
+    bitfan.metrics.oosRecall,
+    bitfan.metrics.oosF1,
+  ];
+
   const solution: Solution<"intent"> = {
-    name: "bpds regression",
+    name: "bpds intent",
     problems,
     engine,
-    criterias,
+    metrics,
   };
 
-  const seeds = [42, 666];
+  const seeds = [42, 69];
   const results = await bitfan.runSolution(solution, seeds);
 
-  bitfan.metrics.showAverageScores(results, { aggregateBy: "problem" });
-  bitfan.metrics.showOOSPerformance(results, { aggregateBy: "problem" });
-  bitfan.metrics.showAverageScores(results, { aggregateBy: "seed" });
-  bitfan.metrics.showOOSPerformance(results, { aggregateBy: "seed" });
-  bitfan.metrics.showOOSConfusion(results);
+  const reportBySeed = bitfan.makeReport(results, metrics, { groupBy: "seed" });
+  const reportByProblem = bitfan.makeReport(results, metrics, { groupBy: "problem" });
+
+  await bitfan.visualisation.showReport(reportBySeed);
+  await bitfan.visualisation.showReport(reportByProblem);
+  await bitfan.visualisation.showOOSConfusion(results);
 }
 main().then(() => {});
 ```
