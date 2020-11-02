@@ -65,7 +65,7 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
 ) => async (problem: sdk.Problem<T>) => {
   const { solutionResults } = state;
 
-  const { engine, metrics } = solution;
+  const { engine, criterias } = solution;
 
   console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
@@ -103,8 +103,8 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
   console.log("");
 
   const results: sdk.Result<T>[] = predictOutputs.map((p) => {
-    const metricsNames = metrics.map((m) => m.name);
-    const metricsScores = metrics.map((m) => m.eval(p));
+    const metricsNames = criterias.map((m) => m.name);
+    const metricsScores = criterias.map((m) => m.eval(p));
     return {
       ...p,
       scores: _.zipObject(metricsNames, metricsScores),

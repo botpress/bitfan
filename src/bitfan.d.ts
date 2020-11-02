@@ -150,7 +150,7 @@ export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
   engine: Engine<T>;
-  metrics: Criteria<T>[]; // threshold and elections are contained in these score-functions
+  criterias: Criteria<T>[]; // threshold and elections are contained in these score-functions
   cb?: Printer<T>;
 };
 
