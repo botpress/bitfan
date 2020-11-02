@@ -1,7 +1,7 @@
 {
   "lang": "en",
   "type": "intent",
-  "rows": [
+  "samples": [
     {
       "text": "How can I pay my bill?",
       "label": "d-bill-inquiry"

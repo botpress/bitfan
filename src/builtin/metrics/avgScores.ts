@@ -3,16 +3,17 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import { roundNumbers } from "../../services/logging";
 
-const DEFAULT_OPTIONS: sdk.AggregationOption = {
+const DEFAULT_OPTIONS: sdk.Options = {
   aggregateBy: "all",
+  silent: false,
 };
 
 const _avgByMetrics = <T extends sdk.ProblemType>(
-  metrics: sdk.Metric<T>[],
+  metrics: string[],
   results: sdk.Result<T>[]
 ) => {
   const scoresByMetrics: _.Dictionary<number[]> = {};
-  for (const metric of metrics.map((m) => m.name)) {
+  for (const metric of metrics) {
     scoresByMetrics[metric] = [];
     for (const result of results) {
       if (_.isNumber(result.scores[metric])) {
@@ -28,16 +29,28 @@ const _avgByMetrics = <T extends sdk.ProblemType>(
   return roundNumbers(avgByMetrics, 4);
 };
 
-export const showAverageScoreByMetric: typeof sdk.visualisation.showAverageScoreByMetric = <
+const _discoverMetrics = <T extends sdk.ProblemType>(
+  results: sdk.Result<T>[]
+): string[] => {
+  const allMetrics: string[] = [];
+  for (const res of results) {
+    allMetrics.push(...Object.keys(res.scores));
+  }
+  return _.uniq(allMetrics);
+};
+
+export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
   T extends sdk.ProblemType
 >(
-  metrics: sdk.Metric<T>[],
-  options?: Partial<sdk.AggregationOption>
-) => async (results: sdk.Result<T>[]) => {
+  results: sdk.Result<T>[],
+  options?: Partial<sdk.Options>
+) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
 
-  let avgByMetrics: Object = {};
+  let avgByMetrics: _.Dictionary<number> = {};
+
+  const metrics = _discoverMetrics(results);
 
   if (resolvedOptions.aggregateBy === "all") {
     avgByMetrics = _avgByMetrics<T>(metrics, results);
@@ -50,7 +63,7 @@ export const showAverageScoreByMetric: typeof sdk.visualisation.showAverageScore
       avgByMetrics = _.merge(
         {},
         avgByMetrics,
-        _.mapValues(avgByMetricsForSeed, (x) => ({ [`${seed}`]: x }))
+        _.mapValues(avgByMetricsForSeed, (x) => ({ [seed]: x }))
       );
     }
   } else if (resolvedOptions.aggregateBy === "problem") {
@@ -62,11 +75,15 @@ export const showAverageScoreByMetric: typeof sdk.visualisation.showAverageScore
       avgByMetrics = _.merge(
         {},
         avgByMetrics,
-        _.mapValues(avgByMetricsForProb, (x) => ({ [`${prob}`]: x }))
+        _.mapValues(avgByMetricsForProb, (x) => ({ [prob]: x }))
       );
     }
   }
 
-  console.log(chalk.green(`Average Score By Metrics`));
-  console.table(avgByMetrics);
+  if (!options.silent) {
+    console.log(chalk.green(`Average Score By Metrics`));
+    console.table(avgByMetrics);
+  }
+
+  return avgByMetrics;
 };

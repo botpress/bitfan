@@ -1,5 +1,5 @@
 import * as sdk from "../../bitfan";
-import { mostConfidentBinaryScore, topicBinaryScore } from "./intent";
+import { labelHasTopic, labelIs } from "./intent";
 
 test("test binary intent scoring", () => {
   const prediction: sdk.Understanding<"intent"> = {
@@ -14,7 +14,7 @@ test("test binary intent scoring", () => {
     label: "A",
   };
 
-  const score = mostConfidentBinaryScore.eval(result);
+  const score = labelIs.eval(result);
 
   expect(score).toBe(1);
 });
@@ -33,7 +33,7 @@ test("test binary intent scoring with oos", () => {
     label: "oos",
   };
 
-  const score = mostConfidentBinaryScore.eval(result);
+  const score = labelIs.eval(result);
 
   expect(score).toBe(1);
 });
@@ -51,7 +51,7 @@ test("test binary topic scoring with correct prediction", () => {
     label: "topicB/intentF",
   };
 
-  const score = topicBinaryScore.eval(result);
+  const score = labelHasTopic.eval(result);
 
   expect(score).toBe(1);
 });
@@ -69,7 +69,7 @@ test("test binary topic scoring with incorrect prediction", () => {
     label: "topicA/intentF",
   };
 
-  const score = topicBinaryScore.eval(result);
+  const score = labelHasTopic.eval(result);
 
   expect(score).toBe(0);
 });
@@ -86,7 +86,7 @@ test("test binary topic scoring with oos", () => {
     label: "oos",
   };
 
-  const score = topicBinaryScore.eval(result);
+  const score = labelHasTopic.eval(result);
 
   expect(score).toBe(1);
 });

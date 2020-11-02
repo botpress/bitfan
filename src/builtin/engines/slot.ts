@@ -17,7 +17,7 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
   }
 
   train(trainSet: sdk.DataSet<"slot">, seed: number, progress: sdk.ProgressCb) {
-    const { enums, patterns, lang, rows, variables } = trainSet;
+    const { enums, patterns, lang, samples: rows, variables } = trainSet;
 
     const examples = rows.map((r) => {
       const { text, label } = r;
@@ -72,7 +72,7 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
 
     let done = 0;
 
-    for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
+    for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
         batch.map((r) => r.text)
       );
@@ -101,7 +101,7 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
           prediction,
         });
 
-        progress(done++ / testSet.rows.length);
+        progress(done++ / testSet.samples.length);
       }
     }
     return results;

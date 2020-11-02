@@ -1,22 +1,18 @@
 import _ from "lodash";
 import * as sdk from "src/bitfan";
 
-import {
-  mostConfidentBinaryScore,
-  oosBinaryScore,
-  topicBinaryScore,
-} from "./builtin/metrics/intent";
+import { labelIs, labelHasTopic } from "./builtin/criterias/intent";
+import { slotsAre, slotIncludes, slotCountIs } from "./builtin/criterias/slot";
 
-import { showSlotsResults } from "./builtin/visualisation/slots";
-import { showOOSConfusion } from "./builtin/visualisation/oos";
-import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
+import { showSlotsResults } from "./builtin/metrics/slots";
+import { showOOSConfusion, showOOSPerformance } from "./builtin/metrics/oos";
+import { showAverageScores } from "./builtin/metrics/avgScores";
 import {
   showClassDistribution,
   showDatasetsSummary,
-} from "./builtin/visualisation/class-distribution";
+} from "./builtin/metrics/dataset";
 
-import DatasetRepository from "./services/dataset-repository";
-import { trainTestSplit } from "./builtin/tools/trainTestSplit";
+import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
@@ -24,9 +20,11 @@ import { BpTopicEngine } from "./builtin/engines/topic";
 import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { BpSlotEngine } from "./builtin/engines/slot";
 
-import { areSame, isOOS, makeKey } from "./services/labels";
+import { areSame, isOOS, makeKey } from "./builtin/labels";
+
 import runSolution from "./solution";
-import { slotBinaryScore, slotScore, slotCount } from "./builtin/metrics/slot";
+
+import DatasetRepository from "./services/dataset-repository";
 
 const dsRepo = new DatasetRepository();
 
@@ -42,6 +40,7 @@ const impl: typeof sdk = {
 
   tools: {
     trainTestSplit,
+    subSample,
     splitOOS,
     pickOOS,
   },
@@ -100,28 +99,32 @@ const impl: typeof sdk = {
     },
   },
 
-  metrics: {
-    mostConfidentBinaryScore,
-    oosBinaryScore,
-    topicBinaryScore,
-    slotBinaryScore,
-    slotCount,
-    slotScore,
+  criterias: {
+    labelIs,
+    labelHasTopic,
+    slotsAre,
+    slotCountIs,
+    slotIncludes,
   },
 
-  visualisation: {
+  metrics: {
     showOOSConfusion,
-    showAverageScoreByMetric,
+    showOOSPerformance,
+    showAverageScores,
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,
   },
 
   engines: {
-    BpTopicEngine,
-    BpIntentEngine,
-    BpIntentTopicEngine,
-    BpSlotEngine,
+    makeBpTopicEngine: (bpEndpoint: string, password: string) =>
+      new BpTopicEngine(bpEndpoint, password),
+    makeBpIntentEngine: (bpEndpoint: string, password: string) =>
+      new BpIntentEngine(bpEndpoint, password),
+    makeBpIntentTopicEngine: (bpEndpoint: string, password: string) =>
+      new BpIntentTopicEngine(bpEndpoint, password),
+    makeBpSlotEngine: (bpEndpoint: string, password: string) =>
+      new BpSlotEngine(bpEndpoint, password),
   },
 };
 

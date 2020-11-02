@@ -1,7 +1,7 @@
 {
   "lang": "en",
   "type": "intent",
-  "rows": [
+  "samples": [
     {
       "text": "I don't understand something on my invoice",
       "label": "a-bill-inquiry"

@@ -1,7 +1,7 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 
-export const showSlotsResults: typeof sdk.visualisation.showSlotsResults = async (
+export const showSlotsResults: typeof sdk.metrics.showSlotsResults = async (
   results: sdk.Result<"slot">[]
 ) => {
   for (const res of results) {

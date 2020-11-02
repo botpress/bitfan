@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, makeKey, OOS } from "../../services/labels";
+import { areSame, makeKey, OOS } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -22,7 +22,7 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
     seed: number,
     progress: sdk.ProgressCb
   ) {
-    const samples = trainSet.rows;
+    const samples = trainSet.samples;
 
     const allTopics = _(samples)
       .map((r) => r.label)
@@ -62,7 +62,7 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
 
     let done = 0;
 
-    for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
+    for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
         batch.map((r) => r.text)
       );
@@ -94,7 +94,7 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
           prediction,
         });
 
-        progress(done++ / testSet.rows.length);
+        progress(done++ / testSet.samples.length);
       }
     }
     return results;

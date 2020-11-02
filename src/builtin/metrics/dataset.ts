@@ -1,13 +1,11 @@
-import { DataSet, ProblemType, visualisation } from "bitfan/sdk";
+import { DataSet, ProblemType, metrics } from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
 import { flipTable, roundNumbers } from "../../services/logging";
-import { areSame, isOOS, makeKey } from "../../services/labels";
+import { areSame, isOOS, makeKey } from "../../builtin/labels";
 
-export const showClassDistribution: typeof visualisation.showClassDistribution = <
-  T extends ProblemType
->(
-  ...datasets: DataSet<T>[]
+export const showClassDistribution: typeof metrics.showClassDistribution = (
+  ...datasets: DataSet<ProblemType>[]
 ) => {
   const distributions: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
@@ -19,21 +17,19 @@ export const showClassDistribution: typeof visualisation.showClassDistribution =
   console.table(flipTable(distributions));
 };
 
-export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
-  T extends ProblemType
->(
-  ...datasets: DataSet<T>[]
+export const showDatasetsSummary: typeof metrics.showDatasetsSummary = (
+  ...datasets: DataSet<ProblemType>[]
 ) => {
   const summaries: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
-    const amountOfSamples = ds.rows.length;
+    const amountOfSamples = ds.samples.length;
     const classes = _.uniqWith(
-      ds.rows.map((r) => r.label),
+      ds.samples.map((r) => r.label),
       areSame
     ).filter((c) => !isOOS(c));
 
     const amountOfSamplesPerClass = classes.map(
-      (c) => ds.rows.filter((r) => areSame(r.label, c)).length
+      (c) => ds.samples.filter((r) => areSame(r.label, c)).length
     );
     const avgSamplesPerClass =
       _.sum(amountOfSamplesPerClass) / amountOfSamplesPerClass.length;
@@ -43,7 +39,7 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
 
     const amountOfClass = classes.length;
 
-    const oosSamples = ds.rows.filter((r) => isOOS(r.label)).length;
+    const oosSamples = ds.samples.filter((r) => isOOS(r.label)).length;
 
     const summary = {
       amountOfSamples,
@@ -63,7 +59,7 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = <
 const _getClassDistributionForOneSet = <T extends ProblemType>(
   dataset: DataSet<T>
 ) => {
-  const { rows } = dataset;
+  const { samples: rows } = dataset;
 
   const allLabels = _.uniqWith(
     rows.map((r) => r.label),

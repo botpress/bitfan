@@ -1,7 +1,17 @@
-import { DataSet, ProblemType, Row, tools } from "bitfan/sdk";
+import { DataSet, ProblemType, Sample, tools } from "bitfan/sdk";
 import { LoDashStatic } from "lodash";
-import { areSame } from "../../services/labels";
+import { areSame } from "../../builtin/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
+
+export const subSample: typeof tools.subSample = <T extends ProblemType>(
+  dataset: DataSet<T>,
+  percent: number,
+  seed: number,
+  options = { stratificate: true }
+): DataSet<T> => {
+  const { trainSet } = trainTestSplit(dataset, percent, seed, options);
+  return trainSet;
+};
 
 export const trainTestSplit: typeof tools.trainTestSplit = <
   T extends ProblemType
@@ -25,23 +35,23 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
   const lo = seededLodashProvider.getSeededLodash();
 
   const allClasses = lo.uniqWith(
-    dataset.rows.map((r) => r.label),
+    dataset.samples.map((r) => r.label),
     areSame
   );
 
-  const trainSamples: Row<T>[] = [];
-  const testSamples: Row<T>[] = [];
+  const trainSamples: Sample<T>[] = [];
+  const testSamples: Sample<T>[] = [];
 
   if (options.stratificate) {
     // preserve proportions of each class
     for (const c of allClasses) {
-      const samplesOfClass = dataset.rows.filter((r) => areSame(r.label, c));
+      const samplesOfClass = dataset.samples.filter((r) => areSame(r.label, c));
       const split = _splitOneClass(samplesOfClass, trainPercent, lo);
       trainSamples.push(...split.trainSamples);
       testSamples.push(...split.testSamples);
     }
   } else {
-    const split = _splitOneClass(dataset.rows, trainPercent, lo);
+    const split = _splitOneClass(dataset.samples, trainPercent, lo);
     trainSamples.push(...split.trainSamples);
     testSamples.push(...split.testSamples);
   }
@@ -57,12 +67,12 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
 };
 
 const _splitOneClass = <T extends ProblemType>(
-  samplesOfClass: Row<T>[],
+  samplesOfClass: Sample<T>[],
   trainPercent: number,
   seededLodash: LoDashStatic
 ): {
-  trainSamples: Row<T>[];
-  testSamples: Row<T>[];
+  trainSamples: Sample<T>[];
+  testSamples: Sample<T>[];
 } => {
   const N = samplesOfClass.length;
   const trainSize = Math.floor(trainPercent * N);
