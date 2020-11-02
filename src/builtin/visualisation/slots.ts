@@ -10,27 +10,27 @@ export const showSlotsResults: typeof sdk.visualisation.showSlotsResults = async
 };
 
 const logResult = (res: sdk.Result<"slot">) => {
-  let expected = "";
+  let actual = "";
   const isInsideExpected = _isInside(
     res.label.map((l) => ({ start: l.start, end: l.end }))
   );
   for (let i = 0; i < res.text.length; i++) {
     const char = isInsideExpected(i) ? "x" : "-";
-    expected += char;
+    actual += char;
   }
 
-  let actual = "";
+  let elected = "";
   const isInsideActual = _isInside(
     Object.values(res.prediction).map((s) => ({ start: s.start, end: s.end }))
   );
   for (let i = 0; i < res.text.length; i++) {
     const char = isInsideActual(i) ? "x" : "-";
-    actual += char;
+    elected += char;
   }
 
-  console.log("expected: " + chalk.blueBright(expected));
+  console.log("actual:   " + chalk.blueBright(actual));
   console.log("text:     " + res.text);
-  console.log("actual:   " + chalk.yellowBright(actual));
+  console.log("elected:  " + chalk.yellowBright(elected));
   console.log("");
 };
 

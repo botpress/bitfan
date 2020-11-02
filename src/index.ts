@@ -4,19 +4,21 @@ import * as sdk from "src/bitfan";
 import { labelIs, labelHasTopic } from "./builtin/criterias/intent";
 import { slotsAre, slotIncludes, slotCountIs } from "./builtin/criterias/slot";
 
-import { oosConfusion, oosPerformance } from "./builtin/metrics/oos";
-import { averageScores } from "./builtin/metrics/avgScores";
+import {
+  oosAccuracy,
+  oosPrecision,
+  oosRecall,
+  oosF1,
+} from "./builtin/metrics/oos";
+import { averageScore } from "./builtin/metrics/avgScores";
 
 import {
   showClassDistribution,
   showDatasetsSummary,
 } from "./builtin/visualisation/dataset";
 import { showSlotsResults } from "./builtin/visualisation/slots";
-import {
-  showOOSPerformance,
-  showOOSConfusion,
-} from "./builtin/visualisation/oos";
-import { showAverageScores } from "./builtin/visualisation/avgScores";
+import { showOOSConfusion } from "./builtin/visualisation/oos";
+import { showReport } from "./builtin/visualisation/metrics";
 
 import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
@@ -29,6 +31,7 @@ import { BpSlotEngine } from "./builtin/engines/slot";
 import { areSame, isOOS, makeKey } from "./builtin/labels";
 
 import runSolution from "./solution";
+import makeReport from "./report";
 
 import DatasetRepository from "./services/dataset-repository";
 
@@ -37,6 +40,7 @@ const dsRepo = new DatasetRepository();
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
+  makeReport,
 
   labels: {
     isOOS,
@@ -114,15 +118,16 @@ const impl: typeof sdk = {
   },
 
   metrics: {
-    oosConfusion,
-    oosPerformance,
-    averageScores,
+    averageScore,
+    oosAccuracy,
+    oosPrecision,
+    oosRecall,
+    oosF1,
   },
 
   visualisation: {
     showOOSConfusion,
-    showOOSPerformance,
-    showAverageScores,
+    showReport,
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,

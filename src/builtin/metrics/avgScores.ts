@@ -1,83 +1,16 @@
-import chalk from "chalk";
-import _ from "lodash";
-import * as sdk from "src/bitfan";
-import { roundNumbers1Level } from "../../services/logging";
+import * as sdk from "bitfan/sdk";
 
-const DEFAULT_OPTIONS: sdk.AggregateOptions = {
-  groupBy: "all",
-};
-
-const _avgByMetrics = <T extends sdk.ProblemType>(
-  metrics: string[],
-  results: sdk.Result<T>[]
-) => {
-  const scoresByMetrics: _.Dictionary<number[]> = {};
-  for (const metric of metrics) {
-    scoresByMetrics[metric] = [];
-    for (const result of results) {
-      if (_.isNumber(result.scores[metric])) {
-        scoresByMetrics[metric].push(result.scores[metric]);
-      }
-    }
-  }
-
-  const avgByMetrics = _.mapValues(scoresByMetrics, (scores) => {
-    return _.sum(scores) / scores.length;
-  });
-
-  return roundNumbers1Level(avgByMetrics, 4);
-};
-
-const _discoverMetrics = <T extends sdk.ProblemType>(
-  results: sdk.Result<T>[]
-): string[] => {
-  const allMetrics: string[] = [];
-  for (const res of results) {
-    allMetrics.push(...Object.keys(res.scores));
-  }
-  return _.uniq(allMetrics);
-};
-
-export const averageScores: typeof sdk.metrics.averageScores = async <
+export const averageScore: typeof sdk.metrics.averageScore = <
   T extends sdk.ProblemType
 >(
-  results: sdk.Result<T>[],
-  options?: Partial<sdk.AggregateOptions>
-) => {
-  options = options ?? {};
-  const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
-
-  let avgByMetrics: _.Dictionary<_.Dictionary<number>> = {};
-
-  const metrics = _discoverMetrics(results);
-
-  if (resolvedOptions.groupBy === "all") {
-    avgByMetrics["all"] = _avgByMetrics<T>(metrics, results);
-  } else if (resolvedOptions.groupBy === "seed") {
-    const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
-
-    for (const seed of allSeeds) {
-      const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const avgByMetricsForSeed = _avgByMetrics<T>(metrics, resultsOfSeed);
-      avgByMetrics = _.merge(
-        {},
-        avgByMetrics,
-        _.mapValues(avgByMetricsForSeed, (x) => ({ [seed]: x }))
-      );
+  criteria: sdk.Criteria<T>
+) => ({
+  name: `avgScore:${criteria.name}`,
+  eval: (results: sdk.PredictOutput<T>[]) => {
+    let sum = 0;
+    for (const res of results) {
+      sum += criteria.eval(res);
     }
-  } else if (resolvedOptions.groupBy === "problem") {
-    const allProblems = _.uniq(results.map((r) => r.metadata.problem));
-
-    for (const prob of allProblems) {
-      const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const avgByMetricsForProb = _avgByMetrics<T>(metrics, resultsOfProb);
-      avgByMetrics = _.merge(
-        {},
-        avgByMetrics,
-        _.mapValues(avgByMetricsForProb, (x) => ({ [prob]: x }))
-      );
-    }
-  }
-
-  return avgByMetrics;
-};
+    return sum / results.length;
+  },
+});

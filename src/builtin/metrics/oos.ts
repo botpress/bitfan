@@ -4,10 +4,6 @@ import { isOOS } from "../../builtin/labels";
 import { electMostConfident } from "../criterias/intent";
 import _ from "lodash";
 
-const DEFAULT_OPTIONS: sdk.AggregateOptions = {
-  groupBy: "all",
-};
-
 type ConfusionMatrix = {
   truePos: number;
   falsePos: number;
@@ -16,15 +12,30 @@ type ConfusionMatrix = {
 };
 
 type OOSPerformance = {
-  accuracy: number;
-  precision: number;
-  recall: number;
-  f1: number;
+  oosAccuracy: number;
+  oosPrecision: number;
+  oosRecall: number;
+  oosF1: number;
 };
 
-const _oosConfusion = (
-  results: sdk.Result<sdk.SingleLabel>[]
-): ConfusionMatrix => {
+const _computePerformance = (confusion: ConfusionMatrix): OOSPerformance => {
+  const { truePos, falsePos, falseNeg, trueNeg } = confusion;
+  const total = truePos + falsePos + falseNeg + trueNeg;
+
+  const accuracy = (truePos + trueNeg) / total;
+  const precision = truePos / (truePos + falsePos);
+  const recall = truePos / (truePos + falseNeg);
+  const f1 = 2 * ((precision * recall) / (precision + recall));
+
+  return {
+    oosAccuracy: accuracy,
+    oosPrecision: precision,
+    oosRecall: recall,
+    oosF1: f1,
+  };
+};
+
+export const oosConfusion = (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
   const oosResults = results.map((r) => {
     const elected = electMostConfident(r.prediction);
     const expected = r.label;
@@ -52,96 +63,38 @@ const _oosConfusion = (
   };
 };
 
-const _computePerformance = (confusion: ConfusionMatrix): OOSPerformance => {
-  const { truePos, falsePos, falseNeg, trueNeg } = confusion;
-  const total = truePos + falsePos + falseNeg + trueNeg;
-
-  const accuracy = (truePos + trueNeg) / total;
-  const precision = truePos / (truePos + falsePos);
-  const recall = truePos / (truePos + falseNeg);
-  const f1 = 2 * ((precision * recall) / (precision + recall));
-
-  return { accuracy, precision, recall, f1 };
+export const oosAccuracy: typeof sdk.metrics.oosAccuracy = {
+  name: "oosAccuracy",
+  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+    const confusionMatrix = oosConfusion(results);
+    const { oosAccuracy } = _computePerformance(confusionMatrix);
+    return oosAccuracy;
+  },
 };
 
-export const oosConfusion: typeof sdk.metrics.oosConfusion = async (
-  results: sdk.Result<sdk.SingleLabel>[],
-  options?: Partial<sdk.AggregateOptions>
-) => {
-  options = options ?? {};
-  const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
-
-  let confusion: _.Dictionary<_.Dictionary<number>> = {};
-  if (resolvedOptions.groupBy === "all") {
-    confusion["all"] = _oosConfusion(results);
-  } else if (resolvedOptions.groupBy === "seed") {
-    const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
-
-    for (const seed of allSeeds) {
-      const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const confusionForSeed = _oosConfusion(resultsOfSeed);
-      confusion = _.merge(
-        {},
-        confusion,
-        _.mapValues(confusionForSeed, (x) => ({ [seed]: x }))
-      );
-    }
-  } else if (resolvedOptions.groupBy === "problem") {
-    const allProblems = _.uniq(results.map((r) => r.metadata.problem));
-
-    for (const prob of allProblems) {
-      const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const confusionForProb = _oosConfusion(resultsOfProb);
-      confusion = _.merge(
-        {},
-        confusion,
-        _.mapValues(confusionForProb, (x) => ({ [prob]: x }))
-      );
-    }
-  }
-
-  return confusion;
+export const oosPrecision: typeof sdk.metrics.oosPrecision = {
+  name: "oosPrecision",
+  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+    const confusionMatrix = oosConfusion(results);
+    const { oosPrecision } = _computePerformance(confusionMatrix);
+    return oosPrecision;
+  },
 };
 
-export const oosPerformance: typeof sdk.metrics.oosPerformance = async (
-  results: sdk.Result<sdk.SingleLabel>[],
-  options?: Partial<sdk.AggregateOptions>
-) => {
-  options = options ?? {};
-  const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
+export const oosRecall: typeof sdk.metrics.oosRecall = {
+  name: "oosRecall",
+  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+    const confusionMatrix = oosConfusion(results);
+    const { oosRecall } = _computePerformance(confusionMatrix);
+    return oosRecall;
+  },
+};
 
-  let oosPerformance: _.Dictionary<_.Dictionary<number>> = {};
-  if (resolvedOptions.groupBy === "all") {
-    const confusion = _oosConfusion(results);
-    oosPerformance["all"] = _computePerformance(confusion);
-  } else if (resolvedOptions.groupBy === "seed") {
-    const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
-
-    for (const seed of allSeeds) {
-      const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const confusionForSeed = _oosConfusion(resultsOfSeed);
-      const oosPerformanceForSeed = _computePerformance(confusionForSeed);
-      oosPerformance = _.merge(
-        {},
-        oosPerformance,
-        _.mapValues(oosPerformanceForSeed, (x) => ({ [seed]: x }))
-      );
-    }
-  } else if (resolvedOptions.groupBy === "problem") {
-    const allProblems = _.uniq(results.map((r) => r.metadata.problem));
-
-    for (const prob of allProblems) {
-      const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const confusionForProb = _oosConfusion(resultsOfProb);
-      const oosPerformanceForProb = _computePerformance(confusionForProb);
-
-      oosPerformance = _.merge(
-        {},
-        oosPerformance,
-        _.mapValues(oosPerformanceForProb, (x) => ({ [prob]: x }))
-      );
-    }
-  }
-
-  return oosPerformance;
+export const oosF1: typeof sdk.metrics.oosF1 = {
+  name: "oosF1",
+  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+    const confusionMatrix = oosConfusion(results);
+    const { oosF1 } = _computePerformance(confusionMatrix);
+    return oosF1;
+  },
 };

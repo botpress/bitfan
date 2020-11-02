@@ -3,6 +3,12 @@ export function runSolution<T extends ProblemType>(
   seeds: number[]
 ): Promise<Result<T>[]>;
 
+export function makeReport<T extends ProblemType>(
+  results: Result<T>[],
+  metrics: Metric<T>[],
+  options?: Partial<AggregateOptions>
+): PerformanceReport;
+
 export namespace datasets {
   export namespace bpds {
     export namespace intents {
@@ -70,19 +76,24 @@ export namespace criterias {
 }
 
 export namespace metrics {
-  export const averageScores: Metric<ProblemType, AggregateOptions>;
-  export const oosPerformance: Metric<SingleLabel, AggregateOptions>;
-  export const oosConfusion: Metric<SingleLabel, AggregateOptions>;
+  export const averageScore: <T extends ProblemType>(
+    criteria: Criteria<T>
+  ) => Metric<T>;
+
+  export const oosAccuracy: Metric<SingleLabel>;
+  export const oosPrecision: Metric<SingleLabel>;
+  export const oosRecall: Metric<SingleLabel>;
+  export const oosF1: Metric<SingleLabel>;
 }
 
 export namespace visualisation {
-  export const showAverageScores: ResultViewer<ProblemType, AggregateOptions>;
-  export const showOOSPerformance: ResultViewer<SingleLabel, AggregateOptions>;
   export const showOOSConfusion: ResultViewer<SingleLabel>;
   export const showSlotsResults: ResultViewer<"slot">;
 
   export const showClassDistribution: DatasetViewer<SingleLabel>;
   export const showDatasetsSummary: DatasetViewer<ProblemType>;
+
+  export const showReport: (report: PerformanceReport) => Promise<void>;
 }
 
 export namespace engines {
@@ -152,7 +163,7 @@ export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
   engine: Engine<T>;
-  criterias: Criteria<T>[]; // threshold and elections are contained in these score-functions
+  metrics: Metric<T>[];
   cb?: ResultViewer<T>;
 };
 
@@ -240,9 +251,6 @@ export type Criteria<T extends ProblemType> = {
 };
 
 export type Result<T extends ProblemType> = PredictOutput<T> & {
-  scores: {
-    [criteria: string]: number;
-  };
   metadata: {
     seed: number;
     problem: string;
@@ -262,10 +270,16 @@ export type DatasetViewer<T extends ProblemType> = (
   ...datasets: DataSet<T>[]
 ) => void;
 
-export type Metric<T extends ProblemType, O extends Object = {}> = (
-  results: Result<T>[],
-  options?: Partial<O>
-) => Promise<Dic<Dic<number>>>;
+export type PerformanceReport = Dic<Dic<number>>;
+
+/**
+ * @description Function that compute a performance score given the whole results.
+ * @returns A performance score between 0 and 1.
+ */
+export type Metric<T extends ProblemType> = {
+  name: string;
+  eval: (results: PredictOutput<T>[]) => number;
+};
 
 export type DataSet<T extends ProblemType> = {
   name: string;
