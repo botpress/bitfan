@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import _ from "lodash";
 import * as sdk from "src/bitfan";
-import { roundNumbers } from "../../services/logging";
+import { roundNumbers1Level } from "../../services/logging";
 
 const DEFAULT_OPTIONS: sdk.ViewOptions = {
   aggregateBy: "all",
@@ -26,7 +26,7 @@ const _avgByMetrics = <T extends sdk.ProblemType>(
     return _.sum(scores) / scores.length;
   });
 
-  return roundNumbers(avgByMetrics, 4);
+  return roundNumbers1Level(avgByMetrics, 4);
 };
 
 const _discoverMetrics = <T extends sdk.ProblemType>(

@@ -72,7 +72,7 @@ export namespace criterias {
 export namespace metrics {
   export const showAverageScores: Metric<ProblemType, ViewOptions>;
   export const showOOSPerformance: Metric<SingleLabel, ViewOptions>;
-  export const showOOSConfusion: Metric<SingleLabel>;
+  export const showOOSConfusion: Metric<SingleLabel, ViewOptions>;
 }
 
 export namespace visualisation {
@@ -141,6 +141,9 @@ export namespace labels {
   export function makeKey<T extends ProblemType>(label: Label<T>): string;
 }
 
+/**
+ * @description Collection of problems with an engine to solve them
+ */
 export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
@@ -156,12 +159,21 @@ export type SingleLabel =
   | "lang"
   | "spell";
 export type MultiLabel = "multi-intent" | "multi-intent-topic";
+
+/**
+ * @name ProblemType
+ * @description All solvable problem types
+ */
 export type ProblemType = SingleLabel | MultiLabel | "slot";
 
 type Dic<T> = {
   [key: string]: T;
 };
 
+/**
+ * @description Format of a label for a given problem type.
+ *  For intent problems, its only a string, but for slots, it contains more information
+ */
 export type Label<T extends ProblemType> = T extends SingleLabel
   ? string
   : T extends MultiLabel
@@ -178,6 +190,9 @@ export type Understanding<T extends ProblemType> = T extends SingleLabel
   ? Dic<{ start: number; end: number; confidence: number }>
   : string;
 
+/**
+ * @description Collection of one train dataset and one test dataset
+ */
 export interface Problem<T extends ProblemType> {
   name: string;
   type: ProblemType;
@@ -189,6 +204,9 @@ export interface Problem<T extends ProblemType> {
 
 export type ProgressCb = (p: number) => void;
 
+/**
+ * @description Collection of a train function and a predict function
+ */
 export interface Engine<T extends ProblemType> {
   train: (
     trainSet: DataSet<T>,
@@ -207,6 +225,11 @@ export type PredictOutput<T extends ProblemType> = {
   label: Label<T>;
 };
 
+/**
+ * @description Function that decides weither or not a test should pass or fail.
+ * @returns A number between 0 and 1 where 0 means that the test has failed.
+ * For multi-class problems, this number will often be, neither 1 or 0, but a fraction.
+ */
 export type Criteria<T extends ProblemType> = {
   name: string;
   eval(res: PredictOutput<T>): number;
