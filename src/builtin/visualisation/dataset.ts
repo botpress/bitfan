@@ -1,10 +1,10 @@
-import { DataSet, ProblemType, metrics } from "bitfan/sdk";
+import { DataSet, ProblemType, visualisation } from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
 import { flipTable, roundNumbers } from "../../services/logging";
 import { areSame, isOOS, makeKey } from "../../builtin/labels";
 
-export const showClassDistribution: typeof metrics.showClassDistribution = (
+export const showClassDistribution: typeof visualisation.showClassDistribution = (
   ...datasets: DataSet<ProblemType>[]
 ) => {
   const distributions: _.Dictionary<_.Dictionary<number>> = {};
@@ -17,7 +17,7 @@ export const showClassDistribution: typeof metrics.showClassDistribution = (
   console.table(flipTable(distributions));
 };
 
-export const showDatasetsSummary: typeof metrics.showDatasetsSummary = (
+export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = (
   ...datasets: DataSet<ProblemType>[]
 ) => {
   const summaries: _.Dictionary<_.Dictionary<number>> = {};

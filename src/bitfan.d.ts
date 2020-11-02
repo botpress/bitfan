@@ -70,20 +70,15 @@ export namespace criterias {
 }
 
 export namespace metrics {
-  export const showAverageScores: Metric<ProblemType, Options>;
+  export const showAverageScores: Metric<ProblemType, ViewOptions>;
+  export const showOOSPerformance: Metric<SingleLabel, ViewOptions>;
+  export const showOOSConfusion: Metric<SingleLabel>;
+}
 
-  export const showOOSPerformance: Metric<SingleLabel, Options>;
-
-  export const showOOSConfusion: Printer<SingleLabel>;
-
-  export const showSlotsResults: Printer<"slot">;
-
-  export const showClassDistribution: (
-    ...datasets: DataSet<ProblemType>[]
-  ) => void;
-  export const showDatasetsSummary: (
-    ...datasets: DataSet<ProblemType>[]
-  ) => void;
+export namespace visualisation {
+  export const showSlotsResults: ResultViewer<"slot">;
+  export const showClassDistribution: DatasetViewer<SingleLabel>;
+  export const showDatasetsSummary: DatasetViewer<ProblemType>;
 }
 
 export namespace engines {
@@ -151,7 +146,7 @@ export type Solution<T extends ProblemType> = {
   problems: Problem<T>[];
   engine: Engine<T>;
   criterias: Criteria<T>[]; // threshold and elections are contained in these score-functions
-  cb?: Printer<T>;
+  cb?: ResultViewer<T>;
 };
 
 export type SingleLabel =
@@ -189,7 +184,7 @@ export interface Problem<T extends ProblemType> {
   trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
-  cb?: Printer<T>;
+  cb?: ResultViewer<T>;
 }
 
 export type ProgressCb = (p: number) => void;
@@ -227,20 +222,23 @@ export type Result<T extends ProblemType> = PredictOutput<T> & {
   };
 };
 
-export type Options = {
+export type ViewOptions = {
   aggregateBy: "seed" | "problem" | "all";
   silent: boolean;
 };
 
-export type Printer<T extends ProblemType, O extends Object = {}> = (
-  results: Result<T>[],
-  options?: Partial<O>
+export type ResultViewer<T extends ProblemType> = (
+  results: Result<T>[]
 ) => Promise<void>;
+
+export type DatasetViewer<T extends ProblemType> = (
+  ...datasets: DataSet<T>[]
+) => void;
 
 export type Metric<T extends ProblemType, O extends Object = {}> = (
   results: Result<T>[],
   options?: Partial<O>
-) => Promise<Dic<number>>;
+) => Promise<Dic<Dic<number>>>;
 
 export type DataSet<T extends ProblemType> = {
   name: string;

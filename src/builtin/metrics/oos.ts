@@ -5,16 +5,18 @@ import { isOOS } from "../../builtin/labels";
 
 import { electMostConfident } from "../criterias/intent";
 
-const DEFAULT_OPTIONS: sdk.Options = {
+const DEFAULT_OPTIONS: sdk.ViewOptions = {
   aggregateBy: "all",
   silent: false,
 };
 
-export const showOOSConfusion: typeof sdk.metrics.showOOSConfusion = async <
-  T extends sdk.SingleLabel
->(
-  results: sdk.Result<T>[]
+export const showOOSConfusion: typeof sdk.metrics.showOOSConfusion = async (
+  results: sdk.Result<sdk.SingleLabel>[],
+  options?: Partial<sdk.ViewOptions>
 ) => {
+  options = options ?? {};
+  const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
+
   const oosResults = results.map((r) => {
     const elected = electMostConfident(r.prediction);
     const expected = r.label;
@@ -30,19 +32,31 @@ export const showOOSConfusion: typeof sdk.metrics.showOOSConfusion = async <
   const trueNeg = oosResults.filter((r) => !r.electedIsOOS && !r.expectedIsOOS);
   const falseNeg = oosResults.filter((r) => !r.electedIsOOS && r.expectedIsOOS);
 
-  const confusionMatrix = {
-    electedIsOOScope: {
-      actualIsOOScope: truePos.length,
-      actualIsInScope: falsePos.length,
-    },
-    electedIsInScope: {
-      actualIsOOScope: falseNeg.length,
-      actualIsInScope: trueNeg.length,
-    },
+  if (!resolvedOptions.silent) {
+    const confusionMatrix = {
+      electedIsOOScope: {
+        actualIsOOScope: truePos.length,
+        actualIsInScope: falsePos.length,
+      },
+      electedIsInScope: {
+        actualIsOOScope: falseNeg.length,
+        actualIsInScope: trueNeg.length,
+      },
+    };
+
+    console.log(chalk.green("OOS Confusion Matrix: "));
+    console.table(confusionMatrix);
+  }
+
+  const confusion: _.Dictionary<_.Dictionary<number>> = {};
+  confusion["all"] = {
+    truePos: truePos.length,
+    falsePos: falsePos.length,
+    falseNeg: falseNeg.length,
+    trueNeg: trueNeg.length,
   };
 
-  console.log(chalk.green("OOS Confusion Matrix: "));
-  console.table(confusionMatrix);
+  return confusion;
 };
 
 // TODO: extract common code
@@ -50,7 +64,7 @@ export const showOOSPerformance: typeof sdk.metrics.showOOSPerformance = async <
   T extends sdk.SingleLabel
 >(
   results: sdk.Result<T>[],
-  options?: Partial<sdk.Options>
+  options?: Partial<sdk.ViewOptions>
 ) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
@@ -76,11 +90,13 @@ export const showOOSPerformance: typeof sdk.metrics.showOOSPerformance = async <
   const precision = truePos.length / (truePos.length + falsePos.length);
   const recall = truePos.length / (truePos.length + falseNeg.length);
   const f1 = 2 * ((precision * recall) / (precision + recall));
-  const performance = { accuracy, precision, recall, f1 };
+
+  const performance: _.Dictionary<_.Dictionary<number>> = {};
+  performance["all"] = { accuracy, precision, recall, f1 };
 
   if (!resolvedOptions.silent) {
     console.log(chalk.green("OOS Accuracy, Precision and Recall"));
-    console.table(roundNumbers(performance, 4));
+    console.table(roundNumbers(performance["all"], 4));
   }
 
   return performance;

@@ -3,7 +3,7 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import { roundNumbers } from "../../services/logging";
 
-const DEFAULT_OPTIONS: sdk.Options = {
+const DEFAULT_OPTIONS: sdk.ViewOptions = {
   aggregateBy: "all",
   silent: false,
 };
@@ -43,17 +43,17 @@ export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
   T extends sdk.ProblemType
 >(
   results: sdk.Result<T>[],
-  options?: Partial<sdk.Options>
+  options?: Partial<sdk.ViewOptions>
 ) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
 
-  let avgByMetrics: _.Dictionary<number> = {};
+  let avgByMetrics: _.Dictionary<_.Dictionary<number>> = {};
 
   const metrics = _discoverMetrics(results);
 
   if (resolvedOptions.aggregateBy === "all") {
-    avgByMetrics = _avgByMetrics<T>(metrics, results);
+    avgByMetrics["all"] = _avgByMetrics<T>(metrics, results);
   } else if (resolvedOptions.aggregateBy === "seed") {
     const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
 

@@ -4,13 +4,14 @@ import * as sdk from "src/bitfan";
 import { labelIs, labelHasTopic } from "./builtin/criterias/intent";
 import { slotsAre, slotIncludes, slotCountIs } from "./builtin/criterias/slot";
 
-import { showSlotsResults } from "./builtin/metrics/slots";
 import { showOOSConfusion, showOOSPerformance } from "./builtin/metrics/oos";
 import { showAverageScores } from "./builtin/metrics/avgScores";
+
 import {
   showClassDistribution,
   showDatasetsSummary,
-} from "./builtin/metrics/dataset";
+} from "./builtin/visualisation/dataset";
+import { showSlotsResults } from "./builtin/visualisation/slots";
 
 import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
@@ -111,6 +112,9 @@ const impl: typeof sdk = {
     showOOSConfusion,
     showOOSPerformance,
     showAverageScores,
+  },
+
+  visualisation: {
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,
