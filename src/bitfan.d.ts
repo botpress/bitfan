@@ -70,13 +70,17 @@ export namespace criterias {
 }
 
 export namespace metrics {
-  export const showAverageScores: Metric<ProblemType, ViewOptions>;
-  export const showOOSPerformance: Metric<SingleLabel, ViewOptions>;
-  export const showOOSConfusion: Metric<SingleLabel, ViewOptions>;
+  export const averageScores: Metric<ProblemType, AggregateOptions>;
+  export const oosPerformance: Metric<SingleLabel, AggregateOptions>;
+  export const oosConfusion: Metric<SingleLabel, AggregateOptions>;
 }
 
 export namespace visualisation {
+  export const showAverageScores: ResultViewer<ProblemType, AggregateOptions>;
+  export const showOOSPerformance: ResultViewer<SingleLabel, AggregateOptions>;
+  export const showOOSConfusion: ResultViewer<SingleLabel>;
   export const showSlotsResults: ResultViewer<"slot">;
+
   export const showClassDistribution: DatasetViewer<SingleLabel>;
   export const showDatasetsSummary: DatasetViewer<ProblemType>;
 }
@@ -245,13 +249,13 @@ export type Result<T extends ProblemType> = PredictOutput<T> & {
   };
 };
 
-export type ViewOptions = {
-  aggregateBy: "seed" | "problem" | "all";
-  silent: boolean;
+export type AggregateOptions = {
+  groupBy: "seed" | "problem" | "all";
 };
 
-export type ResultViewer<T extends ProblemType> = (
-  results: Result<T>[]
+export type ResultViewer<T extends ProblemType, O extends Object = {}> = (
+  results: Result<T>[],
+  options?: Partial<O>
 ) => Promise<void>;
 
 export type DatasetViewer<T extends ProblemType> = (

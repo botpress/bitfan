@@ -1,14 +1,11 @@
 import * as sdk from "bitfan/sdk";
-import chalk from "chalk";
-import { roundNumbers2Level } from "../../services/logging";
 import { isOOS } from "../../builtin/labels";
 
 import { electMostConfident } from "../criterias/intent";
 import _ from "lodash";
 
-const DEFAULT_OPTIONS: sdk.ViewOptions = {
-  aggregateBy: "all",
-  silent: false,
+const DEFAULT_OPTIONS: sdk.AggregateOptions = {
+  groupBy: "all",
 };
 
 type ConfusionMatrix = {
@@ -26,8 +23,7 @@ type OOSPerformance = {
 };
 
 const _oosConfusion = (
-  results: sdk.Result<sdk.SingleLabel>[],
-  options: sdk.ViewOptions
+  results: sdk.Result<sdk.SingleLabel>[]
 ): ConfusionMatrix => {
   const oosResults = results.map((r) => {
     const elected = electMostConfident(r.prediction);
@@ -47,22 +43,6 @@ const _oosConfusion = (
     .length;
   const falseNeg = oosResults.filter((r) => !r.electedIsOOS && r.expectedIsOOS)
     .length;
-
-  if (!options.silent) {
-    const confusionMatrix = {
-      electedIsOOScope: {
-        actualIsOOScope: truePos,
-        actualIsInScope: falsePos,
-      },
-      electedIsInScope: {
-        actualIsOOScope: falseNeg,
-        actualIsInScope: trueNeg,
-      },
-    };
-
-    console.log(chalk.green("OOS Confusion Matrix: "));
-    console.table(confusionMatrix);
-  }
 
   return {
     truePos,
@@ -84,34 +64,34 @@ const _computePerformance = (confusion: ConfusionMatrix): OOSPerformance => {
   return { accuracy, precision, recall, f1 };
 };
 
-export const showOOSConfusion: typeof sdk.metrics.showOOSConfusion = async (
+export const oosConfusion: typeof sdk.metrics.oosConfusion = async (
   results: sdk.Result<sdk.SingleLabel>[],
-  options?: Partial<sdk.ViewOptions>
+  options?: Partial<sdk.AggregateOptions>
 ) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
 
   let confusion: _.Dictionary<_.Dictionary<number>> = {};
-  if (resolvedOptions.aggregateBy === "all") {
-    confusion["all"] = _oosConfusion(results, resolvedOptions);
-  } else if (resolvedOptions.aggregateBy === "seed") {
+  if (resolvedOptions.groupBy === "all") {
+    confusion["all"] = _oosConfusion(results);
+  } else if (resolvedOptions.groupBy === "seed") {
     const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
 
     for (const seed of allSeeds) {
       const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const confusionForSeed = _oosConfusion(resultsOfSeed, resolvedOptions);
+      const confusionForSeed = _oosConfusion(resultsOfSeed);
       confusion = _.merge(
         {},
         confusion,
         _.mapValues(confusionForSeed, (x) => ({ [seed]: x }))
       );
     }
-  } else if (resolvedOptions.aggregateBy === "problem") {
+  } else if (resolvedOptions.groupBy === "problem") {
     const allProblems = _.uniq(results.map((r) => r.metadata.problem));
 
     for (const prob of allProblems) {
       const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const confusionForProb = _oosConfusion(resultsOfProb, resolvedOptions);
+      const confusionForProb = _oosConfusion(resultsOfProb);
       confusion = _.merge(
         {},
         confusion,
@@ -123,24 +103,23 @@ export const showOOSConfusion: typeof sdk.metrics.showOOSConfusion = async (
   return confusion;
 };
 
-export const showOOSPerformance: typeof sdk.metrics.showOOSPerformance = async (
+export const oosPerformance: typeof sdk.metrics.oosPerformance = async (
   results: sdk.Result<sdk.SingleLabel>[],
-  options?: Partial<sdk.ViewOptions>
+  options?: Partial<sdk.AggregateOptions>
 ) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
-  const confusionOption = { ...resolvedOptions, ...{ silent: true } };
 
   let oosPerformance: _.Dictionary<_.Dictionary<number>> = {};
-  if (resolvedOptions.aggregateBy === "all") {
-    const confusion = _oosConfusion(results, confusionOption);
+  if (resolvedOptions.groupBy === "all") {
+    const confusion = _oosConfusion(results);
     oosPerformance["all"] = _computePerformance(confusion);
-  } else if (resolvedOptions.aggregateBy === "seed") {
+  } else if (resolvedOptions.groupBy === "seed") {
     const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
 
     for (const seed of allSeeds) {
       const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const confusionForSeed = _oosConfusion(resultsOfSeed, confusionOption);
+      const confusionForSeed = _oosConfusion(resultsOfSeed);
       const oosPerformanceForSeed = _computePerformance(confusionForSeed);
       oosPerformance = _.merge(
         {},
@@ -148,12 +127,12 @@ export const showOOSPerformance: typeof sdk.metrics.showOOSPerformance = async (
         _.mapValues(oosPerformanceForSeed, (x) => ({ [seed]: x }))
       );
     }
-  } else if (resolvedOptions.aggregateBy === "problem") {
+  } else if (resolvedOptions.groupBy === "problem") {
     const allProblems = _.uniq(results.map((r) => r.metadata.problem));
 
     for (const prob of allProblems) {
       const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const confusionForProb = _oosConfusion(resultsOfProb, confusionOption);
+      const confusionForProb = _oosConfusion(resultsOfProb);
       const oosPerformanceForProb = _computePerformance(confusionForProb);
 
       oosPerformance = _.merge(
@@ -162,11 +141,6 @@ export const showOOSPerformance: typeof sdk.metrics.showOOSPerformance = async (
         _.mapValues(oosPerformanceForProb, (x) => ({ [prob]: x }))
       );
     }
-  }
-
-  if (!resolvedOptions.silent) {
-    console.log(chalk.green("OOS Accuracy, Precision and Recall"));
-    console.table(roundNumbers2Level(oosPerformance, 4));
   }
 
   return oosPerformance;

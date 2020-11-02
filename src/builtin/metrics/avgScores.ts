@@ -3,9 +3,8 @@ import _ from "lodash";
 import * as sdk from "src/bitfan";
 import { roundNumbers1Level } from "../../services/logging";
 
-const DEFAULT_OPTIONS: sdk.ViewOptions = {
-  aggregateBy: "all",
-  silent: false,
+const DEFAULT_OPTIONS: sdk.AggregateOptions = {
+  groupBy: "all",
 };
 
 const _avgByMetrics = <T extends sdk.ProblemType>(
@@ -39,11 +38,11 @@ const _discoverMetrics = <T extends sdk.ProblemType>(
   return _.uniq(allMetrics);
 };
 
-export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
+export const averageScores: typeof sdk.metrics.averageScores = async <
   T extends sdk.ProblemType
 >(
   results: sdk.Result<T>[],
-  options?: Partial<sdk.ViewOptions>
+  options?: Partial<sdk.AggregateOptions>
 ) => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
@@ -52,9 +51,9 @@ export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
 
   const metrics = _discoverMetrics(results);
 
-  if (resolvedOptions.aggregateBy === "all") {
+  if (resolvedOptions.groupBy === "all") {
     avgByMetrics["all"] = _avgByMetrics<T>(metrics, results);
-  } else if (resolvedOptions.aggregateBy === "seed") {
+  } else if (resolvedOptions.groupBy === "seed") {
     const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
 
     for (const seed of allSeeds) {
@@ -66,7 +65,7 @@ export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
         _.mapValues(avgByMetricsForSeed, (x) => ({ [seed]: x }))
       );
     }
-  } else if (resolvedOptions.aggregateBy === "problem") {
+  } else if (resolvedOptions.groupBy === "problem") {
     const allProblems = _.uniq(results.map((r) => r.metadata.problem));
 
     for (const prob of allProblems) {
@@ -78,11 +77,6 @@ export const showAverageScores: typeof sdk.metrics.showAverageScores = async <
         _.mapValues(avgByMetricsForProb, (x) => ({ [prob]: x }))
       );
     }
-  }
-
-  if (!options.silent) {
-    console.log(chalk.green(`Average Score By Metrics`));
-    console.table(avgByMetrics);
   }
 
   return avgByMetrics;
