@@ -3,7 +3,7 @@
   "type": "slot",
   "lang": "en",
   "variables": [{ "name": "restaurant", "types": ["any"] }],
-  "rows": [
+  "samples": [
     {
       "text": "I'm ready to vote for a restaurant",
       "label": []

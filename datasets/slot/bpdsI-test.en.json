@@ -2,7 +2,7 @@
   "name": "bpdsI-slot-test",
   "type": "slot",
   "lang": "en",
-  "rows": [
+  "samples": [
     {
       "text": "I'm heading to montreal to fire cherries on buildings",
       "label": [

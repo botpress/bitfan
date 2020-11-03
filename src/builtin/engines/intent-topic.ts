@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, makeKey, OOS, splitIntentTopic } from "../../services/labels";
+import { areSame, makeKey, OOS, splitIntentTopic } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -22,7 +22,7 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
     seed: number,
     progress: sdk.ProgressCb
   ) {
-    const samples = trainSet.rows.map((r) => ({
+    const samples = trainSet.samples.map((r) => ({
       ...r,
       ...splitIntentTopic(r.label),
     }));
@@ -73,7 +73,7 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
 
     let done = 0;
 
-    for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
+    for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
         batch.map((r) => r.text)
       );
@@ -108,7 +108,7 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
           prediction,
         });
 
-        progress(done++ / testSet.rows.length);
+        progress(done++ / testSet.samples.length);
       }
     }
     return results;

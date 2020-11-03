@@ -205,7 +205,7 @@
       { "name": "Zagreb", "synonyms": [] }
     ] 
   }],
-  "rows": [
+  "samples": [
     {
       "text": "I want to book a flight from Paris to Quebec",
       "label": [

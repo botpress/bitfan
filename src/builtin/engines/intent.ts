@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, makeKey } from "../../services/labels";
+import { areSame, getOOSLabel, makeKey } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -25,7 +25,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     seed: number,
     progress: sdk.ProgressCb
   ) {
-    const allLabels = _(trainSet.rows)
+    const allLabels = _(trainSet.samples)
       .flatMap((r) => r.label)
       .uniq()
       .value();
@@ -33,7 +33,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     const intents = allLabels.map((l) => ({
       name: makeKey(l),
       variables: [],
-      examples: trainSet.rows
+      examples: trainSet.samples
         .filter((r) => areSame(r.label, l))
         .map((r) => r.text),
     }));
@@ -60,19 +60,13 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     intents: IntentPred[],
     oos: number
   ): sdk.Understanding<"intent"> {
-    const noneIntent = intents.find((i) => i.label.toLowerCase() === NONE);
-
     const prediction: sdk.Understanding<"intent"> = _(intents)
       .map((i) => [i.label, i] as [string, IntentPred])
       .fromPairs()
       .mapValues((i) => i.confidence)
       .value();
-
-    delete prediction[NONE];
-    const noneConfidence = noneIntent?.confidence ?? 0;
-    prediction["oos"] = Math.max(oos, noneConfidence);
-
-    return prediction as sdk.Understanding<"intent">;
+    prediction[getOOSLabel()] = oos;
+    return prediction;
   }
 
   async predict(testSet: sdk.DataSet<"intent">, progress: sdk.ProgressCb) {
@@ -80,7 +74,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
 
     let done = 0;
 
-    for (const batch of _.chunk(testSet.rows, BATCH_SIZE)) {
+    for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
       const predictions = await this._stanProvider.predict(
         batch.map((r) => r.text)
       );
@@ -96,7 +90,7 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
           prediction,
         });
 
-        progress(done++ / testSet.rows.length);
+        progress(done++ / testSet.samples.length);
       }
     }
     return results;

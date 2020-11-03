@@ -1,48 +1,24 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
-import { roundNumbers } from "../../services/logging";
-import { isOOS } from "../../services/labels";
+import _ from "lodash";
+import { oosConfusion } from "../metrics/oos";
 
-import { electMostConfident } from "../metrics/intent";
-
-export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async <
-  T extends sdk.SingleLabel
->(
-  results: sdk.Result<T>[]
+export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async (
+  results: sdk.Result<sdk.SingleLabel>[]
 ) => {
-  const oosResults = results.map((r) => {
-    const elected = electMostConfident(r.prediction);
-    const expected = r.label;
-
-    return {
-      electedIsOOS: isOOS(elected),
-      expectedIsOOS: isOOS(expected),
-    };
-  });
-
-  const truePos = oosResults.filter((r) => r.electedIsOOS && r.expectedIsOOS);
-  const falsePos = oosResults.filter((r) => r.electedIsOOS && !r.expectedIsOOS);
-  const trueNeg = oosResults.filter((r) => !r.electedIsOOS && !r.expectedIsOOS);
-  const falseNeg = oosResults.filter((r) => !r.electedIsOOS && r.expectedIsOOS);
-
-  const accuracy = (truePos.length + trueNeg.length) / results.length;
-  const precision = truePos.length / (truePos.length + falsePos.length);
-  const recall = truePos.length / (truePos.length + falseNeg.length);
-
-  console.log(chalk.green("OOS Accuracy, Precision and Recall"));
-  console.table(roundNumbers({ accuracy, precision, recall }, 4));
+  const { truePos, falsePos, falseNeg, trueNeg } = oosConfusion(results);
 
   const confusionMatrix = {
-    electedIsOOScope: {
-      actualIsOOScope: truePos.length,
-      actualIsInScope: falsePos.length,
+    "elected is oo-scope": {
+      "actual is oo-scope": truePos,
+      "actual is in-scope": falsePos,
     },
-    electedIsInScope: {
-      actualIsOOScope: falseNeg.length,
-      actualIsInScope: trueNeg.length,
+    "elected is in-scope": {
+      "actual is oo-scope": falseNeg,
+      "actual is in-scope": trueNeg,
     },
   };
 
-  console.log(chalk.green("OOS ConfusionMatrix: "));
+  console.log(chalk.green("OOS Confusion Matrix: "));
   console.table(confusionMatrix);
 };

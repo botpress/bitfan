@@ -1,15 +1,15 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 
-export const slotBinaryScore: typeof sdk.metrics.slotBinaryScore = {
-  name: "slotBinaryScore",
+export const slotsAre: typeof sdk.criterias.slotsAre = {
+  name: "slotsAre",
   eval: (res: sdk.PredictOutput<"slot">): number => {
-    return slotScore.eval(res) === 1 && slotCount.eval(res) === 1 ? 1 : 0;
+    return slotIncludes.eval(res) === 1 && slotCountIs.eval(res) === 1 ? 1 : 0;
   },
 };
 
-export const slotScore: typeof sdk.metrics.slotScore = {
-  name: "slotScore",
+export const slotIncludes: typeof sdk.criterias.slotIncludes = {
+  name: "slotIncludes",
   eval: (res: sdk.PredictOutput<"slot">): number => {
     if (!res.label.length) {
       return 1;
@@ -26,8 +26,8 @@ export const slotScore: typeof sdk.metrics.slotScore = {
   },
 };
 
-export const slotCount: typeof sdk.metrics.slotCount = {
-  name: "slotCount",
+export const slotCountIs: typeof sdk.criterias.slotCountIs = {
+  name: "slotCountIs",
   eval: (res: sdk.PredictOutput<"slot">): number => {
     const success = res.label.length === Object.keys(res.prediction).length;
     return success ? 1 : 0;

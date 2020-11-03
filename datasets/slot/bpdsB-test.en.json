@@ -2,7 +2,7 @@
   "name": "bpdsB-slot-test",
   "type": "slot",
   "lang": "en",
-  "rows": [
+  "samples": [
     {
       "text": "buy pinaple",
       "label": [

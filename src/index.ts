@@ -1,22 +1,26 @@
 import _ from "lodash";
 import * as sdk from "src/bitfan";
 
-import {
-  mostConfidentBinaryScore,
-  oosBinaryScore,
-  topicBinaryScore,
-} from "./builtin/metrics/intent";
+import { labelIs, labelHasTopic } from "./builtin/criterias/intent";
+import { slotsAre, slotIncludes, slotCountIs } from "./builtin/criterias/slot";
 
-import { showSlotsResults } from "./builtin/visualisation/slots";
-import { showOOSConfusion } from "./builtin/visualisation/oos";
-import { showAverageScoreByMetric } from "./builtin/visualisation/metrics";
+import {
+  oosAccuracy,
+  oosPrecision,
+  oosRecall,
+  oosF1,
+} from "./builtin/metrics/oos";
+import { averageScore } from "./builtin/metrics/avgScores";
+
 import {
   showClassDistribution,
   showDatasetsSummary,
-} from "./builtin/visualisation/class-distribution";
+} from "./builtin/visualisation/dataset";
+import { showSlotsResults } from "./builtin/visualisation/slots";
+import { showOOSConfusion } from "./builtin/visualisation/oos";
+import { showReport } from "./builtin/visualisation/metrics";
 
-import DatasetRepository from "./services/dataset-repository";
-import { trainTestSplit } from "./builtin/tools/trainTestSplit";
+import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
@@ -24,15 +28,19 @@ import { BpTopicEngine } from "./builtin/engines/topic";
 import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { BpSlotEngine } from "./builtin/engines/slot";
 
-import { areSame, isOOS, makeKey } from "./services/labels";
+import { areSame, isOOS, makeKey } from "./builtin/labels";
+
 import runSolution from "./solution";
-import { slotBinaryScore, slotScore, slotCount } from "./builtin/metrics/slot";
+import makeReport from "./report";
+
+import DatasetRepository from "./services/dataset-repository";
 
 const dsRepo = new DatasetRepository();
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
+  makeReport,
 
   labels: {
     isOOS,
@@ -42,6 +50,7 @@ const impl: typeof sdk = {
 
   tools: {
     trainTestSplit,
+    subSample,
     splitOOS,
     pickOOS,
   },
@@ -100,28 +109,39 @@ const impl: typeof sdk = {
     },
   },
 
+  criterias: {
+    labelIs,
+    labelHasTopic,
+    slotsAre,
+    slotCountIs,
+    slotIncludes,
+  },
+
   metrics: {
-    mostConfidentBinaryScore,
-    oosBinaryScore,
-    topicBinaryScore,
-    slotBinaryScore,
-    slotCount,
-    slotScore,
+    averageScore,
+    oosAccuracy,
+    oosPrecision,
+    oosRecall,
+    oosF1,
   },
 
   visualisation: {
     showOOSConfusion,
-    showAverageScoreByMetric,
+    showReport,
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,
   },
 
   engines: {
-    BpTopicEngine,
-    BpIntentEngine,
-    BpIntentTopicEngine,
-    BpSlotEngine,
+    makeBpTopicEngine: (bpEndpoint: string, password: string) =>
+      new BpTopicEngine(bpEndpoint, password),
+    makeBpIntentEngine: (bpEndpoint: string, password: string) =>
+      new BpIntentEngine(bpEndpoint, password),
+    makeBpIntentTopicEngine: (bpEndpoint: string, password: string) =>
+      new BpIntentTopicEngine(bpEndpoint, password),
+    makeBpSlotEngine: (bpEndpoint: string, password: string) =>
+      new BpSlotEngine(bpEndpoint, password),
   },
 };
 

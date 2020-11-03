@@ -1,7 +1,7 @@
 {
   "lang": "en",
   "type": "intent",
-  "rows": [
+  "samples": [
     {
       "text": "I need to cancel my contract",
       "label": "f-cancellation"

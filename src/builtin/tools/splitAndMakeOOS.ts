@@ -1,13 +1,13 @@
-import { DataSet, SingleLabel, Row, tools, Label } from "bitfan/sdk";
+import { DataSet, SingleLabel, Sample, tools, Label } from "bitfan/sdk";
 import _ from "lodash";
-import { areSame } from "../../services/labels";
+import { areSame, getOOSLabel } from "../../builtin/labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
 export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   labels: Label<T>[]
 ) => {
-  const { rows } = dataset;
+  const { samples: rows } = dataset;
 
   const rowsOfLabels = rows.filter((r) =>
     labels.some((l) => areSame(r.label, l))
@@ -17,9 +17,9 @@ export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
     (r) => !labels.some((l) => areSame(r.label, l))
   );
 
-  const oosRows: Row<SingleLabel>[] = rowsOfLabels.map((r) => ({
+  const oosRows: Sample<SingleLabel>[] = rowsOfLabels.map((r) => ({
     ...r,
-    label: "oos",
+    label: getOOSLabel(),
   }));
 
   const inScopeSet = { ...dataset, rows: otherRows };
@@ -33,7 +33,7 @@ export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
   oosPercent: number,
   seed: number
 ) => {
-  const { rows } = dataset;
+  const { samples: rows } = dataset;
 
   const N = rows.length;
   const oosSize = oosPercent * N;
@@ -49,7 +49,7 @@ export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
   const shuffledLabels = lo.shuffle(allLabels);
 
   let i = 0;
-  const testRows: Row<T>[] = [];
+  const testRows: Sample<T>[] = [];
   const pickedLabels: Label<T>[] = [];
   while (testRows.length <= oosSize) {
     const label = shuffledLabels[i++];

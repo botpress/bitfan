@@ -4,7 +4,7 @@
   "lang": "en",
   "variables": [{ "name": "employe_to_fire", "types": ["email", "employe-number", "any"] }],
   "patterns": [{ "name": "employe-number", "regex": "[0-9]{6}", "case_sensitive": false }],
-  "rows": [
+  "samples": [
     {
       "text": "I want to fire François Xavier",
       "label": [

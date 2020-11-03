@@ -2,7 +2,7 @@
   "name": "bpdsD-slot-test",
   "type": "slot",
   "lang": "en",
-  "rows": [
+  "samples": [
     {
       "text": "vote for wendys",
       "label": [

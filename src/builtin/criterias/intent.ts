@@ -1,7 +1,7 @@
 import _ from "lodash";
 import * as sdk from "src/bitfan";
 
-import { areSame, isOOS, splitIntentTopic } from "../../services/labels";
+import { areSame, isOOS, splitIntentTopic } from "../../builtin/labels";
 
 const _electMostConfidents = (
   dict: _.Dictionary<number>,
@@ -21,8 +21,8 @@ export const electMostConfident = (
   return _electMostConfidents(dict, 1)[0];
 };
 
-export const mostConfidentBinaryScore: typeof sdk.metrics.mostConfidentBinaryScore = {
-  name: "mostConfidentBinaryScore",
+export const labelIs: typeof sdk.criterias.labelIs = {
+  name: "labelIs",
   eval: <T extends sdk.SingleLabel>(res: sdk.Result<T>): number => {
     const { prediction, label } = res;
     const elected = electMostConfident(prediction);
@@ -30,23 +30,8 @@ export const mostConfidentBinaryScore: typeof sdk.metrics.mostConfidentBinarySco
   },
 };
 
-export const oosBinaryScore: typeof sdk.metrics.oosBinaryScore = {
-  name: "oosBinaryScore",
-  eval: <T extends sdk.SingleLabel>(res: sdk.Result<T>): number => {
-    const { prediction, label } = res;
-    const elected = electMostConfident(prediction);
-
-    const expectedIsOOS = isOOS<sdk.SingleLabel>(label);
-    const actualIsOOS = isOOS<sdk.SingleLabel>(elected);
-    const testPass =
-      (expectedIsOOS && actualIsOOS) || (!expectedIsOOS && !actualIsOOS);
-
-    return testPass ? 1 : 0;
-  },
-};
-
-export const topicBinaryScore: typeof sdk.metrics.mostConfidentBinaryScore = {
-  name: "topicBinaryScore",
+export const labelHasTopic: typeof sdk.criterias.labelHasTopic = {
+  name: "labelHasTopic",
   eval: (res: sdk.Result<"intent-topic">): number => {
     const { prediction, label } = res;
     const elected = electMostConfident(prediction);
