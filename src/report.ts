@@ -16,7 +16,7 @@ export function _makeSingleLevelReport<T extends sdk.ProblemType>(
   return report;
 }
 
-const makeReport: typeof sdk.makeReport = <T extends sdk.ProblemType>(
+const evaluateMetrics: typeof sdk.evaluateMetrics = <T extends sdk.ProblemType>(
   results: sdk.Result<T>[],
   metrics: sdk.Metric<T>[],
   options?: Partial<sdk.AggregateOptions>
@@ -58,4 +58,4 @@ const makeReport: typeof sdk.makeReport = <T extends sdk.ProblemType>(
 
   return report;
 };
-export default makeReport;
+export default evaluateMetrics;

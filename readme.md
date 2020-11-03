@@ -138,8 +138,12 @@ async function main() {
   const seeds = [42, 69];
   const results = await bitfan.runSolution(solution, seeds);
 
-  const reportBySeed = bitfan.makeReport(results, metrics, { groupBy: "seed" });
-  const reportByProblem = bitfan.makeReport(results, metrics, { groupBy: "problem" });
+  const reportBySeed = bitfan.evaluateMetrics(results, metrics, {
+    groupBy: "seed",
+  });
+  const reportByProblem = bitfan.evaluateMetrics(results, metrics, {
+    groupBy: "problem",
+  });
 
   await bitfan.visualisation.showReport(reportBySeed);
   await bitfan.visualisation.showReport(reportByProblem);

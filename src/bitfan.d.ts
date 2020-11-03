@@ -3,7 +3,7 @@ export function runSolution<T extends ProblemType>(
   seeds: number[]
 ): Promise<Result<T>[]>;
 
-export function makeReport<T extends ProblemType>(
+export function evaluateMetrics<T extends ProblemType>(
   results: Result<T>[],
   metrics: Metric<T>[],
   options?: Partial<AggregateOptions>
@@ -163,7 +163,6 @@ export type Solution<T extends ProblemType> = {
   name: string;
   problems: Problem<T>[];
   engine: Engine<T>;
-  metrics: Metric<T>[];
   cb?: ResultViewer<T>;
 };
 

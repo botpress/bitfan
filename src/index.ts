@@ -31,7 +31,7 @@ import { BpSlotEngine } from "./builtin/engines/slot";
 import { areSame, isOOS, makeKey } from "./builtin/labels";
 
 import runSolution from "./solution";
-import makeReport from "./report";
+import evaluateMetrics from "./report";
 
 import DatasetRepository from "./services/dataset-repository";
 
@@ -40,7 +40,7 @@ const dsRepo = new DatasetRepository();
 // TODO: write actual implementation
 const impl: typeof sdk = {
   runSolution,
-  makeReport,
+  evaluateMetrics,
 
   labels: {
     isOOS,
