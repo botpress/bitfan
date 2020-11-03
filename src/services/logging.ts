@@ -27,16 +27,6 @@ export const flipTable = (table: _.Dictionary<_.Dictionary<number>>) => {
   return flipped;
 };
 
-export const roundNumbers2Level = (
-  table: _.Dictionary<_.Dictionary<number>>,
-  precision = 4
-) => {
-  return _.mapValues(table, (t) => roundNumbers1Level(t, precision));
-};
-
-export const roundNumbers1Level = (
-  table: _.Dictionary<number>,
-  precision = 4
-) => {
+export const roundNumbers = (table: _.Dictionary<number>, precision = 4) => {
   return _.mapValues(table, (v) => (_.isNumber(v) ? _.round(v, precision) : v));
 };

@@ -1,7 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
-import { roundNumbers2Level } from "../../services/logging";
 import { oosConfusion } from "../metrics/oos";
 
 export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async (
@@ -21,5 +20,5 @@ export const showOOSConfusion: typeof sdk.visualisation.showOOSConfusion = async
   };
 
   console.log(chalk.green("OOS Confusion Matrix: "));
-  console.table(roundNumbers2Level(confusionMatrix, 4));
+  console.table(confusionMatrix);
 };
