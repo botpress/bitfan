@@ -49,7 +49,7 @@ export default function comparePerformances(
   }
 
   const defaultTolerance = initDictionnary(currentMetrics, () => 0);
-  const userDefinedTolerance = options?.toleranceByMetrics ?? {};
+  const userDefinedTolerance = options?.toleranceByMetric ?? {};
   const toleranceByMetric = {
     ...defaultTolerance,
     ...userDefinedTolerance,

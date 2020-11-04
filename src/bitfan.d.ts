@@ -307,7 +307,7 @@ export type ComparisonReport = {
 };
 
 export type CompareOptions = {
-  toleranceByMetrics: Dic<number>;
+  toleranceByMetric: Dic<number>;
 };
 
 /**
