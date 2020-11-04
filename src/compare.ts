@@ -9,11 +9,10 @@ export default function comparePerformances(
   options?: Partial<sdk.CompareOptions>
 ): sdk.ComparisonReport {
   if (currentPerformance.groupedBy !== previousPerformance.groupedBy) {
-    throw new Error(
-      `Bitfan can only compare two performances if both are grouped the same way.\n
-      Currently trying to compare a report by ${currentPerformance.groupedBy} 
-      with a report by ${previousPerformance.groupedBy}`
-    );
+    let msg =
+      "Bitfan can only compare two performances if both are grouped the same way.\n" +
+      `Currently trying to compare a report by ${currentPerformance.groupedBy} with a report by ${previousPerformance.groupedBy}.`;
+    throw new Error(msg);
   }
 
   const currentMetrics = _.uniq(
@@ -26,10 +25,11 @@ export default function comparePerformances(
     const diff = currentMetrics
       .filter((m) => !previousMetrics.includes(m))
       .join(", ");
-    throw new Error(
-      `Bitfan can only compare two performances if both are evaluated on the same metrics.\n
-      Metrics [${diff}] seems to not be available in previous report.`
-    );
+
+    let msg =
+      "Bitfan can only compare two performances if both are evaluated on the same metrics.\n" +
+      `Metrics [${diff}] seems to not be available in previous report.`;
+    throw new Error(msg);
   }
 
   const currentGroups = _.uniq(
@@ -42,10 +42,10 @@ export default function comparePerformances(
     const diff = currentGroups
       .filter((g) => !previousGroups.includes(g))
       .join(", ");
-    throw new Error(
-      `Bitfan can only compare two performances if both are evaluated on the same seed or problem.
-      Groups [${diff}] seems to not be available in previous report.`
-    );
+    let msg =
+      "Bitfan can only compare two performances if both are evaluated on the same seed or problem.\n" +
+      `Groups [${diff}] seems to not be available in previous report.`;
+    throw new Error(msg);
   }
 
   const defaultTolerance = initDictionnary(currentMetrics, () => 0);

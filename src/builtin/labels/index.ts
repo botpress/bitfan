@@ -8,13 +8,11 @@ export const areSame = <T extends sdk.ProblemType>(
   label2: sdk.Label<T>
 ): boolean => {
   if (typeof label1 !== typeof label2) {
-    throw new Error(
-      `Both labels must share the same types.\nlabel1=${JSON.stringify(
-        label1,
-        undefined,
-        2
-      )}, label2=${JSON.stringify(label2, undefined, 2)}`
-    );
+    let msg =
+      "Both labels must share the same types.\n" +
+      `label1=${JSON.stringify(label1, undefined, 2)}, ` +
+      `label2=${JSON.stringify(label2, undefined, 2)}`;
+    throw new Error(msg);
   }
   if (typeof label1 === "string") {
     return label1 === label2;
@@ -54,9 +52,10 @@ export const splitIntentTopic = (
 ): { intent: string; topic: string } => {
   const splitted = label.split("/");
   if (splitted.length < 2) {
-    throw new Error(
-      `intent-topic problems ask for the label to be formated as "topic/intent".\nLabel "${label}" as no forward slash...`
-    );
+    let msg =
+      'intent-topic problems ask for the label to be formated as "topic/intent".\n' +
+      `Label "${label}" as no forward slash...`;
+    throw new Error(msg);
   }
   const topic = splitted.shift()!;
   const intent = splitted.join("");

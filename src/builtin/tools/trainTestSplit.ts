@@ -25,9 +25,8 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
   testSet: DataSet<T>;
 } => {
   if (trainPercent < 0 || trainPercent > 1) {
-    throw new Error(
-      `trainTestSplit function cannot make a train set with ${trainPercent} of all samples. Must be between 0 and 1`
-    );
+    let msg = `trainTestSplit function cannot make a train set with ${trainPercent} of all samples. Must be between 0 and 1`;
+    throw new Error(msg);
   }
 
   const seededLodashProvider = new SeededLodashProvider();
