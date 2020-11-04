@@ -18,7 +18,7 @@ import {
 } from "./builtin/visualisation/dataset";
 import { showSlotsResults } from "./builtin/visualisation/slots";
 import { showOOSConfusion } from "./builtin/visualisation/oos";
-import { showReport } from "./builtin/visualisation/metrics";
+import { showReport } from "./builtin/visualisation/report";
 
 import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
@@ -32,6 +32,7 @@ import { areSame, isOOS, makeKey } from "./builtin/labels";
 
 import runSolution from "./solution";
 import evaluateMetrics from "./report";
+import comparePerformances from "./compare";
 
 import DatasetRepository from "./services/dataset-repository";
 
@@ -41,6 +42,7 @@ const dsRepo = new DatasetRepository();
 const impl: typeof sdk = {
   runSolution,
   evaluateMetrics,
+  comparePerformances,
 
   labels: {
     isOOS,

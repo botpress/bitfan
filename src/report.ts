@@ -1,61 +1,54 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 
-const DEFAULT_OPTIONS: sdk.AggregateOptions = {
+const DEFAULT_OPTIONS: sdk.ReportOptions = {
   groupBy: "all",
 };
 
 export function _makeSingleLevelReport<T extends sdk.ProblemType>(
   results: sdk.Result<T>[],
-  metrics: sdk.Metric<T>[]
-): sdk.Dic<number> {
-  let report: sdk.Dic<number> = {};
-  for (const metric of metrics) {
-    report[metric.name] = metric.eval(results);
-  }
-  return report;
+  metrics: sdk.Metric<T>[],
+  group: string
+): sdk.ScoreInfo[] {
+  return metrics.map((m) => ({
+    metric: m.name,
+    group,
+    score: m.eval(results),
+  }));
 }
 
 const evaluateMetrics: typeof sdk.evaluateMetrics = <T extends sdk.ProblemType>(
   results: sdk.Result<T>[],
   metrics: sdk.Metric<T>[],
-  options?: Partial<sdk.AggregateOptions>
+  options?: Partial<sdk.ReportOptions>
 ): sdk.PerformanceReport => {
   options = options ?? {};
   const resolvedOptions = { ...DEFAULT_OPTIONS, ...options };
 
-  let report: sdk.PerformanceReport = {};
+  const scores: sdk.ScoreInfo[] = [];
 
   if (resolvedOptions.groupBy === "all") {
-    report = _.mapValues(_makeSingleLevelReport(results, metrics), (x) => ({
-      ["all"]: x,
-    }));
+    scores.push(..._makeSingleLevelReport(results, metrics, "all"));
   } else if (resolvedOptions.groupBy === "seed") {
     const allSeeds = _.uniq(results.map((r) => r.metadata.seed));
 
     for (const seed of allSeeds) {
       const resultsOfSeed = results.filter((r) => r.metadata.seed === seed);
-      const avgForSeed = _makeSingleLevelReport(resultsOfSeed, metrics);
-      report = _.merge(
-        {},
-        report,
-        _.mapValues(avgForSeed, (x) => ({ [seed]: x }))
-      );
+      scores.push(..._makeSingleLevelReport(resultsOfSeed, metrics, `${seed}`));
     }
   } else if (resolvedOptions.groupBy === "problem") {
     const allProblems = _.uniq(results.map((r) => r.metadata.problem));
 
     for (const prob of allProblems) {
       const resultsOfProb = results.filter((r) => r.metadata.problem === prob);
-      const avgForProb = _makeSingleLevelReport(resultsOfProb, metrics);
-      report = _.merge(
-        {},
-        report,
-        _.mapValues(avgForProb, (x) => ({ [prob]: x }))
-      );
+      scores.push(..._makeSingleLevelReport(resultsOfProb, metrics, prob));
     }
   }
 
-  return report;
+  return {
+    generatedOn: new Date(),
+    groupedBy: resolvedOptions.groupBy,
+    scores,
+  };
 };
 export default evaluateMetrics;

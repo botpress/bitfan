@@ -23,7 +23,7 @@ export const electMostConfident = (
 
 export const labelIs: typeof sdk.criterias.labelIs = {
   name: "labelIs",
-  eval: <T extends sdk.SingleLabel>(res: sdk.Result<T>): number => {
+  eval: <T extends sdk.SingleLabel>(res: sdk.PredictOutput<T>): number => {
     const { prediction, label } = res;
     const elected = electMostConfident(prediction);
     return areSame<sdk.SingleLabel>(label, elected) ? 1 : 0;
@@ -32,7 +32,7 @@ export const labelIs: typeof sdk.criterias.labelIs = {
 
 export const labelHasTopic: typeof sdk.criterias.labelHasTopic = {
   name: "labelHasTopic",
-  eval: (res: sdk.Result<"intent-topic">): number => {
+  eval: (res: sdk.PredictOutput<"intent-topic">): number => {
     const { prediction, label } = res;
     const elected = electMostConfident(prediction);
 

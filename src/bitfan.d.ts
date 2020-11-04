@@ -6,8 +6,14 @@ export function runSolution<T extends ProblemType>(
 export function evaluateMetrics<T extends ProblemType>(
   results: Result<T>[],
   metrics: Metric<T>[],
-  options?: Partial<AggregateOptions>
+  options?: Partial<ReportOptions>
 ): PerformanceReport;
+
+export function comparePerformances(
+  currentPerformance: PerformanceReport,
+  previousPerformance: PerformanceReport,
+  options?: Partial<CompareOptions>
+): ComparisonReport;
 
 export namespace datasets {
   export namespace bpds {
@@ -256,8 +262,9 @@ export type Result<T extends ProblemType> = PredictOutput<T> & {
   };
 };
 
-export type AggregateOptions = {
-  groupBy: "seed" | "problem" | "all";
+export type AggregateOptions = "seed" | "problem" | "all";
+export type ReportOptions = {
+  groupBy: AggregateOptions;
 };
 
 export type ResultViewer<T extends ProblemType, O extends Object = {}> = (
@@ -269,7 +276,39 @@ export type DatasetViewer<T extends ProblemType> = (
   ...datasets: DataSet<T>[]
 ) => void;
 
-export type PerformanceReport = Dic<Dic<number>>;
+export type ScoreInfo = {
+  metric: string;
+  group: string;
+  score: number;
+};
+
+export type PerformanceReport = {
+  generatedOn: Date;
+  groupedBy: AggregateOptions;
+  scores: ScoreInfo[];
+};
+
+export type RegressionStatus =
+  | "success"
+  | "regression"
+  | "tolerated-regression";
+
+export type RegressionReason = {
+  metric: string;
+  group: string;
+  currentScore: number;
+  previousScore: number;
+  allowedRegression: number;
+};
+
+export type ComparisonReport = {
+  status: RegressionStatus;
+  reasons: RegressionReason[];
+};
+
+export type CompareOptions = {
+  toleranceByMetrics: Dic<number>;
+};
 
 /**
  * @description Function that compute a performance score given the whole results.
