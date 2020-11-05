@@ -65,11 +65,6 @@ export namespace datasets {
       }
     }
   }
-
-  export namespace covid {
-    const en: DataSet<"intent">;
-    const fr: DataSet<"intent">;
-  }
 }
 
 export namespace criterias {

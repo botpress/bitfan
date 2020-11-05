@@ -105,10 +105,6 @@ const impl: typeof sdk = {
         },
       },
     },
-    covid: {
-      en: dsRepo.getDataset("intent", "en", "covid"),
-      fr: dsRepo.getDataset("intent", "fr", "covid"),
-    },
   },
 
   criterias: {

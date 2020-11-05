@@ -683,34 +683,6 @@
       "label": "a-cancellation"
     },
     {
-      "text": "help",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "I need assistance",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "give me assistance",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "I want help",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "give me help",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "I want assistance",
-      "label": "a-disambiguation"
-    },
-    {
-      "text": "How can I get help",
-      "label": "a-disambiguation"
-    },
-    {
       "text": "hello",
       "label": "oos"
     },
