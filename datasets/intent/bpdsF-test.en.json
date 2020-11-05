@@ -487,34 +487,6 @@
       "label": "f-cancellation"
     },
     {
-      "text": "help",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "I need assistance",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "give me assistance",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "I want help",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "give me help",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "I want assistance",
-      "label": "f-disambiguation"
-    },
-    {
-      "text": "How can I get help",
-      "label": "f-disambiguation"
-    },
-    {
       "text": "hello",
       "label": "oos"
     },
