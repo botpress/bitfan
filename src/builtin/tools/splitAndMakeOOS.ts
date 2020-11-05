@@ -7,23 +7,23 @@ export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   labels: Label<T>[]
 ) => {
-  const { samples: rows } = dataset;
+  const { samples } = dataset;
 
-  const rowsOfLabels = rows.filter((r) =>
+  const samplesOfLabel = samples.filter((r) =>
     labels.some((l) => areSame(r.label, l))
   );
 
-  const otherRows = rows.filter(
+  const otherSamples = samples.filter(
     (r) => !labels.some((l) => areSame(r.label, l))
   );
 
-  const oosRows: Sample<SingleLabel>[] = rowsOfLabels.map((r) => ({
+  const oosSamples: Sample<SingleLabel>[] = samplesOfLabel.map((r) => ({
     ...r,
     label: getOOSLabel(),
   }));
 
-  const inScopeSet = { ...dataset, rows: otherRows };
-  const ooScopeSet = { ...dataset, rows: oosRows };
+  const inScopeSet: DataSet<T> = { ...dataset, samples: otherSamples };
+  const ooScopeSet: DataSet<T> = { ...dataset, samples: oosSamples };
 
   return { inScopeSet, ooScopeSet };
 };
@@ -33,9 +33,9 @@ export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
   oosPercent: number,
   seed: number
 ) => {
-  const { samples: rows } = dataset;
+  const { samples } = dataset;
 
-  const N = rows.length;
+  const N = samples.length;
   const oosSize = oosPercent * N;
 
   const seededLodashProvider = new SeededLodashProvider();
@@ -43,18 +43,18 @@ export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
   const lo = seededLodashProvider.getSeededLodash();
 
   const allLabels = lo.uniqWith(
-    rows.map((r) => r.label),
+    samples.map((r) => r.label),
     areSame
   );
   const shuffledLabels = lo.shuffle(allLabels);
 
   let i = 0;
-  const testRows: Sample<T>[] = [];
+  const testSamples: Sample<T>[] = [];
   const pickedLabels: Label<T>[] = [];
-  while (testRows.length <= oosSize) {
+  while (testSamples.length <= oosSize) {
     const label = shuffledLabels[i++];
-    const rowsOfLabel = rows.filter((r) => areSame(r.label, label));
-    testRows.push(...rowsOfLabel);
+    const samplesOfLabel = samples.filter((r) => areSame(r.label, label));
+    testSamples.push(...samplesOfLabel);
     pickedLabels.push(label);
   }
 

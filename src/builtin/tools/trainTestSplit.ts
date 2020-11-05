@@ -57,8 +57,8 @@ export const trainTestSplit: typeof tools.trainTestSplit = <
 
   seededLodashProvider.resetSeed();
 
-  const trainSet = { ...dataset, rows: trainSamples };
-  const testSet = { ...dataset, rows: testSamples };
+  const trainSet: DataSet<T> = { ...dataset, samples: trainSamples };
+  const testSet: DataSet<T> = { ...dataset, samples: testSamples };
   return {
     trainSet,
     testSet,

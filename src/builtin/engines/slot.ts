@@ -17,9 +17,9 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
   }
 
   train(trainSet: sdk.DataSet<"slot">, seed: number, progress: sdk.ProgressCb) {
-    const { enums, patterns, lang, samples: rows, variables } = trainSet;
+    const { enums, patterns, lang, samples, variables } = trainSet;
 
-    const examples = rows.map((r) => {
+    const examples = samples.map((r) => {
       const { text, label } = r;
 
       let sanitized = `${text}`;

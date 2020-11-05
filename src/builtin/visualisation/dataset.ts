@@ -59,10 +59,10 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = (
 const _getClassDistributionForOneSet = <T extends ProblemType>(
   dataset: DataSet<T>
 ) => {
-  const { samples: rows } = dataset;
+  const { samples } = dataset;
 
   const allLabels = _.uniqWith(
-    rows.map((r) => r.label),
+    samples.map((r) => r.label),
     areSame
   );
 
@@ -71,10 +71,10 @@ const _getClassDistributionForOneSet = <T extends ProblemType>(
     allLabels.map((x) => 0)
   );
 
-  const N = rows.length;
+  const N = samples.length;
   for (const label of allLabels) {
     distribution[makeKey(label)] =
-      rows.filter((r) => areSame(label, r.label)).length / N;
+      samples.filter((r) => areSame(label, r.label)).length / N;
   }
 
   return distribution;
