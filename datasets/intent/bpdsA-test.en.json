@@ -4,331 +4,87 @@
   "samples": [
     {
       "text": "What is the contact number?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
-      "text": "WHAT IS THE CONTACT NUMBER?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "WHAT is THE contact NUMBER",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "what is the contact number",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "what    is the contact number    ?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "WHAT... IS THE CONTACT NUMBER?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "what ; is ; your ; contact number ?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "? contact number, please!",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "      what is contact number",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Where can I find your ladnline?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Please help with technical isseu",
-      "label": "a-problem"
-    },
-    {
-      "text": "I want to amend my staetment",
-      "label": "a-bill-inquiry"
-    },
-    {
-      "text": "how do I go about cnacelling",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "I've got a probelm with login",
-      "label": "a-problem"
-    },
-    {
-      "text": "Why is my screen lokced?",
-      "label": "oos"
-    },
-    {
-      "text": "hellpine please!",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "hellpine",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "isseu",
-      "label": "a-problem"
-    },
-    {
-      "text": "teck isseu",
-      "label": "a-problem"
-    },
-    {
-      "text": "Where can I find your lsndline?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Please help with technical issye",
-      "label": "a-problem"
-    },
-    {
-      "text": "I want to amend my statrment",
-      "label": "a-bill-inquiry"
-    },
-    {
-      "text": "how do I go about csncelling",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "I've got a problen with login",
-      "label": "a-problem"
-    },
-    {
-      "text": "Why is my screen lockef?",
-      "label": "oos"
-    },
-    {
-      "text": "Got a ptobkem",
-      "label": "a-problem"
-    },
-    {
-      "text": "ptobkem",
-      "label": "a-problem"
-    },
-    {
-      "text": "teck ptobkem",
-      "label": "a-problem"
-    },
-    {
-      "text": "Where can I find your lndline?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Please help with technical ssue",
-      "label": "a-problem"
-    },
-    {
-      "text": "I want to amend my statment",
-      "label": "a-bill-inquiry"
-    },
-    {
-      "text": "how do I go about cncelling",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "I've got a poblem with login",
-      "label": "a-problem"
-    },
-    {
-      "text": "Why is my screen lcked?",
-      "label": "oos"
-    },
-    {
-      "text": "lgin problm",
-      "label": "a-problem"
-    },
-    {
-      "text": "scren loked",
-      "label": "oos"
-    },
-    {
-      "text": "problm",
-      "label": "a-problem"
-    },
-    {
-      "text": "teck problm",
-      "label": "a-problem"
-    },
-    {
-      "text": "What isthe contact number",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "contactnumber",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "I'm having some trouble tologin",
-      "label": "a-problem"
-    },
-    {
-      "text": "trouble tologin",
-      "label": "a-problem"
-    },
-    {
-      "text": "loginproblem",
-      "label": "a-problem"
-    },
-    {
-      "text": "screenlocked",
-      "label": "oos"
-    },
-    {
-      "text": "Whats the contactnumer",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "How can Icanncel",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "How can Icancerl",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "Where tofind your land line?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "teckproblem",
-      "label": "a-problem"
+      "text": "? contact number, please!", 
+      "label": "contact-details"
     },
     {
       "text": "Where can I find your landlines?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Please help with technical issues",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to amend my statements",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "how do I go about cancellings",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I've got a problems with logins",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Why are my screens locked?",
       "label": "oos"
     },
     {
-      "text": "Where can I find your landlinne?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Please help with technnical issue",
-      "label": "a-problem"
-    },
-    {
-      "text": "I want to amend my statemment",
-      "label": "a-bill-inquiry"
-    },
-    {
-      "text": "how do I go abbout cancelling",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "I've got a problem with loggin",
-      "label": "a-problem"
-    },
-    {
-      "text": "Why are my screen lockked",
-      "label": "oos"
-    },
-    {
-      "text": "Where can I find your lasndline?",
-      "label": "a-contact-details"
-    },
-    {
-      "text": "Please help with tecvhnical issue",
-      "label": "a-problem"
-    },
-    {
-      "text": "I want to amend my statrement",
-      "label": "a-bill-inquiry"
-    },
-    {
-      "text": "how do I go about cancellinfg",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "I've got a problem with logfin",
-      "label": "a-problem"
-    },
-    {
-      "text": "Why are my screen lockerd",
-      "label": "oos"
-    },
-    {
-      "text": "canbcel",
-      "label": "a-cancellation"
-    },
-    {
-      "text": "Where can I find your land line?",
-      "label": "a-contact-details"
-    },
-    {
       "text": "There's a problem with my screen",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "They're is a problem with my screen",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Theirs a problem with my screen",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I am experiencing difficulties using the system",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I need techniqual support",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I need technical support",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I'm experiencing dificulties using the system",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I'm experiencing difficuleties using the system",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Where can I fidn your ladnline?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Please help with techniqual isseu",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to ammend my staetment",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "how do I go about cnaceling",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I've got a probelm with loggin",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Why are my screens lokced?",
@@ -396,291 +152,291 @@
     },
     {
       "text": "There is a problem with my screen",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I've got a problem with login",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I've got an error when trying to loging",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I've got a problem with my results",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "There is a problem with the result",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "hpow do I go about getting help for an issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "There is an error in the result",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I can't continue with my subscription",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I have an inquiry about termination",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I am unsatisfied, I want to cancel my account",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "how can I cancel your service",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
-      "text": "I want to stop my business relationship withyou",
-      "label": "a-cancellation"
+      "text": "I want to stop my business relationship with you",
+      "label": "cancellation"
     },
     {
       "text": "please help me cancel this service",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "how do I go about cancelling",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "please help end my subscription",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "help cancel contract",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "who do I contact to cancel",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I need my bill amended",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "Rectify my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "Details of my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I got an error on my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I am facing an issue with my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "something is not working with my statement",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "terminate my monthly subscription",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "Please give me my statement",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I want to resolve a billing issue",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I want to amend my statement",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I want to verify a charge",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I want to amend my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "I believe there is an error on my bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "technical problem",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Please help with technical support",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Please help with technical issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I need advice regarding my technical issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Please give me your tech support",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to resolve an IT issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to resolve a technical issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to solve a problem",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I have bugs",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I want to solve some bugs",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I am facing several bugs",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "there is a major bug",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "there is a major glitch",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "I have an inquiry about an IT issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "Tech help",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "contract number",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "how can I reach you",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I need to talk to someone",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Where can I find your landline?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Do you have an 1-800 number?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I want to find your phone line",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I want to find your number",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I can't seem to locate your help line",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I want to locate your toll free line",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "May I inquire about your contact number",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "I inquire your contact number",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "how do I go about reaching out to you",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "how do I go about contacting you",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "What number can I call to make an inquiry",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Do you have toll free line?",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Is there someone I can talk to",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "contact",
-      "label": "a-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "IT issue",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "IT problem",
-      "label": "a-problem"
+      "label": "problem"
     },
     {
       "text": "help with bill",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "help statement",
-      "label": "a-bill-inquiry"
+      "label": "bill-inquiry"
     },
     {
       "text": "help cancellation",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "cancel",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "cancellation inquiry",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "termination inquiry",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "terminate",
-      "label": "a-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "hello",

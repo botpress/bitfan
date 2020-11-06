@@ -3,272 +3,52 @@
   "type": "intent",
   "samples": [
     {
-      "text": "Where can I find your ladnline?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with technical isseu",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go about cnacelling",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a probelm with login",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why is my screen lokced?",
-      "label": "oos"
-    },
-    {
-      "text": "hellpine please!",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "hellpine",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "isseu",
-      "label": "f-problem"
-    },
-    {
-      "text": "teck isseu",
-      "label": "f-problem"
-    },
-    {
-      "text": "Where can I find your lsndline?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with technical issye",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go about csncelling",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a problen with login",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why is my screen lockef?",
-      "label": "oos"
-    },
-    {
-      "text": "Got a ptobkem",
-      "label": "f-problem"
-    },
-    {
-      "text": "ptobkem",
-      "label": "f-problem"
-    },
-    {
-      "text": "teck ptobkem",
-      "label": "f-problem"
-    },
-    {
-      "text": "Where can I find your lndline?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with technical ssue",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go about cncelling",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a poblem with login",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why is my screen lcked?",
-      "label": "oos"
-    },
-    {
-      "text": "lgin problm",
-      "label": "f-problem"
-    },
-    {
-      "text": "scren loked",
-      "label": "oos"
-    },
-    {
-      "text": "problm",
-      "label": "f-problem"
-    },
-    {
-      "text": "teck problm",
-      "label": "f-problem"
-    },
-    {
-      "text": "What isthe contact number",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "contactnumber",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "I'm having some trouble tologin",
-      "label": "f-problem"
-    },
-    {
-      "text": "trouble tologin",
-      "label": "f-problem"
-    },
-    {
-      "text": "loginproblem",
-      "label": "f-problem"
-    },
-    {
-      "text": "screenlocked",
-      "label": "oos"
-    },
-    {
-      "text": "Whats the contactnumer",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "How can Icanncel",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "How can Icancerl",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "Where tofind your land line?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "teckproblem",
-      "label": "f-problem"
-    },
-    {
       "text": "Where can I find your landlines?",
-      "label": "f-contact-details"
+      "label": "contact-details"
     },
     {
       "text": "Please help with technical issues",
-      "label": "f-problem"
+      "label": "problem"
+    },
+    {
+      "text": "I want to amend my statements",
+      "label": "bill-inquiry"
     },
     {
       "text": "how do I go about cancellings",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I've got a problems with logins",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "Why are my screens locked?",
       "label": "oos"
     },
     {
-      "text": "Where can I find your landlinne?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with technnical issue",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go abbout cancelling",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a problem with loggin",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why are my screen lockked",
-      "label": "oos"
-    },
-    {
-      "text": "Where can I find your lasndline?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with tecvhnical issue",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go about cancellinfg",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a problem with logfin",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why are my screen lockerd",
-      "label": "oos"
-    },
-    {
-      "text": "canbcel",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "Where can I find your land line?",
-      "label": "f-contact-details"
-    },
-    {
       "text": "There's a problem with my screen",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "They're is a problem with my screen",
-      "label": "f-problem"
-    },
-    {
-      "text": "Theirs a problem with my screen",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I am experiencing difficulties using the system",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I need techniqual support",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I need technical support",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I'm experiencing dificulties using the system",
-      "label": "f-problem"
-    },
-    {
-      "text": "I'm experiencing difficuleties using the system",
-      "label": "f-problem"
-    },
-    {
-      "text": "Where can I fidn your ladnline?",
-      "label": "f-contact-details"
-    },
-    {
-      "text": "Please help with techniqual isseu",
-      "label": "f-problem"
-    },
-    {
-      "text": "how do I go about cnaceling",
-      "label": "f-cancellation"
-    },
-    {
-      "text": "I've got a probelm with loggin",
-      "label": "f-problem"
-    },
-    {
-      "text": "Why are my screens lokced?",
-      "label": "oos"
+      "label": "problem"
     },
     {
       "text": "I can not unlock my screen",
@@ -320,71 +100,71 @@
     },
     {
       "text": "There is a problem with my screen",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I've got a problem with login",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I've got an error when trying to loging",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I've got a problem with my results",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "There is a problem with the result",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
-      "text": "hpow do I go about getting help for an issue",
-      "label": "f-problem"
+      "text": "how do I go about getting help for an issue",
+      "label": "problem"
     },
     {
       "text": "There is an error in the result",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I can't continue with my subscription",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I have an inquiry about termination",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I am unsatisfied, I want to cancel my account",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "how can I cancel your service",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
-      "text": "I want to stop my business relationship withyou",
-      "label": "f-cancellation"
+      "text": "I want to stop my business relationship with you",
+      "label": "cancellation"
     },
     {
       "text": "please help me cancel this service",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "how do I go about cancelling",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "please help end my subscription",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "help cancel contract",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "who do I contact to cancel",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "I need my bill amended",
@@ -420,71 +200,71 @@
     },
     {
       "text": "Please help with technical issue",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I need advice regarding my technical issue",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I want to resolve an IT issue",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I want to resolve a technical issue",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I want to solve a problem",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I have bugs",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I want to solve some bugs",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I am facing several bugs",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "there is a major bug",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "there is a major glitch",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "I have an inquiry about an IT issue",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "Tech help",
-      "label": "f-problem"
+      "label": "problem"
     },
     {
       "text": "help cancellation",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "cancel",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "cancellation inquiry",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "termination inquiry",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "terminate",
-      "label": "f-cancellation"
+      "label": "cancellation"
     },
     {
       "text": "hello",
