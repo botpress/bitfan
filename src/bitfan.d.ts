@@ -68,6 +68,10 @@ export namespace datasets {
 }
 
 export namespace criterias {
+  /**
+   * @description Most basic criteria.
+   * @returns 1 if most confident label is the expected one and 0 else
+   */
   export const labelIs: Criteria<SingleLabel>;
   export const labelHasTopic: Criteria<"intent-topic">;
 
@@ -81,6 +85,16 @@ export namespace metrics {
     criteria: Criteria<T>
   ) => Metric<T>;
 
+  /**
+   * @description Equivalent to computing average score with criteria "labelIs"
+   * @returns Accuracy of correctly identified labels, using the most confident as the elected one
+   */
+  export const accuracy: Metric<SingleLabel>;
+
+  /**
+   * @description Accuracy metrics computed only on in-scope samples. Elects most confident label, but ignore OOS.
+   */
+  export const inScopeAccuracy: Metric<SingleLabel>;
   export const oosAccuracy: Metric<SingleLabel>;
   export const oosPrecision: Metric<SingleLabel>;
   export const oosRecall: Metric<SingleLabel>;
