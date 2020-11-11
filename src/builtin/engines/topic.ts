@@ -12,6 +12,7 @@ const BATCH_SIZE = 10;
 
 export class BpTopicEngine implements sdk.Engine<"topic"> {
   private _stanProvider: StanProvider;
+  private _skipTraining: boolean;
 
   constructor(
     bpEndpoint: string,
@@ -19,13 +20,18 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
     opt?: Partial<sdk.BpEngineOptions>
   ) {
     this._stanProvider = new StanProvider(bpEndpoint, password, opt);
+    this._skipTraining = _.isString(opt?.modelId);
   }
 
-  train(
+  async train(
     trainSet: sdk.DataSet<"topic">,
     seed: number,
     progress: sdk.ProgressCb
   ) {
+    if (this._skipTraining) {
+      return;
+    }
+
     const samples = trainSet.samples;
 
     const allTopics = _(samples)

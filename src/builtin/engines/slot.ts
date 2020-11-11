@@ -11,6 +11,7 @@ const BATCH_SIZE = 10;
 
 export class BpSlotEngine implements sdk.Engine<"slot"> {
   private _stanProvider: StanProvider;
+  private _skipTraining: boolean;
 
   constructor(
     bpEndpoint: string,
@@ -18,9 +19,18 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
     opt?: Partial<sdk.BpEngineOptions>
   ) {
     this._stanProvider = new StanProvider(bpEndpoint, password, opt);
+    this._skipTraining = _.isString(opt?.modelId);
   }
 
-  train(trainSet: sdk.DataSet<"slot">, seed: number, progress: sdk.ProgressCb) {
+  async train(
+    trainSet: sdk.DataSet<"slot">,
+    seed: number,
+    progress: sdk.ProgressCb
+  ) {
+    if (this._skipTraining) {
+      return;
+    }
+
     const { enums, patterns, lang, samples, variables } = trainSet;
 
     const examples = samples.map((r) => {
