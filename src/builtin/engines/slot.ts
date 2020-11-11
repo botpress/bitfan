@@ -12,7 +12,7 @@ const BATCH_SIZE = 10;
 export class BpSlotEngine implements sdk.Engine<"slot"> {
   private _stanProvider: StanProvider;
 
-  constructor(bpEndpoint?: string, password?: string) {
+  constructor(bpEndpoint: string, password: string) {
     this._stanProvider = new StanProvider(bpEndpoint, password);
   }
 

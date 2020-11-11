@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, makeKey, OOS, splitIntentTopic } from "../../builtin/labels";
+import { OOS, splitIntentTopic } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {

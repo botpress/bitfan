@@ -114,19 +114,23 @@ export namespace visualisation {
 export namespace engines {
   export const makeBpIntentEngine: (
     bpEndpoint: string,
-    password: string
+    password: string,
+    opt?: Partial<BpEngineOptions>
   ) => Engine<"intent">;
   export const makeBpIntentTopicEngine: (
     bpEndpoint: string,
-    password: string
+    password: string,
+    opt?: Partial<BpEngineOptions>
   ) => Engine<"intent-topic">;
   export const makeBpTopicEngine: (
     bpEndpoint: string,
-    password: string
+    password: string,
+    opt?: Partial<BpEngineOptions>
   ) => Engine<"topic">;
   export const makeBpSlotEngine: (
     bpEndpoint: string,
-    password: string
+    password: string,
+    opt?: Partial<BpEngineOptions>
   ) => Engine<"slot">;
 }
 
@@ -232,6 +236,10 @@ export interface Problem<T extends ProblemType> {
 }
 
 export type ProgressCb = (p: number) => void;
+
+export interface BpEngineOptions {
+  modelId: string;
+}
 
 /**
  * @description Collection of a train function and a predict function
