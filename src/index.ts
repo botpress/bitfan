@@ -10,6 +10,7 @@ import {
   oosRecall,
   oosF1,
 } from "./builtin/metrics/oos";
+import { inScopeAccuracy } from "./builtin/metrics/in-scope";
 import { averageScore } from "./builtin/metrics/avgScores";
 
 import {
@@ -117,6 +118,11 @@ const impl: typeof sdk = {
 
   metrics: {
     averageScore,
+    accuracy: {
+      name: "accuracy",
+      eval: averageScore(labelIs).eval,
+    },
+    inScopeAccuracy,
     oosAccuracy,
     oosPrecision,
     oosRecall,

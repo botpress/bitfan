@@ -1,7 +1,7 @@
 import _ from "lodash";
 import * as sdk from "src/bitfan";
 
-import { areSame, isOOS, splitIntentTopic } from "../../builtin/labels";
+import { areSame, isOOS, OOS, splitIntentTopic } from "../../builtin/labels";
 
 const _electMostConfidents = (
   dict: _.Dictionary<number>,
@@ -16,8 +16,15 @@ const _electMostConfidents = (
 };
 
 export const electMostConfident = (
-  dict: _.Dictionary<number>
+  dict: _.Dictionary<number>,
+  opt?: Partial<{ ignoreOOS: boolean }>
 ): sdk.Label<sdk.SingleLabel> => {
+  const defaultOpt = { ignoreOOS: false };
+  const options = { ...defaultOpt, ...opt };
+
+  if (options.ignoreOOS) {
+    return _electMostConfidents(_.omit(dict, OOS), 1)[0];
+  }
   return _electMostConfidents(dict, 1)[0];
 };
 
