@@ -238,7 +238,7 @@ export interface Problem<T extends ProblemType> {
 export type ProgressCb = (p: number) => void;
 
 export interface BpEngineOptions {
-  modelId: string;
+  modelId: string; // allows to skip training and do predictions with given modelId
 }
 
 /**

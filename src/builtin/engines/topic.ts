@@ -13,8 +13,12 @@ const BATCH_SIZE = 10;
 export class BpTopicEngine implements sdk.Engine<"topic"> {
   private _stanProvider: StanProvider;
 
-  constructor(bpEndpoint: string, password: string) {
-    this._stanProvider = new StanProvider(bpEndpoint, password);
+  constructor(
+    bpEndpoint: string,
+    password: string,
+    opt?: Partial<sdk.BpEngineOptions>
+  ) {
+    this._stanProvider = new StanProvider(bpEndpoint, password, opt);
   }
 
   train(

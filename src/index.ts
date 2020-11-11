@@ -142,7 +142,7 @@ const impl: typeof sdk = {
       bpEndpoint: string,
       password: string,
       opt?: Partial<sdk.BpEngineOptions>
-    ) => new BpTopicEngine(bpEndpoint, password),
+    ) => new BpTopicEngine(bpEndpoint, password, opt),
     makeBpIntentEngine: (
       bpEndpoint: string,
       password: string,
@@ -152,12 +152,12 @@ const impl: typeof sdk = {
       bpEndpoint: string,
       password: string,
       opt?: Partial<sdk.BpEngineOptions>
-    ) => new BpIntentTopicEngine(bpEndpoint, password),
+    ) => new BpIntentTopicEngine(bpEndpoint, password, opt),
     makeBpSlotEngine: (
       bpEndpoint: string,
       password: string,
       opt?: Partial<sdk.BpEngineOptions>
-    ) => new BpSlotEngine(bpEndpoint, password),
+    ) => new BpSlotEngine(bpEndpoint, password, opt),
   },
 };
 
