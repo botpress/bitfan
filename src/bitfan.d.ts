@@ -148,6 +148,13 @@ export namespace tools {
     options?: { stratificate: boolean }
   ) => DataSet<T>;
 
+  export const sampleClasses: <T extends SingleLabel>(
+    datasets: DataSet<T>[],
+    nClass: number,
+    seed: number,
+    opt?: Partial<{ keepOOS: boolean }>
+  ) => DataSet<T>[];
+
   export const pickOOS: <T extends SingleLabel>(
     dataset: DataSet<T>,
     oosPercent: number,

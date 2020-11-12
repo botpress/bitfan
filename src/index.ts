@@ -23,6 +23,7 @@ import { showReport } from "./builtin/visualisation/report";
 
 import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
+import { sampleClasses } from "./builtin/tools/samplesClasses";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { BpTopicEngine } from "./builtin/engines/topic";
@@ -56,6 +57,7 @@ const impl: typeof sdk = {
     subSample,
     splitOOS,
     pickOOS,
+    sampleClasses,
   },
 
   // TODO lazy load these...
