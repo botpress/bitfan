@@ -58,7 +58,7 @@ const DEFAULT_OPT: {
   groupBy: "all",
 };
 
-export const showReport: typeof sdk.visualisation.showReport = async (
+export const showReport: typeof sdk.visualisation.showReport = (
   report: sdk.PerformanceReport,
   opt?: Partial<{
     groupBy: "seed" | "problem" | "all";
@@ -79,4 +79,48 @@ export const showReport: typeof sdk.visualisation.showReport = async (
 
   console.log(chalk.green("Report Summary: "));
   console.table(table);
+};
+
+function logReason(reason: sdk.RegressionReason) {
+  const {
+    status,
+    seed,
+    problem,
+    metric,
+    currentScore,
+    previousScore,
+    allowedRegression,
+  } = reason;
+
+  let msg =
+    ` - For problem "${problem}", for seed "${seed}", for metric "${metric}",\n` +
+    `   current score is ${currentScore}, while previous score is ${previousScore}`;
+
+  if (status === "regression") {
+    msg += `(allowed regression is ${allowedRegression})`;
+    console.log(chalk.red(msg));
+  } else if (status === "tolerated-regression") {
+    msg += ".";
+    console.log(chalk.yellow(msg));
+  }
+}
+
+export const showComparisonReport: typeof sdk.visualisation.showComparisonReport = (
+  name: string,
+  comparison: sdk.ComparisonReport
+) => {
+  if (comparison.status === "regression") {
+    console.log(
+      `There seems to be a regression on test ${name}.\n` + "Reasons are:\n"
+    );
+  }
+  if (comparison.status === "tolerated-regression") {
+    console.log(
+      `There seems to be a regression on test ${name}, but regression is small enough to be tolerated.\n` +
+        "Reasons are:\n"
+    );
+  }
+  comparison.reasons.forEach(logReason);
+
+  return `No regression noted for test ${name}.`;
 };

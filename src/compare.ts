@@ -54,6 +54,7 @@ export default function comparePerformances(
         if (currentScore + delta < previousScore) {
           status = "regression";
           reasons.push({
+            status,
             metric,
             problem,
             seed,
@@ -64,6 +65,7 @@ export default function comparePerformances(
         } else if (currentScore < previousScore) {
           status = "tolerated-regression";
           reasons.push({
+            status,
             metric,
             problem,
             seed,
