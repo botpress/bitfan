@@ -69,7 +69,7 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
     testSet: sdk.DataSet<"intent-topic">,
     progress: sdk.ProgressCb
   ) {
-    const results: sdk.PredictOutput<"intent-topic">[] = [];
+    const results: sdk.Prediction<"intent-topic">[] = [];
 
     let done = 0;
 
@@ -83,13 +83,15 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
 
         let mostConfidentTopic: PredictedTopic | undefined;
 
-        const prediction: _.Dictionary<number> = {};
+        const candidates: sdk.Candidate<"intent-topic">[] = [];
         for (const topicLabel of Object.keys(pred!)) {
           const topic = pred![topicLabel];
 
           for (const intent of topic.intents) {
-            prediction[`${topicLabel}/${intent.label}`] =
-              topic.confidence * intent.confidence;
+            candidates.push({
+              elected: `${topicLabel}/${intent.label}`,
+              confidence: topic.confidence * intent.confidence,
+            });
           }
 
           if (
@@ -100,12 +102,15 @@ export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
           }
         }
 
-        prediction[OOS] = mostConfidentTopic!.oos;
+        candidates.push({
+          elected: OOS,
+          confidence: mostConfidentTopic!.oos,
+        });
 
         results.push({
           text,
           label,
-          prediction,
+          candidates,
         });
 
         progress(done++ / testSet.samples.length);

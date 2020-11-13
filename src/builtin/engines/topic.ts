@@ -58,7 +58,7 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
   }
 
   async predict(testSet: sdk.DataSet<"topic">, progress: sdk.ProgressCb) {
-    const results: sdk.PredictOutput<"topic">[] = [];
+    const results: sdk.Prediction<"topic">[] = [];
 
     let done = 0;
 
@@ -72,11 +72,14 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
 
         let mostConfidentTopic: PredictedTopic | undefined;
 
-        const prediction: _.Dictionary<number> = {};
+        const candidates: sdk.Candidate<"topic">[] = [];
         for (const topicLabel of Object.keys(pred!)) {
           const topic = pred![topicLabel];
 
-          prediction[topicLabel] = topic.confidence;
+          candidates.push({
+            elected: topicLabel,
+            confidence: topic.confidence,
+          });
 
           if (
             !mostConfidentTopic ||
@@ -86,12 +89,15 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
           }
         }
 
-        prediction[OOS] = mostConfidentTopic!.oos;
+        candidates.push({
+          elected: OOS,
+          confidence: mostConfidentTopic!.oos,
+        });
 
         results.push({
           text,
           label,
-          prediction,
+          candidates,
         });
 
         progress(done++ / testSet.samples.length);

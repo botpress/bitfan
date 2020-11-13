@@ -68,7 +68,7 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
   }
 
   async predict(testSet: sdk.DataSet<"slot">, progress: sdk.ProgressCb) {
-    const results: sdk.PredictOutput<"slot">[] = [];
+    const results: sdk.Prediction<"slot">[] = [];
 
     let done = 0;
 
@@ -86,19 +86,18 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
         const { intents } = pred[MAIN_TOPIC];
         const mainIntent = intents.find((i) => i.label === MAIN_INTENT);
 
-        const prediction = _.mapValues(
-          mainIntent?.slots,
-          ({ start, end, confidence }) => ({
-            start,
-            end,
+        const candidates: sdk.Candidate<"slot">[] = _(mainIntent?.slots)
+          .values()
+          .map(({ name, start, end, confidence }) => ({
+            elected: { name, start, end },
             confidence,
-          })
-        );
+          }))
+          .value();
 
         results.push({
           text,
           label,
-          prediction,
+          candidates,
         });
 
         progress(done++ / testSet.samples.length);
