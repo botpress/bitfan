@@ -1,6 +1,5 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { toTable } from "./builtin/visualisation/report";
 import { initDictionnary } from "./services/dic-utils";
 
 export default function comparePerformances(
@@ -8,45 +7,15 @@ export default function comparePerformances(
   previousPerformance: sdk.PerformanceReport,
   options?: Partial<sdk.CompareOptions>
 ): sdk.ComparisonReport {
-  if (currentPerformance.groupedBy !== previousPerformance.groupedBy) {
-    let msg =
-      "Bitfan can only compare two performances if both are grouped the same way.\n" +
-      `Currently trying to compare a report by ${currentPerformance.groupedBy} with a report by ${previousPerformance.groupedBy}.`;
-    throw new Error(msg);
-  }
-
   const currentMetrics = _.uniq(
     currentPerformance.scores.map((s) => s.metric)
   ).sort();
-  const previousMetrics = _.uniq(
-    previousPerformance.scores.map((s) => s.metric)
+  const currentProblems = _.uniq(
+    currentPerformance.scores.map((s) => s.problem)
   ).sort();
-  if (!_.isEqual(currentMetrics, previousMetrics)) {
-    const diff = currentMetrics
-      .filter((m) => !previousMetrics.includes(m))
-      .join(", ");
-
-    let msg =
-      "Bitfan can only compare two performances if both are evaluated on the same metrics.\n" +
-      `Metrics [${diff}] seems to not be available in previous report.`;
-    throw new Error(msg);
-  }
-
-  const currentGroups = _.uniq(
-    currentPerformance.scores.map((s) => s.group)
+  const currentSeeds = _.uniq(
+    currentPerformance.scores.map((s) => s.seed)
   ).sort();
-  const previousGroups = _.uniq(
-    previousPerformance.scores.map((s) => s.group)
-  ).sort();
-  if (!_.isEqual(currentGroups, previousGroups)) {
-    const diff = currentGroups
-      .filter((g) => !previousGroups.includes(g))
-      .join(", ");
-    let msg =
-      "Bitfan can only compare two performances if both are evaluated on the same seed or problem.\n" +
-      `Groups [${diff}] seems to not be available in previous report.`;
-    throw new Error(msg);
-  }
 
   const defaultTolerance = initDictionnary(currentMetrics, () => 0);
   const userDefinedTolerance = options?.toleranceByMetric ?? {};
@@ -55,37 +24,54 @@ export default function comparePerformances(
     ...userDefinedTolerance,
   };
 
-  const currentTable = toTable(currentPerformance);
-  const previousTable = toTable(previousPerformance);
-
   let status: sdk.RegressionStatus = "success";
 
   const reasons: sdk.RegressionReason[] = [];
   for (const metric of currentMetrics) {
-    for (const group of currentGroups) {
-      const currentScore = currentTable[metric][group];
-      const previousScore = previousTable[metric][group];
+    for (const problem of currentProblems) {
+      for (const seed of currentSeeds) {
+        const isComb = (s: sdk.ScoreInfo) =>
+          s.metric === metric && s.problem === problem && s.seed === seed;
+        const current = currentPerformance.scores.find(isComb);
+        const previous = previousPerformance.scores.find(isComb);
 
-      const delta = toleranceByMetric[metric] * previousScore;
+        if (!previous || !current) {
+          const combination = JSON.stringify(
+            { metric, problem, seed },
+            undefined,
+            2
+          );
+          throw new Error(
+            `No score could be found for combination ${combination} in previous or current performance.`
+          );
+        }
 
-      if (currentScore + delta < previousScore) {
-        status = "regression";
-        reasons.push({
-          metric,
-          group,
-          currentScore,
-          previousScore,
-          allowedRegression: -delta,
-        });
-      } else if (currentScore < previousScore) {
-        status = "tolerated-regression";
-        reasons.push({
-          metric,
-          group,
-          currentScore,
-          previousScore,
-          allowedRegression: -delta,
-        });
+        const currentScore = current.score;
+        const previousScore = previous.score;
+
+        const delta = toleranceByMetric[metric] * previousScore;
+
+        if (currentScore + delta < previousScore) {
+          status = "regression";
+          reasons.push({
+            metric,
+            problem,
+            seed,
+            currentScore,
+            previousScore,
+            allowedRegression: -delta,
+          });
+        } else if (currentScore < previousScore) {
+          status = "tolerated-regression";
+          reasons.push({
+            metric,
+            problem,
+            seed,
+            currentScore,
+            previousScore,
+            allowedRegression: -delta,
+          });
+        }
       }
     }
   }
