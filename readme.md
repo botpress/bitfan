@@ -95,33 +95,27 @@ Bitfan is shipped with builtin `datasets`, `criterias`, `metrics`, `engine` and 
 Here's a full example:
 
 ```ts
-import bitfan, { Problem, Solution } from "@botpress/bitfan";
+import bitfan, { Problem, Solution, Metric } from "@botpress/bitfan";
 
-type BpdsTopics = "A" | "B" | "C" | "D" | "E" | "F";
+async function main() {
+  console.log("BPDS intents");
 
-const makeProblem = (topic: BpdsTopics): Problem<"intent"> => {
-  return {
+  const allTopics = ["A", "B", "C", "D", "E", "F"];
+
+  const problems: Problem<"intent"> = allTopics.map((t) => ({
     name: `bpds intents ${topic}`,
     type: "intent",
     trainSet: bitfan.datasets.bpds.intents.train[topic],
     testSet: bitfan.datasets.bpds.intents.test[topic],
     lang: "en",
-  };
-};
-
-async function main() {
-  console.log("BPDS intents");
-
-  const allTopics: BpdsTopics[] = ["A", "B", "C", "D", "E", "F"];
-
-  const problems = allTopics.map(makeProblem);
+  }));
 
   const stanEndpoint = "http://localhost:3200";
   const password = "123456";
   const engine = bitfan.engines.makeBpIntentEngine(stanEndpoint, password);
 
-  const metrics = [
-    bitfan.metrics.averageScore(bitfan.criterias.labelIs),
+  const metrics: Metric<"intent"> = [
+    bitfan.metrics.accuracy,
     bitfan.metrics.oosAccuracy,
     bitfan.metrics.oosPrecision,
     bitfan.metrics.oosRecall,
@@ -138,15 +132,14 @@ async function main() {
   const seeds = [42, 69];
   const results = await bitfan.runSolution(solution, seeds);
 
-  const reportBySeed = bitfan.evaluateMetrics(results, metrics, {
+  const report = bitfan.evaluateMetrics(results, metrics);
+
+  await bitfan.visualisation.showReport(report, {
     groupBy: "seed",
   });
-  const reportByProblem = bitfan.evaluateMetrics(results, metrics, {
+  await bitfan.visualisation.showReport(report, {
     groupBy: "problem",
   });
-
-  await bitfan.visualisation.showReport(reportBySeed);
-  await bitfan.visualisation.showReport(reportByProblem);
   await bitfan.visualisation.showOOSConfusion(results);
 }
 main().then(() => {});

@@ -128,7 +128,12 @@ export namespace visualisation {
     opt?: Partial<{
       groupBy: "seed" | "problem" | "all";
     }>
-  ) => Promise<void>;
+  ) => void;
+
+  export const showComparisonReport: (
+    name: string,
+    comparison: ComparisonReport
+  ) => void;
 
   export const tabelize: <D>(
     data: D[],
@@ -336,6 +341,7 @@ export type RegressionStatus =
   | "tolerated-regression";
 
 export type RegressionReason = {
+  status: RegressionStatus;
   metric: string;
   problem: string;
   seed: number;
