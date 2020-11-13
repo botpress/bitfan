@@ -1,8 +1,8 @@
 import * as sdk from "bitfan/sdk";
 import { isOOS } from "../../builtin/labels";
 
-import { electMostConfident } from "../criterias/intent";
 import _ from "lodash";
+import { mostConfident } from "../election/mostConfident";
 
 type ConfusionMatrix = {
   truePos: number;
@@ -35,9 +35,9 @@ const _computePerformance = (confusion: ConfusionMatrix): OOSPerformance => {
   };
 };
 
-export const oosConfusion = (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+export const oosConfusion = (results: sdk.Prediction<sdk.SingleLabel>[]) => {
   const oosResults = results.map((r) => {
-    const elected = electMostConfident(r.prediction);
+    const elected = mostConfident(r.candidates);
     const expected = r.label;
 
     return {
@@ -65,7 +65,7 @@ export const oosConfusion = (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
 
 export const oosAccuracy: typeof sdk.metrics.oosAccuracy = {
   name: "oosAccuracy",
-  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+  eval: (results: sdk.Prediction<sdk.SingleLabel>[]) => {
     const confusionMatrix = oosConfusion(results);
     const { oosAccuracy } = _computePerformance(confusionMatrix);
     return oosAccuracy;
@@ -74,7 +74,7 @@ export const oosAccuracy: typeof sdk.metrics.oosAccuracy = {
 
 export const oosPrecision: typeof sdk.metrics.oosPrecision = {
   name: "oosPrecision",
-  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+  eval: (results: sdk.Prediction<sdk.SingleLabel>[]) => {
     const confusionMatrix = oosConfusion(results);
     const { oosPrecision } = _computePerformance(confusionMatrix);
     return oosPrecision;
@@ -83,7 +83,7 @@ export const oosPrecision: typeof sdk.metrics.oosPrecision = {
 
 export const oosRecall: typeof sdk.metrics.oosRecall = {
   name: "oosRecall",
-  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+  eval: (results: sdk.Prediction<sdk.SingleLabel>[]) => {
     const confusionMatrix = oosConfusion(results);
     const { oosRecall } = _computePerformance(confusionMatrix);
     return oosRecall;
@@ -92,7 +92,7 @@ export const oosRecall: typeof sdk.metrics.oosRecall = {
 
 export const oosF1: typeof sdk.metrics.oosF1 = {
   name: "oosF1",
-  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+  eval: (results: sdk.Prediction<sdk.SingleLabel>[]) => {
     const confusionMatrix = oosConfusion(results);
     const { oosF1 } = _computePerformance(confusionMatrix);
     return oosF1;

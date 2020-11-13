@@ -5,6 +5,11 @@ import { labelIs, labelHasTopic } from "./builtin/criterias/intent";
 import { slotsAre, slotIncludes, slotCountIs } from "./builtin/criterias/slot";
 
 import {
+  mostConfident,
+  mostConfidents,
+} from "./builtin/election/mostConfident";
+
+import {
   oosAccuracy,
   oosPrecision,
   oosRecall,
@@ -50,6 +55,11 @@ const impl: typeof sdk = {
     isOOS,
     areSame,
     makeKey,
+  },
+
+  election: {
+    mostConfident,
+    mostConfidents,
   },
 
   tools: {

@@ -6,7 +6,7 @@ export const averageScore: typeof sdk.metrics.averageScore = <
   criteria: sdk.Criteria<T>
 ) => ({
   name: `avgScore:${criteria.name}`,
-  eval: (results: sdk.PredictOutput<T>[]) => {
+  eval: (results: sdk.Prediction<T>[]) => {
     let sum = 0;
     for (const res of results) {
       sum += criteria.eval(res);

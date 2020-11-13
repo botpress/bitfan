@@ -1,16 +1,16 @@
 import * as sdk from "bitfan/sdk";
 import { isOOS } from "../../builtin/labels";
 
-import { electMostConfident } from "../criterias/intent";
 import _ from "lodash";
+import { mostConfident } from "../election/mostConfident";
 
 export const inScopeAccuracy: typeof sdk.metrics.inScopeAccuracy = {
   name: "inScopeAccuracy",
-  eval: (results: sdk.PredictOutput<sdk.SingleLabel>[]) => {
+  eval: (results: sdk.Prediction<sdk.SingleLabel>[]) => {
     const inScopeSamples = results.filter((r) => !isOOS(r.label));
 
     const totalScore = inScopeSamples.reduce((totalScore, currentSample) => {
-      const elected = electMostConfident(currentSample.prediction, {
+      const elected = mostConfident(currentSample.candidates, {
         ignoreOOS: true,
       });
       const currentScore = elected === currentSample.label ? 1 : 0;

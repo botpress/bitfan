@@ -59,18 +59,24 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _makePredictions(
     intents: IntentPred[],
     oos: number
-  ): sdk.Understanding<"intent"> {
-    const prediction: sdk.Understanding<"intent"> = _(intents)
-      .map((i) => [i.label, i] as [string, IntentPred])
-      .fromPairs()
-      .mapValues((i) => i.confidence)
-      .value();
-    prediction[getOOSLabel()] = oos;
-    return prediction;
+  ): sdk.Candidate<"intent">[] {
+    const candidates: sdk.Candidate<"intent">[] = intents.map(
+      ({ label: elected, confidence }) => ({
+        elected,
+        confidence,
+      })
+    );
+
+    candidates.push({
+      elected: getOOSLabel(),
+      confidence: oos,
+    });
+
+    return candidates;
   }
 
   async predict(testSet: sdk.DataSet<"intent">, progress: sdk.ProgressCb) {
-    const results: sdk.PredictOutput<"intent">[] = [];
+    const results: sdk.Prediction<"intent">[] = [];
 
     let done = 0;
 
@@ -82,12 +88,12 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
       for (const [pred, row] of _.zip(predictions, batch)) {
         const { text, label } = row!;
         const { intents, oos } = pred![MAIN_TOPIC];
-        const prediction = this._makePredictions(intents, oos);
+        const candidates = this._makePredictions(intents, oos);
 
         results.push({
           text,
           label,
-          prediction,
+          candidates,
         });
 
         progress(done++ / testSet.samples.length);

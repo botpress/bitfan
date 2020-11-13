@@ -21,7 +21,10 @@ const logResult = (res: sdk.Result<"slot">) => {
 
   let elected = "";
   const isInsideActual = _isInside(
-    Object.values(res.prediction).map((s) => ({ start: s.start, end: s.end }))
+    res.candidates.map(({ elected }) => ({
+      start: elected.start,
+      end: elected.end,
+    }))
   );
   for (let i = 0; i < res.text.length; i++) {
     const char = isInsideActual(i) ? "x" : "-";

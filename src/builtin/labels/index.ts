@@ -28,7 +28,7 @@ export const areSame = <T extends sdk.ProblemType>(
 export const getOOSLabel = () => OOS;
 
 export const isOOS = <T extends sdk.ProblemType>(
-  label: sdk.Label<T>
+  label: sdk.Label<T> | sdk.Elected<T>
 ): boolean => {
   if (typeof label === "string") {
     return label === OOS;

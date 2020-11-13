@@ -67,6 +67,22 @@ export namespace datasets {
   }
 }
 
+export namespace election {
+  export const mostConfident: <T extends ProblemType>(
+    candidates: Candidate<T>[],
+    opt?: Partial<{
+      ignoreOOS: boolean;
+    }>
+  ) => Elected<T>;
+  export const mostConfidents: <T extends ProblemType>(
+    candidates: Candidate<T>[],
+    n: number,
+    opt?: Partial<{
+      ignoreOOS: boolean;
+    }>
+  ) => Elected<T>[];
+}
+
 export namespace criterias {
   /**
    * @description Most basic criteria.
@@ -218,12 +234,13 @@ export type Label<T extends ProblemType> = T extends SingleLabel
   ? { name: string; start: number; end: number }[]
   : string;
 
-export type Understanding<T extends ProblemType> = T extends SingleLabel
-  ? Dic<number>
-  : T extends MultiLabel
-  ? Dic<number>
-  : T extends "slot"
-  ? Dic<{ start: number; end: number; confidence: number }>
+export type Candidate<T extends ProblemType> = {
+  elected: Elected<T>;
+  confidence: number;
+};
+
+export type Elected<T extends ProblemType> = T extends "slot"
+  ? { name: string; start: number; end: number }
   : string;
 
 /**
@@ -252,12 +269,12 @@ export interface Engine<T extends ProblemType> {
   predict: (
     testSet: DataSet<T>,
     progress: ProgressCb
-  ) => Promise<PredictOutput<T>[]>;
+  ) => Promise<Prediction<T>[]>;
 }
 
-export type PredictOutput<T extends ProblemType> = {
+export type Prediction<T extends ProblemType> = {
   text: string;
-  prediction: Understanding<T>;
+  candidates: Candidate<T>[];
   label: Label<T>;
 };
 
@@ -268,10 +285,10 @@ export type PredictOutput<T extends ProblemType> = {
  */
 export type Criteria<T extends ProblemType> = {
   name: string;
-  eval(res: PredictOutput<T>): number;
+  eval(res: Prediction<T>): number;
 };
 
-export type Result<T extends ProblemType> = PredictOutput<T> & {
+export type Result<T extends ProblemType> = Prediction<T> & {
   metadata: {
     seed: number;
     problem: string;
@@ -332,7 +349,7 @@ export type CompareOptions = {
  */
 export type Metric<T extends ProblemType> = {
   name: string;
-  eval: (results: PredictOutput<T>[]) => number;
+  eval: (res: Result<T>[]) => number;
 };
 
 export type DataSet<T extends ProblemType> = {
