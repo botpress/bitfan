@@ -1,7 +1,7 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
-import { initDictionnary } from "src/services/dic-utils";
+import { initDictionnary } from "../../services/dic-utils";
 import { roundNumbers } from "../../services/logging";
 
 const _roundReport = (
