@@ -146,7 +146,7 @@ export namespace engines {
   ) => Engine<"slot">;
 }
 
-export namespace tools {
+export namespace sampling {
   export const trainTestSplit: <T extends ProblemType>(
     dataset: DataSet<T>,
     trainPercent: number,

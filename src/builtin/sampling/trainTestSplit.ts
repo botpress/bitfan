@@ -1,9 +1,9 @@
-import { DataSet, ProblemType, Sample, tools } from "bitfan/sdk";
+import { DataSet, ProblemType, Sample, sampling } from "bitfan/sdk";
 import { LoDashStatic } from "lodash";
-import { areSame } from "../../builtin/labels";
+import { areSame } from "../labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
-export const subSample: typeof tools.subSample = <T extends ProblemType>(
+export const subSample: typeof sampling.subSample = <T extends ProblemType>(
   dataset: DataSet<T>,
   percent: number,
   seed: number,
@@ -13,7 +13,7 @@ export const subSample: typeof tools.subSample = <T extends ProblemType>(
   return trainSet;
 };
 
-export const trainTestSplit: typeof tools.trainTestSplit = <
+export const trainTestSplit: typeof sampling.trainTestSplit = <
   T extends ProblemType
 >(
   dataset: DataSet<T>,

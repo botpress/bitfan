@@ -1,9 +1,9 @@
-import { DataSet, SingleLabel, Sample, tools, Label } from "bitfan/sdk";
+import { DataSet, SingleLabel, Sample, sampling, Label } from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, getOOSLabel } from "../../builtin/labels";
+import { areSame, getOOSLabel } from "../labels";
 import SeededLodashProvider from "../../services/seeded-lodash";
 
-export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
+export const splitOOS: typeof sampling.splitOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   labels: Label<T>[]
 ) => {
@@ -28,7 +28,7 @@ export const splitOOS: typeof tools.splitOOS = <T extends SingleLabel>(
   return { inScopeSet, ooScopeSet };
 };
 
-export const pickOOS: typeof tools.pickOOS = <T extends SingleLabel>(
+export const pickOOS: typeof sampling.pickOOS = <T extends SingleLabel>(
   dataset: DataSet<T>,
   oosPercent: number,
   seed: number
