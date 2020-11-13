@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
   keepOOS: true,
 };
 
-export const sampleClasses: typeof sdk.tools.sampleClasses = <
+export const sampleClasses: typeof sdk.sampling.sampleClasses = <
   T extends sdk.SingleLabel
 >(
   datasets: sdk.DataSet<T>[],

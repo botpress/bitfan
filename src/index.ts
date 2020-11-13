@@ -26,9 +26,9 @@ import { showSlotsResults } from "./builtin/visualisation/slots";
 import { showOOSConfusion } from "./builtin/visualisation/oos";
 import { showReport } from "./builtin/visualisation/report";
 
-import { trainTestSplit, subSample } from "./builtin/tools/trainTestSplit";
-import { splitOOS, pickOOS } from "./builtin/tools/splitAndMakeOOS";
-import { sampleClasses } from "./builtin/tools/samplesClasses";
+import { trainTestSplit, subSample } from "./builtin/sampling/trainTestSplit";
+import { splitOOS, pickOOS } from "./builtin/sampling/splitAndMakeOOS";
+import { sampleClasses } from "./builtin/sampling/samplesClasses";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { BpTopicEngine } from "./builtin/engines/topic";
@@ -62,7 +62,7 @@ const impl: typeof sdk = {
     mostConfidents,
   },
 
-  tools: {
+  sampling: {
     trainTestSplit,
     subSample,
     splitOOS,
