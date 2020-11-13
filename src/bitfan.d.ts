@@ -5,8 +5,7 @@ export function runSolution<T extends ProblemType>(
 
 export function evaluateMetrics<T extends ProblemType>(
   results: Result<T>[],
-  metrics: Metric<T>[],
-  options?: Partial<ReportOptions>
+  metrics: Metric<T>[]
 ): PerformanceReport;
 
 export function comparePerformances(
@@ -124,7 +123,22 @@ export namespace visualisation {
   export const showClassDistribution: DatasetViewer<SingleLabel>;
   export const showDatasetsSummary: DatasetViewer<ProblemType>;
 
-  export const showReport: (report: PerformanceReport) => Promise<void>;
+  export const showReport: (
+    report: PerformanceReport,
+    opt?: Partial<{
+      groupBy: "seed" | "problem" | "all";
+    }>
+  ) => Promise<void>;
+
+  export const tabelize: <D>(
+    data: D[],
+    disposition: {
+      row: (d: D) => string;
+      column: (d: D) => string;
+      score: (d: D) => number;
+      aggregator?: (scores: number[]) => number;
+    }
+  ) => Dic<Dic<number>>;
 }
 
 export namespace engines {
@@ -295,11 +309,6 @@ export type Result<T extends ProblemType> = Prediction<T> & {
   };
 };
 
-export type AggregateOptions = "seed" | "problem" | "all";
-export type ReportOptions = {
-  groupBy: AggregateOptions;
-};
-
 export type ResultViewer<T extends ProblemType, O extends Object = {}> = (
   results: Result<T>[],
   options?: Partial<O>
@@ -311,13 +320,13 @@ export type DatasetViewer<T extends ProblemType> = (
 
 export type ScoreInfo = {
   metric: string;
-  group: string;
+  seed: number;
+  problem: string;
   score: number;
 };
 
 export type PerformanceReport = {
   generatedOn: Date;
-  groupedBy: AggregateOptions;
   scores: ScoreInfo[];
 };
 
@@ -328,7 +337,8 @@ export type RegressionStatus =
 
 export type RegressionReason = {
   metric: string;
-  group: string;
+  problem: string;
+  seed: number;
   currentScore: number;
   previousScore: number;
   allowedRegression: number;

@@ -24,7 +24,7 @@ import {
 } from "./builtin/visualisation/dataset";
 import { showSlotsResults } from "./builtin/visualisation/slots";
 import { showOOSConfusion } from "./builtin/visualisation/oos";
-import { showReport } from "./builtin/visualisation/report";
+import { showReport, tabelize } from "./builtin/visualisation/report";
 
 import { trainTestSplit, subSample } from "./builtin/sampling/trainTestSplit";
 import { splitOOS, pickOOS } from "./builtin/sampling/splitAndMakeOOS";
@@ -147,6 +147,7 @@ const impl: typeof sdk = {
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,
+    tabelize,
   },
 
   engines: {
