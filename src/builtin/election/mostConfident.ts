@@ -27,7 +27,7 @@ export const mostConfidents: typeof sdk.election.mostConfidents = <
     !option.ignoreOOS || !isOOS(c.elected);
 
   return _(candidates)
-    .orderBy((p) => p.confidence)
+    .orderBy((p) => p.confidence, "desc")
     .filter(keepCandidate)
     .take(n)
     .map((p) => p.elected)
