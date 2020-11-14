@@ -1,21 +1,24 @@
 import * as sdk from "../../bitfan";
-import { toTable } from "./report";
+import { tabelize } from "./report";
 
 test("toTable", () => {
   // arrange
   const performanceReport: sdk.PerformanceReport = {
     generatedOn: new Date(),
-    groupedBy: "seed",
     scores: [
-      { metric: "avgScore", group: "42", score: 1 },
-      { metric: "accuracy", group: "42", score: 2 },
-      { metric: "avgScore", group: "69", score: 3 },
-      { metric: "accuracy", group: "69", score: 4 },
+      { metric: "avgScore", seed: 42, problem: "A", score: 1 },
+      { metric: "accuracy", seed: 42, problem: "A", score: 2 },
+      { metric: "avgScore", seed: 69, problem: "A", score: 3 },
+      { metric: "accuracy", seed: 69, problem: "A", score: 4 },
     ],
   };
 
   // act
-  const table = toTable(performanceReport);
+  const table = tabelize(performanceReport.scores, {
+    row: (d) => d.metric,
+    column: (d) => d.seed,
+    score: (d) => d.score,
+  });
 
   // assert
   expect(table["avgScore"]["42"]).toBe(1);

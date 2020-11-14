@@ -14,10 +14,10 @@ const _roundReport = (
 const _initTable = <T extends any>(
   rows: string[],
   columns: string[],
-  init: T
+  init: () => T
 ) => {
-  const perRow = initDictionnary(rows, () => init);
-  return initDictionnary(columns, () => ({ ...perRow }));
+  const perRow = initDictionnary(columns, init);
+  return initDictionnary(rows, () => _.cloneDeep(perRow));
 };
 
 export const tabelize: typeof sdk.visualisation.tabelize = <D>(
@@ -35,14 +35,15 @@ export const tabelize: typeof sdk.visualisation.tabelize = <D>(
   const allRows = data.map((d) => disposition.row(d));
   const allColumns = data.map((d) => disposition.column(d));
 
-  const rawTable = _initTable<number[]>(allRows, allColumns, []);
+  const rawTable = _initTable<number[]>(allRows, allColumns, () => []);
+
   for (const d of data) {
     rawTable[disposition.row(d)][disposition.column(d)].push(
       disposition.score(d)
     );
   }
 
-  const table = _initTable(allRows, allColumns, 0);
+  const table = _initTable<number>(allRows, allColumns, () => 0);
   for (const row of allRows) {
     for (const column of allColumns) {
       table[row][column] = aggregator(rawTable[row][column]);
