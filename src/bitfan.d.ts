@@ -134,16 +134,6 @@ export namespace visualisation {
     name: string,
     comparison: ComparisonReport
   ) => void;
-
-  export const tabelize: <D>(
-    data: D[],
-    disposition: {
-      row: (d: D) => string;
-      column: (d: D) => string;
-      score: (d: D) => number;
-      aggregator?: (scores: number[]) => number;
-    }
-  ) => Dic<Dic<number>>;
 }
 
 export namespace engines {
@@ -213,6 +203,40 @@ export namespace labels {
   export function makeKey<T extends ProblemType>(label: Label<T>): string;
 }
 
+export namespace tables {
+  export const tabelize: <D>(
+    data: D[],
+    disposition: {
+      row: (d: D) => string;
+      column: (d: D) => string;
+      score: (d: D) => number;
+      aggregator?: (scores: number[]) => number;
+    }
+  ) => Table<number>;
+
+  export const transposeTable: <D>(table: Table<D>) => Table<D>;
+
+  export const roundTable: (
+    table: Table<number>,
+    precision?: number
+  ) => Table<number>;
+
+  export const roundDic: (
+    table: Dic<number>,
+    precision?: number
+  ) => Dic<number>;
+
+  export const initTable: <D>(
+    rows: string[],
+    columns: string[],
+    init: () => D
+  ) => Table<D>;
+
+  export const initDic: <D>(keys: string[], init: () => D) => Dic<D>;
+
+  export const isAllDefined: <D>(dic: Dic<D | undefined>) => dic is Dic<D>;
+}
+
 /**
  * @description Collection of problems with an engine to solve them
  */
@@ -240,6 +264,8 @@ export type ProblemType = SingleLabel | MultiLabel | "slot";
 type Dic<T> = {
   [key: string]: T;
 };
+
+type Table<T> = Dic<Dic<T>>;
 
 /**
  * @description Format of a label for a given problem type.

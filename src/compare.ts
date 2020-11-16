@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { initDictionnary } from "./services/dic-utils";
+import { initDic } from "./builtin/tables/init";
 
 export default function comparePerformances(
   currentPerformance: sdk.PerformanceReport,
@@ -17,7 +17,7 @@ export default function comparePerformances(
     currentPerformance.scores.map((s) => s.seed)
   ).sort();
 
-  const defaultTolerance = initDictionnary(currentMetrics, () => 0);
+  const defaultTolerance = initDic(currentMetrics, () => 0);
   const userDefinedTolerance = options?.toleranceByMetric ?? {};
   const toleranceByMetric = {
     ...defaultTolerance,
@@ -36,11 +36,7 @@ export default function comparePerformances(
         const previous = previousPerformance.scores.find(isComb);
 
         if (!previous || !current) {
-          const combination = JSON.stringify(
-            { metric, problem, seed },
-            undefined,
-            2
-          );
+          const combination = `{ metric: ${metric}, problem: ${problem}, seed: ${seed} }`;
           throw new Error(
             `No score could be found for combination ${combination} in previous or current performance.`
           );

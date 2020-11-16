@@ -1,10 +1,10 @@
-import { initDictionnary } from "./dic-utils";
+import { initDic } from "./init";
 
 test("initDictionnary", () => {
   // arrange
 
   // act
-  const table = initDictionnary(["A", "B"], () => 69);
+  const table = initDic(["A", "B"], () => 69);
 
   // assert
   expect(table["A"]).toBe(69);

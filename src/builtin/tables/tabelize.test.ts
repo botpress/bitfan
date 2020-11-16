@@ -1,5 +1,5 @@
 import * as sdk from "../../bitfan";
-import { tabelize } from "./report";
+import { tabelize } from "./tabelize";
 
 test("toTable", () => {
   // arrange

@@ -1,9 +1,9 @@
+import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 
-/**
- * could have been named transposeTable
- */
-export const flipTable = (table: _.Dictionary<_.Dictionary<number>>) => {
+export const transposeTable: typeof sdk.tables.transposeTable = <D>(
+  table: _.Dictionary<_.Dictionary<D>>
+) => {
   const columns = Object.keys(table);
 
   let rows: string[] = [];
@@ -25,8 +25,4 @@ export const flipTable = (table: _.Dictionary<_.Dictionary<number>>) => {
   }
 
   return flipped;
-};
-
-export const roundNumbers = (table: _.Dictionary<number>, precision = 4) => {
-  return _.mapValues(table, (v) => (_.isNumber(v) ? _.round(v, precision) : v));
 };
