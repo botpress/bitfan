@@ -26,7 +26,6 @@ import { showSlotsResults } from "./builtin/visualisation/slots";
 import { showOOSConfusion } from "./builtin/visualisation/oos";
 import {
   showReport,
-  tabelize,
   showComparisonReport,
 } from "./builtin/visualisation/report";
 
@@ -40,6 +39,12 @@ import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { BpSlotEngine } from "./builtin/engines/slot";
 
 import { areSame, isOOS, makeKey } from "./builtin/labels";
+
+import { transposeTable } from "./builtin/tables/transpose";
+import { roundDic, roundTable } from "./builtin/tables/round";
+import { initDic, initTable } from "./builtin/tables/init";
+import { tabelize } from "./builtin/tables/tabelize";
+import { isAllDefined } from "./builtin/tables/guards";
 
 import runSolution from "./solution";
 import evaluateMetrics from "./report";
@@ -152,7 +157,6 @@ const impl: typeof sdk = {
     showClassDistribution,
     showDatasetsSummary,
     showSlotsResults,
-    tabelize,
   },
 
   engines: {
@@ -164,6 +168,16 @@ const impl: typeof sdk = {
       new BpIntentTopicEngine(bpEndpoint, password),
     makeBpSlotEngine: (bpEndpoint: string, password: string) =>
       new BpSlotEngine(bpEndpoint, password),
+  },
+
+  tables: {
+    tabelize,
+    initDic,
+    initTable,
+    roundDic,
+    roundTable,
+    transposeTable,
+    isAllDefined,
   },
 };
 

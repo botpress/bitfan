@@ -1,8 +1,9 @@
 import { DataSet, ProblemType, visualisation } from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
-import { flipTable, roundNumbers } from "../../services/logging";
 import { areSame, isOOS, makeKey } from "../../builtin/labels";
+import { roundDic } from "../tables/round";
+import { transposeTable } from "../tables/transpose";
 
 export const showClassDistribution: typeof visualisation.showClassDistribution = (
   ...datasets: DataSet<ProblemType>[]
@@ -10,11 +11,11 @@ export const showClassDistribution: typeof visualisation.showClassDistribution =
   const distributions: _.Dictionary<_.Dictionary<number>> = {};
   for (const ds of datasets) {
     const distribution = _getClassDistributionForOneSet(ds);
-    distributions[ds.name] = roundNumbers(distribution, 4);
+    distributions[ds.name] = roundDic(distribution, 4);
   }
 
   console.log(chalk.green(`Class Distribution`));
-  console.table(flipTable(distributions));
+  console.table(transposeTable(distributions));
 };
 
 export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = (
@@ -49,11 +50,11 @@ export const showDatasetsSummary: typeof visualisation.showDatasetsSummary = (
       minSamplesPerClass,
       oosSamples,
     };
-    summaries[ds.name] = roundNumbers(summary, 4);
+    summaries[ds.name] = roundDic(summary, 4);
   }
 
   console.log(chalk.green(`Dataset summary`));
-  console.table(flipTable(summaries));
+  console.table(transposeTable(summaries));
 };
 
 const _getClassDistributionForOneSet = <T extends ProblemType>(
