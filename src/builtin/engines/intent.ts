@@ -9,22 +9,31 @@ import {
 } from "../../services/bp-provider/stan-typings";
 
 const MAIN_TOPIC = "main";
-const NONE = "none";
 
 const BATCH_SIZE = 10;
 
 export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _stanProvider: StanProvider;
+  private _skipTraining: boolean;
 
-  constructor(bpEndpoint?: string, password?: string) {
-    this._stanProvider = new StanProvider(bpEndpoint, password);
+  constructor(
+    bpEndpoint: string,
+    password: string,
+    opt?: Partial<sdk.BpEngineOptions>
+  ) {
+    this._stanProvider = new StanProvider(bpEndpoint, password, opt);
+    this._skipTraining = _.isString(opt?.modelId);
   }
 
-  train(
+  async train(
     trainSet: sdk.DataSet<"intent">,
     seed: number,
     progress: sdk.ProgressCb
   ) {
+    if (this._skipTraining) {
+      return;
+    }
+
     const allLabels = _(trainSet.samples)
       .flatMap((r) => r.label)
       .uniq()

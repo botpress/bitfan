@@ -12,13 +12,20 @@ import {
 
 const POLLING_INTERVAL = 500;
 
+interface StanOptions {
+  modelId: string; // allow to skip training and use an already existing modelId
+}
+
 export class StanProvider {
   private _modelId: string | undefined;
 
   constructor(
-    private _stanEndpoint: string = "http://localhost:3200",
-    private _password: string = "123456"
-  ) {}
+    private _stanEndpoint: string,
+    private _password: string,
+    opt?: Partial<StanOptions>
+  ) {
+    this._modelId = opt?.modelId;
+  }
 
   public async getVersion(): Promise<{ version: string } | undefined> {
     try {

@@ -1,6 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
-import { areSame, makeKey, OOS, splitIntentTopic } from "../../builtin/labels";
+import { OOS, splitIntentTopic } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
@@ -12,16 +12,26 @@ const BATCH_SIZE = 10;
 
 export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
   private _stanProvider: StanProvider;
+  private _skipTraining: boolean;
 
-  constructor(bpEndpoint: string, password: string) {
-    this._stanProvider = new StanProvider(bpEndpoint, password);
+  constructor(
+    bpEndpoint: string,
+    password: string,
+    opt?: Partial<sdk.BpEngineOptions>
+  ) {
+    this._stanProvider = new StanProvider(bpEndpoint, password, opt);
+    this._skipTraining = _.isString(opt?.modelId);
   }
 
-  train(
+  async train(
     trainSet: sdk.DataSet<"intent-topic">,
     seed: number,
     progress: sdk.ProgressCb
   ) {
+    if (this._skipTraining) {
+      return;
+    }
+
     const samples = trainSet.samples.map((r) => ({
       ...r,
       ...splitIntentTopic(r.label),

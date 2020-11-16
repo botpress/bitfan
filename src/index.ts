@@ -140,14 +140,26 @@ const impl: typeof sdk = {
   },
 
   engines: {
-    makeBpTopicEngine: (bpEndpoint: string, password: string) =>
-      new BpTopicEngine(bpEndpoint, password),
-    makeBpIntentEngine: (bpEndpoint: string, password: string) =>
-      new BpIntentEngine(bpEndpoint, password),
-    makeBpIntentTopicEngine: (bpEndpoint: string, password: string) =>
-      new BpIntentTopicEngine(bpEndpoint, password),
-    makeBpSlotEngine: (bpEndpoint: string, password: string) =>
-      new BpSlotEngine(bpEndpoint, password),
+    makeBpTopicEngine: (
+      bpEndpoint: string,
+      password: string,
+      opt?: Partial<sdk.BpEngineOptions>
+    ) => new BpTopicEngine(bpEndpoint, password, opt),
+    makeBpIntentEngine: (
+      bpEndpoint: string,
+      password: string,
+      opt?: Partial<sdk.BpEngineOptions>
+    ) => new BpIntentEngine(bpEndpoint, password, opt),
+    makeBpIntentTopicEngine: (
+      bpEndpoint: string,
+      password: string,
+      opt?: Partial<sdk.BpEngineOptions>
+    ) => new BpIntentTopicEngine(bpEndpoint, password, opt),
+    makeBpSlotEngine: (
+      bpEndpoint: string,
+      password: string,
+      opt?: Partial<sdk.BpEngineOptions>
+    ) => new BpSlotEngine(bpEndpoint, password, opt),
   },
 };
 
