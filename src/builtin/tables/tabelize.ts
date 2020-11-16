@@ -1,7 +1,6 @@
 import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 import { initTable } from "./init";
-import { roundTable } from "./round";
 
 export const tabelize: typeof sdk.tables.tabelize = <D>(
   data: D[],
@@ -33,5 +32,5 @@ export const tabelize: typeof sdk.tables.tabelize = <D>(
     }
   }
 
-  return roundTable(table);
+  return table;
 };
