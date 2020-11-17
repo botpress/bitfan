@@ -1,6 +1,7 @@
 import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
+import { roundTable } from "../tables/round";
 import { tabelize } from "../tables/tabelize";
 
 const DEFAULT_OPT: {
@@ -17,7 +18,7 @@ export const showReport: typeof sdk.visualisation.showReport = (
 ) => {
   const options = { ...DEFAULT_OPT, ...(opt ?? {}) };
 
-  const table = tabelize(report.scores, {
+  let table = tabelize(report.scores, {
     row: (s) => s.metric,
     column: (s) =>
       options.groupBy === "seed"
@@ -27,6 +28,7 @@ export const showReport: typeof sdk.visualisation.showReport = (
         : "all",
     score: (s) => s.score,
   });
+  table = roundTable(table);
 
   console.log(chalk.green("Report Summary: "));
   console.table(table);
