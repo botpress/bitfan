@@ -2,9 +2,13 @@ import * as sdk from "bitfan/sdk";
 import chalk from "chalk";
 import _ from "lodash";
 import cliProgress from "cli-progress";
+import { isUnsupervisedProblem } from "./guards";
 
-const runSolution = async <T extends sdk.ProblemType>(
-  solution: sdk.Solution<T>,
+const runSolution = async <
+  T extends sdk.ProblemType,
+  L extends sdk.LearningApproach
+>(
+  solution: sdk.Solution<T, L>,
   seeds: number[]
 ) => {
   const allResults: sdk.Result<T>[] = [];
@@ -21,7 +25,7 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
   state: {
     allResults: sdk.Result<T>[];
   },
-  solution: sdk.Solution<T>
+  solution: sdk.Solution<T, sdk.LearningApproach>
 ) => async (seed: number) => {
   const { allResults } = state;
 
@@ -33,10 +37,10 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
 
   const solutionResults: sdk.Result<T>[] = [];
 
-  const runProblem = makeProblemRunner({ solutionResults }, solution, seed);
+  const runProblem = makeProblemRunner({ solutionResults }, seed);
   for (const problem of problems) {
     try {
-      await runProblem(problem);
+      await runProblem({ problem, engine: solution.engine });
     } catch (err) {
       console.log(
         chalk.red(
@@ -56,16 +60,32 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
   }
 };
 
+type ProblemArgs<T extends sdk.ProblemType, L extends sdk.LearningApproach> = {
+  problem: sdk.Problem<T, L>;
+  engine: sdk.Engine<T, L>;
+};
+
+const isUnsupervised = <T extends sdk.ProblemType>(
+  args: ProblemArgs<T, sdk.LearningApproach>
+): args is ProblemArgs<T, "unsupervised"> => {
+  return isUnsupervisedProblem(args.problem);
+};
+
+const isSupervised = <T extends sdk.ProblemType>(
+  args: ProblemArgs<T, sdk.LearningApproach>
+): args is ProblemArgs<T, "supervised"> => {
+  return !isUnsupervisedProblem(args.problem);
+};
+
 const makeProblemRunner = <T extends sdk.ProblemType>(
   state: {
     solutionResults: sdk.Result<T>[];
   },
-  solution: sdk.Solution<T>,
   seed: number
-) => async (problem: sdk.Problem<T>) => {
+) => async (args: ProblemArgs<T, sdk.LearningApproach>) => {
   const { solutionResults } = state;
 
-  const { engine } = solution;
+  const { engine, problem } = args;
 
   console.log(chalk.green(chalk.bold(`Problem ${problem.name}`)));
 
@@ -76,12 +96,20 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
   });
   trainProgressBar.start(100, 0);
 
-  await engine.train(problem.trainSet, seed, (p: number) => {
+  const trainProgress = (p: number) => {
     if (p === 1) {
       p = 0.99;
     }
     trainProgressBar.update(p * 100);
-  });
+  };
+
+  if (isUnsupervised(args)) {
+    await args.engine.train(args.problem.corpus, seed, trainProgress);
+  }
+  if (isSupervised(args)) {
+    await args.engine.train(args.problem.trainSet, seed, trainProgress);
+  }
+
   trainProgressBar.update(100);
   trainProgressBar.stop();
 

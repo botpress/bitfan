@@ -1,5 +1,5 @@
 export function runSolution<T extends ProblemType>(
-  solution: Solution<T>,
+  solution: Solution<T, LearningApproach>,
   seeds: number[]
 ): Promise<Result<T>[]>;
 
@@ -140,19 +140,19 @@ export namespace engines {
   export const makeBpIntentEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"intent">;
+  ) => Engine<"intent", "supervised">;
   export const makeBpIntentTopicEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"intent-topic">;
+  ) => Engine<"intent-topic", "supervised">;
   export const makeBpTopicEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"topic">;
+  ) => Engine<"topic", "supervised">;
   export const makeBpSlotEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"slot">;
+  ) => Engine<"slot", "supervised">;
 }
 
 export namespace sampling {
@@ -240,26 +240,23 @@ export namespace tables {
 /**
  * @description Collection of problems with an engine to solve them
  */
-export type Solution<T extends ProblemType> = {
+export type Solution<T extends ProblemType, L extends LearningApproach> = {
   name: string;
-  problems: Problem<T>[];
-  engine: Engine<T>;
+  problems: Problem<T, L>[];
+  engine: Engine<T, L>;
   cb?: ResultViewer<T>;
 };
 
-export type SingleLabel =
-  | "intent"
-  | "topic"
-  | "intent-topic" // label of an "intent-topic" problem is "topic/intent"
-  | "lang"
-  | "spell";
+export type LearningApproach = "supervised" | "unsupervised";
+
+export type SingleLabel = "intent" | "topic" | "intent-topic"; // label of an "intent-topic" problem is "topic/intent"
 export type MultiLabel = "multi-intent" | "multi-intent-topic";
 
 /**
  * @name ProblemType
  * @description All solvable problem types
  */
-export type ProblemType = SingleLabel | MultiLabel | "slot";
+export type ProblemType = SingleLabel | MultiLabel | "spell" | "lang" | "slot";
 
 type Dic<T> = {
   [key: string]: T;
@@ -291,31 +288,45 @@ export type Elected<T extends ProblemType> = T extends "slot"
 /**
  * @description Collection of one train dataset and one test dataset
  */
-export interface Problem<T extends ProblemType> {
+export type Problem<T extends ProblemType, L extends LearningApproach> = {
   name: string;
   type: ProblemType;
-  trainSet: DataSet<T>;
   testSet: DataSet<T>;
   lang: string;
   cb?: ResultViewer<T>;
-}
+} & (L extends "unsupervised"
+  ? {
+      corpus: Document[];
+    }
+  : {
+      trainSet: DataSet<T>;
+    });
 
 export type ProgressCb = (p: number) => void;
 
 /**
  * @description Collection of a train function and a predict function
  */
-export interface Engine<T extends ProblemType> {
-  train: (
-    trainSet: DataSet<T>,
-    seed: number,
-    progress: ProgressCb
-  ) => Promise<void>;
+export type Engine<T extends ProblemType, L extends LearningApproach> = {
   predict: (
     testSet: DataSet<T>,
     progress: ProgressCb
   ) => Promise<Prediction<T>[]>;
-}
+} & (L extends "unsupervised"
+  ? {
+      train: (
+        corpus: Document[],
+        seed: number,
+        progress: ProgressCb
+      ) => Promise<void>;
+    }
+  : {
+      train: (
+        trainSet: DataSet<T>,
+        seed: number,
+        progress: ProgressCb
+      ) => Promise<void>;
+    });
 
 export type Prediction<T extends ProblemType> = {
   text: string;
@@ -402,6 +413,12 @@ export type DataSet<T extends ProblemType> = {
 } & (T extends "slot"
   ? { variables?: Variable[]; patterns?: Pattern[]; enums?: Enum[] }
   : {});
+
+export type Document = {
+  name: string;
+  lang: string;
+  text: string;
+};
 
 type Variable = {
   name: string;
