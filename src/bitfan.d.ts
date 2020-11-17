@@ -1,5 +1,5 @@
-export function runSolution<T extends ProblemType>(
-  solution: Solution<T, LearningApproach>,
+export function runSolution<T extends ProblemType, L extends LearningApproach>(
+  solution: Solution<T, L>,
   seeds: number[]
 ): Promise<Result<T>[]>;
 
