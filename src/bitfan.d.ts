@@ -15,55 +15,24 @@ export function comparePerformances(
 ): ComparisonReport;
 
 export namespace datasets {
-  export namespace bpds {
-    export namespace intents {
-      export namespace test {
-        const A: DataSet<"intent">;
-        const B: DataSet<"intent">;
-        const C: DataSet<"intent">;
-        const D: DataSet<"intent">;
-        const E: DataSet<"intent">;
-        const F: DataSet<"intent">;
-      }
-
-      export namespace train {
-        const A: DataSet<"intent">;
-        const B: DataSet<"intent">;
-        const C: DataSet<"intent">;
-        const D: DataSet<"intent">;
-        const E: DataSet<"intent">;
-        const F: DataSet<"intent">;
-      }
-    }
-
-    export namespace slots {
-      export namespace test {
-        const A: DataSet<"slot">;
-        const B: DataSet<"slot">;
-        const C: DataSet<"slot">;
-        const D: DataSet<"slot">;
-        const E: DataSet<"slot">;
-        const F: DataSet<"slot">;
-        const G: DataSet<"slot">;
-        const H: DataSet<"slot">;
-        const I: DataSet<"slot">;
-        const J: DataSet<"slot">;
-      }
-
-      export namespace train {
-        const A: DataSet<"slot">;
-        const B: DataSet<"slot">;
-        const C: DataSet<"slot">;
-        const D: DataSet<"slot">;
-        const E: DataSet<"slot">;
-        const F: DataSet<"slot">;
-        const G: DataSet<"slot">;
-        const H: DataSet<"slot">;
-        const I: DataSet<"slot">;
-        const J: DataSet<"slot">;
-      }
-    }
-  }
+  export const listDatasets: () => Promise<
+    FileDef<ProblemType, LearningApproach, Stage>[]
+  >;
+  export const readDataset: <
+    T extends ProblemType,
+    L extends LearningApproach,
+    S extends Stage | undefined
+  >(
+    info: FileDef<T, L, S>
+  ) => Promise<
+    L extends "unsupervised"
+      ? Document
+      : S extends "train"
+      ? TrainSet<T>
+      : S extends "test"
+      ? TestSet<T>
+      : DataSet<T>
+  >;
 }
 
 export namespace election {
@@ -247,6 +216,7 @@ export type Solution<T extends ProblemType, L extends LearningApproach> = {
   cb?: ResultViewer<T>;
 };
 
+export type Stage = "train" | "test";
 export type LearningApproach = "supervised" | "unsupervised";
 
 export type SingleLabel = "intent" | "topic" | "intent-topic"; // label of an "intent-topic" problem is "topic/intent"
@@ -291,7 +261,7 @@ export type Elected<T extends ProblemType> = T extends "slot"
 export type Problem<T extends ProblemType, L extends LearningApproach> = {
   name: string;
   type: ProblemType;
-  testSet: DataSet<T>;
+  testSet: TestSet<T>;
   lang: string;
   cb?: ResultViewer<T>;
 } & (L extends "unsupervised"
@@ -299,7 +269,7 @@ export type Problem<T extends ProblemType, L extends LearningApproach> = {
       corpus: Document[];
     }
   : {
-      trainSet: DataSet<T>;
+      trainSet: TrainSet<T>;
     });
 
 export type ProgressCb = (p: number) => void;
@@ -309,7 +279,7 @@ export type ProgressCb = (p: number) => void;
  */
 export type Engine<T extends ProblemType, L extends LearningApproach> = {
   predict: (
-    testSet: DataSet<T>,
+    testSet: TestSet<T>,
     progress: ProgressCb
   ) => Promise<Prediction<T>[]>;
 } & (L extends "unsupervised"
@@ -322,7 +292,7 @@ export type Engine<T extends ProblemType, L extends LearningApproach> = {
     }
   : {
       train: (
-        trainSet: DataSet<T>,
+        trainSet: TrainSet<T>,
         seed: number,
         progress: ProgressCb
       ) => Promise<void>;
@@ -405,19 +375,38 @@ export type Metric<T extends ProblemType> = {
   eval: (res: Result<T>[]) => number;
 };
 
+export type TrainSet<T extends ProblemType> = DataSet<T> &
+  (T extends "slot"
+    ? { variables: Variable[]; patterns: Pattern[]; enums: Enum[] }
+    : {});
+
+export type TestSet<T extends ProblemType> = DataSet<T>;
+
 export type DataSet<T extends ProblemType> = {
   name: string;
   type: T;
   lang: string;
   samples: Sample<T>[];
-} & (T extends "slot"
-  ? { variables?: Variable[]; patterns?: Pattern[]; enums?: Enum[] }
-  : {});
+};
 
 export type Document = {
   name: string;
+  type: ProblemType;
   lang: string;
   text: string;
+};
+
+export type FileDef<
+  T extends ProblemType,
+  L extends LearningApproach,
+  S extends Stage | undefined
+> = {
+  name: string;
+  type: T;
+  lang: string;
+  approach: L;
+  namespace?: string[];
+  stage?: S;
 };
 
 type Variable = {

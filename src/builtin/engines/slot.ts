@@ -16,7 +16,11 @@ export class BpSlotEngine implements sdk.Engine<"slot", "supervised"> {
     this._stanProvider = new StanProvider(bpEndpoint, password);
   }
 
-  train(trainSet: sdk.DataSet<"slot">, seed: number, progress: sdk.ProgressCb) {
+  train(
+    trainSet: sdk.TrainSet<"slot">,
+    seed: number,
+    progress: sdk.ProgressCb
+  ) {
     const { enums, patterns, lang, samples, variables } = trainSet;
 
     const examples = samples.map((r) => {

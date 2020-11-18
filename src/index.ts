@@ -50,9 +50,7 @@ import runSolution from "./solution";
 import evaluateMetrics from "./report";
 import comparePerformances from "./compare";
 
-import DatasetRepository from "./services/dataset-repository";
-
-const dsRepo = new DatasetRepository();
+import { listDatasets, readDataset } from "./builtin/datasets/index";
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
@@ -81,52 +79,8 @@ const impl: typeof sdk = {
 
   // TODO lazy load these...
   datasets: {
-    bpds: {
-      intents: {
-        train: {
-          A: dsRepo.getDataset("intent", "en", "bpdsA-train"),
-          B: dsRepo.getDataset("intent", "en", "bpdsB-train"),
-          C: dsRepo.getDataset("intent", "en", "bpdsC-train"),
-          D: dsRepo.getDataset("intent", "en", "bpdsD-train"),
-          E: dsRepo.getDataset("intent", "en", "bpdsE-train"),
-          F: dsRepo.getDataset("intent", "en", "bpdsF-train"),
-        },
-        test: {
-          A: dsRepo.getDataset("intent", "en", "bpdsA-test"),
-          B: dsRepo.getDataset("intent", "en", "bpdsB-test"),
-          C: dsRepo.getDataset("intent", "en", "bpdsC-test"),
-          D: dsRepo.getDataset("intent", "en", "bpdsD-test"),
-          E: dsRepo.getDataset("intent", "en", "bpdsE-test"),
-          F: dsRepo.getDataset("intent", "en", "bpdsF-test"),
-        },
-      },
-      slots: {
-        train: {
-          A: dsRepo.getDataset("slot", "en", "bpdsA-train"),
-          B: dsRepo.getDataset("slot", "en", "bpdsB-train"),
-          C: dsRepo.getDataset("slot", "en", "bpdsC-train"),
-          D: dsRepo.getDataset("slot", "en", "bpdsD-train"),
-          E: dsRepo.getDataset("slot", "en", "bpdsE-train"),
-          F: dsRepo.getDataset("slot", "en", "bpdsF-train"),
-          G: dsRepo.getDataset("slot", "en", "bpdsG-train"),
-          H: dsRepo.getDataset("slot", "en", "bpdsH-train"),
-          I: dsRepo.getDataset("slot", "en", "bpdsI-train"),
-          J: dsRepo.getDataset("slot", "en", "bpdsJ-train"),
-        },
-        test: {
-          A: dsRepo.getDataset("slot", "en", "bpdsA-test"),
-          B: dsRepo.getDataset("slot", "en", "bpdsB-test"),
-          C: dsRepo.getDataset("slot", "en", "bpdsC-test"),
-          D: dsRepo.getDataset("slot", "en", "bpdsD-test"),
-          E: dsRepo.getDataset("slot", "en", "bpdsE-test"),
-          F: dsRepo.getDataset("slot", "en", "bpdsF-test"),
-          G: dsRepo.getDataset("slot", "en", "bpdsG-test"),
-          H: dsRepo.getDataset("slot", "en", "bpdsH-test"),
-          I: dsRepo.getDataset("slot", "en", "bpdsI-test"),
-          J: dsRepo.getDataset("slot", "en", "bpdsJ-test"),
-        },
-      },
-    },
+    listDatasets,
+    readDataset,
   },
 
   criterias: {
