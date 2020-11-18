@@ -17,6 +17,7 @@ const allTypes: sdk.ProblemType[] = [
 ];
 
 const ROOT_DIR = "../../../datasets";
+const NAMESPACE_SEP = ".";
 
 const fileNameFormat = /[a-zA-Z0-9_-]*\.[a-z]{2}\.(?:ds|doc)\.json$/;
 
@@ -56,7 +57,9 @@ export const listFiles: typeof sdk.datasets.listFiles = async () => {
       const fName = path.basename(f);
 
       const splitPath = (p: string) => p.split(path.sep);
-      const namespace = _.xor(...[fPath, basePathForType].map(splitPath));
+      const namespace = _.xor(...[fPath, basePathForType].map(splitPath)).join(
+        NAMESPACE_SEP
+      );
 
       return <sdk.FileDef<sdk.ProblemType, sdk.FileType>>{
         ..._parseFileName(fName),
@@ -80,7 +83,7 @@ const _readFile = async <T extends sdk.ProblemType>(
     __dirname,
     ROOT_DIR,
     type,
-    namespace?.join(path.sep) ?? "",
+    namespace.split(NAMESPACE_SEP).join(path.sep) ?? "",
     fName
   );
   const fileContent = await fse.readFile(fPath, "utf8");

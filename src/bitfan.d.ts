@@ -15,15 +15,14 @@ export function comparePerformances(
 ): ComparisonReport;
 
 export namespace datasets {
-  export const listFiles: () => Promise<FileDef<ProblemType, FileType>[]>;
+  export const listFiles: () => Promise<
+    (DataSetDef<ProblemType> | DocumentDef)[]
+  >;
 
   export const readDataset: <T extends ProblemType>(
-    info: FileDef<T, "dataset">
+    dsInfo: DataSetDef<T>
   ) => Promise<DataSet<T>>;
-
-  export const readDocument: <T extends ProblemType>(
-    info: FileDef<T, "document">
-  ) => Promise<Document>;
+  export const readDocument: (docInfo: DocumentDef) => Promise<Document>;
 }
 
 export namespace election {
@@ -395,13 +394,15 @@ export type Document = {
 };
 
 export type FileType = "document" | "dataset";
-export type FileDef<T extends ProblemType, F extends FileType> = {
+type FileDef<T extends ProblemType, F extends FileType> = {
   name: string;
   type: T;
   fileType: F;
   lang: string;
-  namespace?: string[];
+  namespace: string;
 };
+export type DataSetDef<T extends ProblemType> = FileDef<T, "dataset">;
+export type DocumentDef = FileDef<ProblemType, "document">;
 
 type Variable = {
   name: string;
