@@ -1,7 +1,10 @@
 {
-  "name": "bpdsG-slot-test",
+  "name": "bpdsF-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "flight-number", "types": ["city"] }, { "name": "arrival-city", "types": ["city"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "info BK-8754 to tataouine",

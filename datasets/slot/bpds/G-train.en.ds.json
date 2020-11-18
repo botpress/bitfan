@@ -1,5 +1,5 @@
 {
-  "name": "bpdsF-slot-train",
+  "name": "bpdsG-slot-train",
   "type": "slot",
   "lang": "en",
   "variables": [{ "name": "from_city", "types": ["city"] }, { "name": "to_city", "types": ["city"] }],
@@ -205,6 +205,7 @@
       { "name": "Zagreb", "synonyms": [] }
     ] 
   }],
+  "patterns": [],
   "samples": [
     {
       "text": "I want to book a flight from Paris to Quebec",

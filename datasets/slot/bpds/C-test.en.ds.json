@@ -2,6 +2,12 @@
   "name": "bpdsC-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [
+    { "name": "holiday_start", "types": ["time"] },
+    { "name": "holiday_duration", "types": ["duration"] }
+  ],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "Can I take vacations the 3rd of june for approximately five weeks ?",

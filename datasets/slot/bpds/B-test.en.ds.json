@@ -2,6 +2,9 @@
   "name": "bpdsB-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "fruit-to-buy", "types": ["fruit"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "buy pinaple",

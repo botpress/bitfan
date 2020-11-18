@@ -13,7 +13,7 @@ const NONE = "none";
 
 const BATCH_SIZE = 10;
 
-export class BpIntentEngine implements sdk.Engine<"intent", "supervised"> {
+export class BpIntentEngine implements sdk.Engine<"intent"> {
   private _stanProvider: StanProvider;
 
   constructor(bpEndpoint?: string, password?: string) {

@@ -10,8 +10,7 @@ import {
 
 const BATCH_SIZE = 10;
 
-export class BpIntentTopicEngine
-  implements sdk.Engine<"intent-topic", "supervised"> {
+export class BpIntentTopicEngine implements sdk.Engine<"intent-topic"> {
   private _stanProvider: StanProvider;
 
   constructor(bpEndpoint: string, password: string) {
