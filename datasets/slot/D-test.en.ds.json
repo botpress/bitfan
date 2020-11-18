@@ -2,6 +2,9 @@
   "name": "bpdsD-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "restaurant", "types": ["any"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "vote for wendys",

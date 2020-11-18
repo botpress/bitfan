@@ -1,14 +1,8 @@
 {
-  "name": "bpdsI-slot-train",
+  "name": "bpdsF-slot-train",
   "type": "slot",
   "lang": "en",
-  "variables": [
-    { "name": "thing_to_fire", "types": ["fruit", "gun"] },
-    { "name": "time_or_place", "types": ["city", "time"] }
-  ],
-  "patterns": [
-    { "name": "gun", "regex": "\\w{1,2}-?\\d{2,4}", "case_sensitive": false }
-  ],
+  "variables": [{ "name": "flight-number", "types": ["city"] }, { "name": "arrival-city", "types": ["city"] }],
   "enums": [
     { "name": "city", "values": 
       [
@@ -211,230 +205,125 @@
         { "name": "Yaren", "synonyms": [] },
         { "name": "Zagreb", "synonyms": [] }
       ] 
-    },
-    { "name": "fruit", "values": 
-      [
-        {
-          "name": "apples",
-          "synonyms": []
-        },
-        {
-          "name": "banana",
-          "synonyms": []
-        },
-        {
-          "name": "orange",
-          "synonyms": []
-        },
-        {
-          "name": "apricot",
-          "synonyms": []
-        },
-        {
-          "name": "blackberry",
-          "synonyms": []
-        },
-        {
-          "name": "blueberry",
-          "synonyms": []
-        },
-        {
-          "name": "strawberry",
-          "synonyms": []
-        },
-        {
-          "name": "cherry",
-          "synonyms": ["cherries"]
-        },
-        {
-          "name": "coconut",
-          "synonyms": []
-        },
-        {
-          "name": "date",
-          "synonyms": []
-        },
-        {
-          "name": "grape",
-          "synonyms": []
-        },
-        {
-          "name": "kiwi",
-          "synonyms": []
-        },
-        {
-          "name": "mango",
-          "synonyms": []
-        },
-        {
-          "name": "melon",
-          "synonyms": ["Galia melon"]
-        },
-        {
-          "name": "nectarine",
-          "synonyms": []
-        },
-        {
-          "name": "pineapple",
-          "synonyms": []
-        },
-        {
-          "name": "peach",
-          "synonyms": []
-        },
-        {
-          "name": "passion fruit",
-          "synonyms": []
-        },
-        {
-          "name": "papaya",
-          "synonyms": []
-        },
-        {
-          "name": "Bell pepper",
-          "synonyms": ["Chile pepper"]
-        },
-        {
-          "name": "Purple mangosteen",
-          "synonyms": []
-        },
-        {
-          "name": "Japanese plum",
-          "synonyms": []
-        },
-        {
-          "name": "Black sapote",
-          "synonyms": []
-        },
-        {
-          "name": "Chico fruit",
-          "synonyms": []
-        },
-        {
-          "name": "Goji berry",
-          "synonyms": []
-        },
-        {
-          "name": "tesguino",
-          "synonyms": []
-        }
-      ] 
-    }
+    }],
+  "patterns": [
+    { "name": "flight-number", "regex": "\\w{1,2}-?\\d{2,4}", "case_sensitive": false }
   ],
   "samples": [
     {
-      "text": "I'm gonna fire my AK47 at 8pm",
+      "text": "check flight AR-8945 to Quebec",
       "label": [
         {
-          "name": "thing_to_fire",
-          "start": 18,
-          "end": 22
-        },
-        {
-          "name": "time_or_place",
-          "start": 26,
-          "end": 29
-        }
-      ]
-    },
-    {
-      "text": "I'm going to fire apples in quebec city tonight",
-      "label": [
-        {
-          "name": "thing_to_fire",
-          "start": 18,
-          "end": 24
-        },
-        {
-          "name": "time_or_place",
-          "start": 40,
-          "end": 47
-        }
-      ]
-    },
-    {
-      "text": "There's an orange shooting planned next tuesday",
-      "label": [
-        {
-          "name": "thing_to_fire",
-          "start": 11,
-          "end": 17
-        },
-        {
-          "name": "time_or_place",
-          "start": 35,
-          "end": 47
-        }
-      ]
-    },
-    {
-      "text": "I'm heading to quebec city shooting lane to test my M16",
-      "label": [
-        {
-          "name": "time_or_place",
-          "start": 15,
-          "end": 26
-        },
-        {
-          "name": "thing_to_fire",
-          "start": 52,
-          "end": 55
-        }
-      ]
-    },
-    {
-      "text": "let's shoot some G36 at christmas",
-      "label": [
-        {
-          "name": "thing_to_fire",
-          "start": 17,
+          "name": "flight-number",
+          "start": 13,
           "end": 20
         },
         {
-          "name": "time_or_place",
+          "name": "arrival-city",
           "start": 24,
-          "end": 33
+          "end": 30
         }
       ]
     },
     {
-      "text": "at 5pm is the time I will fire apples",
+      "text": "info BK-8754 to tataouine",
       "label": [
         {
-          "name": "time_or_place",
-          "start": 3,
-          "end": 6
+          "name": "flight-number",
+          "start": 5,
+          "end": 12
         },
         {
-          "name": "thing_to_fire",
-          "start": 31,
-          "end": 37
+          "name": "arrival-city",
+          "start": 16,
+          "end": 25
         }
       ]
     },
     {
-      "text": "Go to paris to shoot some fruits!",
+      "text": "I would like infoLO786",
       "label": [
         {
-          "name": "thing_to_fire",
-          "start": 6,
-          "end": 11
+          "name": "flight-number",
+          "start": 17,
+          "end": 22
         }
       ]
     },
     {
-      "text": "Fire your AK47 at some place or time!",
+      "text": "trip arriving in Sydney",
       "label": [
         {
-          "name": "time_or_place",
-          "start": 10,
-          "end": 14
+          "name": "arrival-city",
+          "start": 17,
+          "end": 23
         }
       ]
     },
     {
-      "text": "I'm going to fire fruits ora gun at some place or time",
-      "label": []
+      "text": "get info about H888 arriving in the city of lights",
+      "label": [
+        {
+          "name": "flight-number",
+          "start": 15,
+          "end": 19
+        },
+        {
+          "name": "arrival-city",
+          "start": 36,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "text": "R-89 informations",
+      "label": [
+        {
+          "name": "flight-number",
+          "start": 0,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "text": "details on my flight TR8566 landing in Sydney",
+      "label": [
+        {
+          "name": "flight-number",
+          "start": 21,
+          "end": 27
+        },
+        {
+          "name": "arrival-city",
+          "start": 39,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "My daughter flight is OO666 I would like to know where she is.",
+      "label": [
+        {
+          "name": "flight-number",
+          "start": 22,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Inform me about aircanada yt-8766 for Dubai",
+      "label": [
+        {
+          "name": "flight-number",
+          "start": 26,
+          "end": 33
+        },
+        {
+          "name": "arrival-city",
+          "start": 38,
+          "end": 43
+        }
+      ]
     }
   ]
 }

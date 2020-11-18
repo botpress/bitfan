@@ -1,5 +1,5 @@
-export function runSolution<T extends ProblemType, L extends LearningApproach>(
-  solution: Solution<T, L>,
+export function runSolution<T extends ProblemType>(
+  solution: Solution<T> | UnsupervisedSolution<T>,
   seeds: number[]
 ): Promise<Result<T>[]>;
 
@@ -15,24 +15,15 @@ export function comparePerformances(
 ): ComparisonReport;
 
 export namespace datasets {
-  export const listDatasets: () => Promise<
-    FileDef<ProblemType, LearningApproach, Stage>[]
-  >;
-  export const readDataset: <
-    T extends ProblemType,
-    L extends LearningApproach,
-    S extends Stage | undefined
-  >(
-    info: FileDef<T, L, S>
-  ) => Promise<
-    L extends "unsupervised"
-      ? Document
-      : S extends "train"
-      ? TrainSet<T>
-      : S extends "test"
-      ? TestSet<T>
-      : DataSet<T>
-  >;
+  export const listFiles: () => Promise<FileDef<ProblemType, FileType>[]>;
+
+  export const readDataset: <T extends ProblemType>(
+    info: FileDef<T, "dataset">
+  ) => Promise<DataSet<T>>;
+
+  export const readDocument: <T extends ProblemType>(
+    info: FileDef<T, "document">
+  ) => Promise<Document>;
 }
 
 export namespace election {
@@ -109,19 +100,19 @@ export namespace engines {
   export const makeBpIntentEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"intent", "supervised">;
+  ) => Engine<"intent">;
   export const makeBpIntentTopicEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"intent-topic", "supervised">;
+  ) => Engine<"intent-topic">;
   export const makeBpTopicEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"topic", "supervised">;
+  ) => Engine<"topic">;
   export const makeBpSlotEngine: (
     bpEndpoint: string,
     password: string
-  ) => Engine<"slot", "supervised">;
+  ) => Engine<"slot">;
 }
 
 export namespace sampling {
@@ -209,15 +200,19 @@ export namespace tables {
 /**
  * @description Collection of problems with an engine to solve them
  */
-export type Solution<T extends ProblemType, L extends LearningApproach> = {
+export type Solution<T extends ProblemType> = {
   name: string;
-  problems: Problem<T, L>[];
-  engine: Engine<T, L>;
+  problems: Problem<T>[];
+  engine: Engine<T>;
   cb?: ResultViewer<T>;
 };
 
-export type Stage = "train" | "test";
-export type LearningApproach = "supervised" | "unsupervised";
+export type UnsupervisedSolution<T extends ProblemType> = {
+  name: string;
+  problems: UnsupervisedProblem<T>[];
+  engine: UnsupervisedEngine<T>;
+  cb?: ResultViewer<T>;
+};
 
 export type SingleLabel = "intent" | "topic" | "intent-topic"; // label of an "intent-topic" problem is "topic/intent"
 export type MultiLabel = "multi-intent" | "multi-intent-topic";
@@ -255,48 +250,52 @@ export type Elected<T extends ProblemType> = T extends "slot"
   ? { name: string; start: number; end: number }
   : string;
 
+type BaseProblem<T extends ProblemType> = {
+  name: string;
+  type: ProblemType;
+  testSet: DataSet<T>;
+  lang: string;
+  cb?: ResultViewer<T>;
+};
+
 /**
  * @description Collection of one train dataset and one test dataset
  */
-export type Problem<T extends ProblemType, L extends LearningApproach> = {
-  name: string;
-  type: ProblemType;
-  testSet: TestSet<T>;
-  lang: string;
-  cb?: ResultViewer<T>;
-} & (L extends "unsupervised"
-  ? {
-      corpus: Document[];
-    }
-  : {
-      trainSet: TrainSet<T>;
-    });
+export type Problem<T extends ProblemType> = BaseProblem<T> & {
+  trainSet: DataSet<T>;
+};
+
+export type UnsupervisedProblem<T extends ProblemType> = BaseProblem<T> & {
+  corpus: Document[];
+};
 
 export type ProgressCb = (p: number) => void;
+
+type Predictor<T extends ProblemType> = {
+  predict: (
+    testSet: DataSet<T>,
+    progress: ProgressCb
+  ) => Promise<Prediction<T>[]>;
+};
 
 /**
  * @description Collection of a train function and a predict function
  */
-export type Engine<T extends ProblemType, L extends LearningApproach> = {
-  predict: (
-    testSet: TestSet<T>,
+export type Engine<T extends ProblemType> = Predictor<T> & {
+  train: (
+    trainSet: DataSet<T>,
+    seed: number,
     progress: ProgressCb
-  ) => Promise<Prediction<T>[]>;
-} & (L extends "unsupervised"
-  ? {
-      train: (
-        corpus: Document[],
-        seed: number,
-        progress: ProgressCb
-      ) => Promise<void>;
-    }
-  : {
-      train: (
-        trainSet: TrainSet<T>,
-        seed: number,
-        progress: ProgressCb
-      ) => Promise<void>;
-    });
+  ) => Promise<void>;
+};
+
+export type UnsupervisedEngine<T extends ProblemType> = Predictor<T> & {
+  train: (
+    corpus: Document[],
+    seed: number,
+    progress: ProgressCb
+  ) => Promise<void>;
+};
 
 export type Prediction<T extends ProblemType> = {
   text: string;
@@ -375,18 +374,17 @@ export type Metric<T extends ProblemType> = {
   eval: (res: Result<T>[]) => number;
 };
 
-export type TrainSet<T extends ProblemType> = DataSet<T> &
-  (T extends "slot"
-    ? { variables: Variable[]; patterns: Pattern[]; enums: Enum[] }
-    : {});
-
-export type TestSet<T extends ProblemType> = DataSet<T>;
-
 export type DataSet<T extends ProblemType> = {
   name: string;
   type: T;
   lang: string;
   samples: Sample<T>[];
+} & (T extends "slot" ? VariablesDef : {});
+
+export type VariablesDef = {
+  variables: Variable[];
+  patterns: Pattern[];
+  enums: Enum[];
 };
 
 export type Document = {
@@ -396,17 +394,13 @@ export type Document = {
   text: string;
 };
 
-export type FileDef<
-  T extends ProblemType,
-  L extends LearningApproach,
-  S extends Stage | undefined
-> = {
+export type FileType = "document" | "dataset";
+export type FileDef<T extends ProblemType, F extends FileType> = {
   name: string;
   type: T;
+  fileType: F;
   lang: string;
-  approach: L;
   namespace?: string[];
-  stage?: S;
 };
 
 type Variable = {

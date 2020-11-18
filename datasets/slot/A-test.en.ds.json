@@ -2,6 +2,9 @@
   "name": "bpdsA-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "gun_to_buy", "types": ["gun"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "A MP34 I WHAT I WISH FOR LOL",

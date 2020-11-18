@@ -18,18 +18,12 @@ const allTypes: sdk.ProblemType[] = [
 
 const ROOT_DIR = "../../../datasets";
 
-const fileNameFormat = /[a-zA-Z0-9_-]*(?:\.test|\.train)?\.[a-z]{2}\.(?:ds|doc)\.json$/;
+const fileNameFormat = /[a-zA-Z0-9_-]*\.[a-z]{2}\.(?:ds|doc)\.json$/;
 
-const _makeFileName = (
-  name: string,
-  lang: string,
-  app: sdk.LearningApproach,
-  stage?: sdk.Stage
-) => {
+const _makeFileName = (name: string, lang: string, app: "doc" | "ds") => {
   let fileName = name;
-  fileName += stage ? `.${stage}` : "";
   fileName += `.${lang}`;
-  fileName += app === "unsupervised" ? `.doc` : ".ds";
+  fileName += `.${app}`;
   fileName += ".json";
   return fileName;
 };
@@ -37,20 +31,17 @@ const _makeFileName = (
 const _parseFileName = (fileName: string) => {
   const parts = fileName.split(".");
   parts.pop(); // rm .json
-  const approach: sdk.LearningApproach =
-    parts.pop()! === "doc" ? "unsupervised" : "supervised";
+  parts.pop(); // rm .doc | .ds
   const lang = parts.pop()!;
   const name = parts.shift()!;
-  const stage = parts.pop();
+
   return {
     name,
     lang,
-    approach,
-    stage,
   };
 };
 
-export const listDatasets: typeof sdk.datasets.listDatasets = async () => {
+export const listFiles: typeof sdk.datasets.listFiles = async () => {
   const basePath = path.join(__dirname, ROOT_DIR);
   const types = allTypes.filter((t) => fse.existsSync(path.join(basePath, t)));
   return BbPromise.map(types, async (type) => {
@@ -67,7 +58,7 @@ export const listDatasets: typeof sdk.datasets.listDatasets = async () => {
       const splitPath = (p: string) => p.split(path.sep);
       const namespace = _.xor(...[fPath, basePathForType].map(splitPath));
 
-      return <sdk.FileDef<sdk.ProblemType, sdk.LearningApproach, sdk.Stage>>{
+      return <sdk.FileDef<sdk.ProblemType, sdk.FileType>>{
         ..._parseFileName(fName),
         type,
         namespace,
@@ -76,15 +67,15 @@ export const listDatasets: typeof sdk.datasets.listDatasets = async () => {
   }).then(_.flatten);
 };
 
-export const readDataset: typeof sdk.datasets.readDataset = async <
-  T extends sdk.ProblemType,
-  L extends sdk.LearningApproach,
-  S extends sdk.Stage | undefined
->(
-  info: sdk.FileDef<T, L, S>
+const _readFile = async <T extends sdk.ProblemType>(
+  info: sdk.FileDef<T, sdk.FileType>
 ) => {
-  const { approach, lang, name, type, namespace, stage } = info;
-  const fName = _makeFileName(name, lang, approach, stage);
+  const { lang, name, type, namespace } = info;
+  const fName = _makeFileName(
+    name,
+    lang,
+    info.fileType === "dataset" ? "ds" : "doc"
+  );
   const fPath = path.join(
     __dirname,
     ROOT_DIR,
@@ -94,4 +85,20 @@ export const readDataset: typeof sdk.datasets.readDataset = async <
   );
   const fileContent = await fse.readFile(fPath, "utf8");
   return JSON.parse(fileContent);
+};
+
+export const readDataset: typeof sdk.datasets.readDataset = <
+  T extends sdk.ProblemType
+>(
+  info: sdk.FileDef<T, "dataset">
+) => {
+  return _readFile(info);
+};
+
+export const readDocument: typeof sdk.datasets.readDocument = <
+  T extends sdk.ProblemType
+>(
+  info: sdk.FileDef<T, "document">
+) => {
+  return _readFile(info);
 };

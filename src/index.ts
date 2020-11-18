@@ -50,7 +50,7 @@ import runSolution from "./solution";
 import evaluateMetrics from "./report";
 import comparePerformances from "./compare";
 
-import { listDatasets, readDataset } from "./builtin/datasets/index";
+import { listFiles, readDataset, readDocument } from "./builtin/datasets/index";
 
 // TODO: write actual implementation
 const impl: typeof sdk = {
@@ -79,8 +79,9 @@ const impl: typeof sdk = {
 
   // TODO lazy load these...
   datasets: {
-    listDatasets,
+    listFiles,
     readDataset,
+    readDocument,
   },
 
   criterias: {

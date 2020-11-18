@@ -2,6 +2,9 @@
   "name": "bpdsJ-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "fruit_to_eat", "types": ["fruit"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "Cherry-pick your way to your favorite grape",

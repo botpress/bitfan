@@ -6,6 +6,8 @@
       { "name": "holiday_start", "types": ["time"] },
       { "name": "holiday_duration", "types": ["duration"] }
     ],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "I want to take holidays now",
