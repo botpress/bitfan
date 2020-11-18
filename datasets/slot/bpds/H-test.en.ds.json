@@ -2,6 +2,9 @@
   "name": "bpdsH-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "flight", "types": ["flight-number"] }, { "name": "gun", "types": ["gun"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "Bring a WD-40 on my trip to tokyo HG-45",

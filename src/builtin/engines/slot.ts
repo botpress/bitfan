@@ -9,7 +9,7 @@ const MAIN_INTENT = "main";
 
 const BATCH_SIZE = 10;
 
-export class BpSlotEngine implements sdk.Engine<"slot", "supervised"> {
+export class BpSlotEngine implements sdk.Engine<"slot"> {
   private _stanProvider: StanProvider;
 
   constructor(bpEndpoint?: string, password?: string) {

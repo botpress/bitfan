@@ -2,6 +2,9 @@
   "name": "bpdsE-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "employe_to_fire", "types": ["email", "employe-number", "any"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "fire employe #426661",

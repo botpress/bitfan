@@ -3,6 +3,7 @@
   "type": "slot",
   "lang": "en",
   "variables": [{ "name": "employe_to_fire", "types": ["email", "employe-number", "any"] }],
+  "enums": [],
   "patterns": [{ "name": "employe-number", "regex": "[0-9]{6}", "case_sensitive": false }],
   "samples": [
     {

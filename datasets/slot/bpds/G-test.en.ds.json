@@ -1,7 +1,10 @@
 {
-  "name": "bpdsF-slot-test",
+  "name": "bpdsG-slot-test",
   "type": "slot",
   "lang": "en",
+  "variables": [{ "name": "from_city", "types": ["city"] }, { "name": "to_city", "types": ["city"] }],
+  "enums": [],
+  "patterns": [],
   "samples": [
     {
       "text": "I want a flight which leaves Prague and land in Tataouine",

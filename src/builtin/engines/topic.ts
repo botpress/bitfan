@@ -10,7 +10,7 @@ import {
 
 const BATCH_SIZE = 10;
 
-export class BpTopicEngine implements sdk.Engine<"topic", "supervised"> {
+export class BpTopicEngine implements sdk.Engine<"topic"> {
   private _stanProvider: StanProvider;
 
   constructor(bpEndpoint: string, password: string) {

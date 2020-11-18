@@ -4,11 +4,8 @@ import _ from "lodash";
 import cliProgress from "cli-progress";
 import { isUnsupervisedProblem } from "./guards";
 
-const runSolution = async <
-  T extends sdk.ProblemType,
-  L extends sdk.LearningApproach
->(
-  solution: sdk.Solution<T, L>,
+const runSolution = async <T extends sdk.ProblemType>(
+  solution: sdk.Solution<T> | sdk.UnsupervisedSolution<T>,
   seeds: number[]
 ) => {
   const allResults: sdk.Result<T>[] = [];
@@ -25,7 +22,7 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
   state: {
     allResults: sdk.Result<T>[];
   },
-  solution: sdk.Solution<T, sdk.LearningApproach>
+  solution: sdk.Solution<T> | sdk.UnsupervisedSolution<T>
 ) => async (seed: number) => {
   const { allResults } = state;
 
@@ -40,7 +37,7 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
   const runProblem = makeProblemRunner({ solutionResults }, seed);
   for (const problem of problems) {
     try {
-      await runProblem({ problem, engine: solution.engine });
+      await runProblem({ problem, engine: solution.engine } as any); // TODO: refactor this
     } catch (err) {
       console.log(
         chalk.red(
@@ -60,21 +57,26 @@ const makeSolutionRunner = <T extends sdk.ProblemType>(
   }
 };
 
-type ProblemArgs<T extends sdk.ProblemType, L extends sdk.LearningApproach> = {
-  problem: sdk.Problem<T, L>;
-  engine: sdk.Engine<T, L>;
+type Unsupervised<T extends sdk.ProblemType> = {
+  problem: sdk.UnsupervisedProblem<T>;
+  engine: sdk.UnsupervisedEngine<T>;
 };
 
-const isUnsupervised = <T extends sdk.ProblemType>(
-  args: ProblemArgs<T, sdk.LearningApproach>
-): args is ProblemArgs<T, "unsupervised"> => {
-  return isUnsupervisedProblem(args.problem);
+type Supervised<T extends sdk.ProblemType> = {
+  problem: sdk.Problem<T>;
+  engine: sdk.Engine<T>;
 };
 
 const isSupervised = <T extends sdk.ProblemType>(
-  args: ProblemArgs<T, sdk.LearningApproach>
-): args is ProblemArgs<T, "supervised"> => {
+  args: Unsupervised<T> | Supervised<T>
+): args is Supervised<T> => {
   return !isUnsupervisedProblem(args.problem);
+};
+
+const isUnsupervised = <T extends sdk.ProblemType>(
+  args: Unsupervised<T> | Supervised<T>
+): args is Unsupervised<T> => {
+  return isUnsupervisedProblem(args.problem);
 };
 
 const makeProblemRunner = <T extends sdk.ProblemType>(
@@ -82,7 +84,7 @@ const makeProblemRunner = <T extends sdk.ProblemType>(
     solutionResults: sdk.Result<T>[];
   },
   seed: number
-) => async (args: ProblemArgs<T, sdk.LearningApproach>) => {
+) => async (args: Unsupervised<T> | Supervised<T>) => {
   const { solutionResults } = state;
 
   const { engine, problem } = args;
