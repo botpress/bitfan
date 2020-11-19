@@ -14,14 +14,16 @@ const evaluateMetrics: typeof sdk.evaluateMetrics = <T extends sdk.ProblemType>(
       const resultsOfComb = results.filter(
         (r) => r.metadata.seed === seed && r.metadata.problem === problem
       );
-      scores.push(
-        ...metrics.map((m) => ({
-          metric: m.name,
-          problem,
-          seed,
-          score: m.eval(resultsOfComb),
-        }))
-      );
+      if (resultsOfComb.length) {
+        scores.push(
+          ...metrics.map((m) => ({
+            metric: m.name,
+            problem,
+            seed,
+            score: m.eval(resultsOfComb),
+          }))
+        );
+      }
     }
   }
 

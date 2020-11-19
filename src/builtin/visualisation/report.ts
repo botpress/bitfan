@@ -10,7 +10,7 @@ const DEFAULT_OPT: {
   groupBy: "all",
 };
 
-export const showReport: typeof sdk.visualisation.showReport = (
+export const showPerformanceReport: typeof sdk.visualisation.showPerformanceReport = (
   report: sdk.PerformanceReport,
   opt?: Partial<{
     groupBy: "seed" | "problem" | "all";
@@ -50,7 +50,7 @@ function logReason(reason: sdk.RegressionReason) {
     `   current score is ${currentScore}, while previous score is ${previousScore}`;
 
   if (status === "regression") {
-    msg += `(allowed regression is ${allowedRegression})`;
+    msg += ` (allowed regression is ${allowedRegression})`;
     console.log(chalk.red(msg));
   } else if (status === "tolerated-regression") {
     msg += ".";
@@ -64,16 +64,21 @@ export const showComparisonReport: typeof sdk.visualisation.showComparisonReport
 ) => {
   if (comparison.status === "regression") {
     console.log(
-      `There seems to be a regression on test ${name}.\n` + "Reasons are:\n"
+      chalk.red(
+        `There seems to be a regression on test ${name}.\n` + "Reasons are:\n"
+      )
     );
   }
   if (comparison.status === "tolerated-regression") {
     console.log(
-      `There seems to be a regression on test ${name}, but regression is small enough to be tolerated.\n` +
-        "Reasons are:\n"
+      chalk.yellow(
+        `There seems to be a regression on test ${name}, but regression is small enough to be tolerated.\n` +
+          "Reasons are:\n"
+      )
     );
   }
+  if (comparison.status === "success") {
+    console.log(chalk.green(`No regression noted for test ${name}.`));
+  }
   comparison.reasons.forEach(logReason);
-
-  return `No regression noted for test ${name}.`;
 };

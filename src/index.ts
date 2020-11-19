@@ -25,7 +25,7 @@ import {
 import { showSlotsResults } from "./builtin/visualisation/slots";
 import { showOOSConfusion } from "./builtin/visualisation/oos";
 import {
-  showReport,
+  showPerformanceReport,
   showComparisonReport,
 } from "./builtin/visualisation/report";
 
@@ -108,7 +108,7 @@ const impl: typeof sdk = {
 
   visualisation: {
     showOOSConfusion,
-    showReport,
+    showPerformanceReport,
     showComparisonReport,
     showClassDistribution,
     showDatasetsSummary,

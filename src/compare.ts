@@ -35,10 +35,16 @@ export default function comparePerformances(
         const current = currentPerformance.scores.find(isComb);
         const previous = previousPerformance.scores.find(isComb);
 
-        if (!previous || !current) {
-          const combination = `{ metric: ${metric}, problem: ${problem}, seed: ${seed} }`;
+        const combination = `{ metric: ${metric}, problem: ${problem}, seed: ${seed} }`;
+        if (!previous && !current) {
+          continue;
+        } else if (!previous) {
           throw new Error(
-            `No score could be found for combination ${combination} in previous or current performance.`
+            `No score could be found for combination ${combination} in previous performance.`
+          );
+        } else if (!current) {
+          throw new Error(
+            `No score could be found for combination ${combination} in current performance.`
           );
         }
 

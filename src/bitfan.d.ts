@@ -82,7 +82,7 @@ export namespace visualisation {
   export const showClassDistribution: DatasetViewer<SingleLabel>;
   export const showDatasetsSummary: DatasetViewer<ProblemType>;
 
-  export const showReport: (
+  export const showPerformanceReport: (
     report: PerformanceReport,
     opt?: Partial<{
       groupBy: "seed" | "problem" | "all";

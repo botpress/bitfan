@@ -11,7 +11,7 @@ export const tabelize: typeof sdk.tables.tabelize = <D>(
     agg?: (scores: number[]) => number;
   }
 ): sdk.Dic<sdk.Dic<number>> => {
-  const average = (n: number[]) => _.sum(n) / n.length;
+  const average = (n: number[]) => _.sum(n.filter(_.isNumber)) / n.length;
   const aggregator = disposition.agg ?? average;
 
   const allRows = data.map((d) => disposition.row(d));
