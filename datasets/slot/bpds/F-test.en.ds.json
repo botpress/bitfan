@@ -1,8 +1,21 @@
 {
-  "name": "bpdsF-slot-test",
+  "name": "F-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "flight-number", "types": ["city"] }, { "name": "arrival-city", "types": ["city"] }],
+  "variables": [
+    {
+      "name": "flight-number",
+      "types": [
+        "city"
+      ]
+    },
+    {
+      "name": "arrival-city",
+      "types": [
+        "city"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

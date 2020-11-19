@@ -1,10 +1,23 @@
 {
-  "name": "bpdsA-slot-train",
+  "name": "A-train",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "gun_to_buy", "types": ["gun"] }],
+  "variables": [
+    {
+      "name": "gun_to_buy",
+      "types": [
+        "gun"
+      ]
+    }
+  ],
   "enums": [],
-  "patterns": [{ "name": "gun", "regex": "\\w{1,2}-?\\d{2,4}", "case_sensitive": false }],
+  "patterns": [
+    {
+      "name": "gun",
+      "regex": "\\w{1,2}-?\\d{2,4}",
+      "case_sensitive": false
+    }
+  ],
   "samples": [
     {
       "text": "I want to buy a gun",

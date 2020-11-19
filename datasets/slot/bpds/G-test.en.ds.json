@@ -1,8 +1,21 @@
 {
-  "name": "bpdsG-slot-test",
+  "name": "G-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "from_city", "types": ["city"] }, { "name": "to_city", "types": ["city"] }],
+  "variables": [
+    {
+      "name": "from_city",
+      "types": [
+        "city"
+      ]
+    },
+    {
+      "name": "to_city",
+      "types": [
+        "city"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

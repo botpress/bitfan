@@ -1,10 +1,22 @@
 {
-  "name": "bpdsI-slot-test",
+  "name": "I-test",
   "type": "slot",
   "lang": "en",
   "variables": [
-    { "name": "thing_to_fire", "types": ["fruit", "gun"] },
-    { "name": "time_or_place", "types": ["city", "time"] }
+    {
+      "name": "thing_to_fire",
+      "types": [
+        "fruit",
+        "gun"
+      ]
+    },
+    {
+      "name": "time_or_place",
+      "types": [
+        "city",
+        "time"
+      ]
+    }
   ],
   "enums": [],
   "patterns": [],

@@ -1,10 +1,20 @@
 {
-  "name": "bpdsC-slot-test",
+  "name": "C-test",
   "type": "slot",
   "lang": "en",
   "variables": [
-    { "name": "holiday_start", "types": ["time"] },
-    { "name": "holiday_duration", "types": ["duration"] }
+    {
+      "name": "holiday_start",
+      "types": [
+        "time"
+      ]
+    },
+    {
+      "name": "holiday_duration",
+      "types": [
+        "duration"
+      ]
+    }
   ],
   "enums": [],
   "patterns": [],

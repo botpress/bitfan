@@ -1,8 +1,15 @@
 {
-  "name": "bpdsJ-slot-test",
+  "name": "J-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "fruit_to_eat", "types": ["fruit"] }],
+  "variables": [
+    {
+      "name": "fruit_to_eat",
+      "types": [
+        "fruit"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

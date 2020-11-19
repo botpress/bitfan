@@ -1,4 +1,5 @@
 {
+  "name": "E-train",
   "lang": "en",
   "type": "intent",
   "samples": [
@@ -226,6 +227,5 @@
       "text": "My system is not working due to an error I made",
       "label": "e-problem"
     }
-  ],
-  "name": "bpdsE-train.en"
+  ]
 }
