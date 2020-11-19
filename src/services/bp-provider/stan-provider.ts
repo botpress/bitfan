@@ -108,7 +108,7 @@ export class StanProvider {
     return predictions;
   }
 
-  public async predict(texts: string[]): Promise<Predictions[]> {
+  public async predict(texts: string[]): Promise<BpPredictOutput[]> {
     try {
       const predOutput = await this._fetchPrediction(texts);
       if (predOutput.some(this._isPredictError)) {
@@ -117,7 +117,7 @@ export class StanProvider {
         );
       }
 
-      return (predOutput as BpPredictOutput[]).map((p) => p.predictions);
+      return predOutput as BpPredictOutput[];
     } catch (err) {
       this._mapErrorAndRethrow("PREDICT", err);
     }
