@@ -1,11 +1,21 @@
 {
-  "name": "bpdsC-slot-train",
+  "name": "C-train",
   "type": "slot",
   "lang": "en",
   "variables": [
-      { "name": "holiday_start", "types": ["time"] },
-      { "name": "holiday_duration", "types": ["duration"] }
-    ],
+    {
+      "name": "holiday_start",
+      "types": [
+        "time"
+      ]
+    },
+    {
+      "name": "holiday_duration",
+      "types": [
+        "duration"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

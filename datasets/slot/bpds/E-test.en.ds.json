@@ -1,8 +1,17 @@
 {
-  "name": "bpdsE-slot-test",
+  "name": "E-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "employe_to_fire", "types": ["email", "employe-number", "any"] }],
+  "variables": [
+    {
+      "name": "employe_to_fire",
+      "types": [
+        "email",
+        "employe-number",
+        "any"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

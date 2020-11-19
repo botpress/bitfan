@@ -1,8 +1,21 @@
 {
-  "name": "bpdsH-slot-test",
+  "name": "H-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "flight", "types": ["flight-number"] }, { "name": "gun", "types": ["gun"] }],
+  "variables": [
+    {
+      "name": "flight",
+      "types": [
+        "flight-number"
+      ]
+    },
+    {
+      "name": "gun",
+      "types": [
+        "gun"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

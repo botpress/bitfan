@@ -1,8 +1,15 @@
 {
-  "name": "bpdsA-slot-test",
+  "name": "A-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "gun_to_buy", "types": ["gun"] }],
+  "variables": [
+    {
+      "name": "gun_to_buy",
+      "types": [
+        "gun"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

@@ -1,4 +1,5 @@
 {
+  "name": "B-test",
   "lang": "en",
   "type": "intent",
   "samples": [
@@ -218,6 +219,5 @@
       "text": "I'm mad",
       "label": "oos"
     }
-  ],
-  "name": "bpdsB-test.en"
+  ]
 }

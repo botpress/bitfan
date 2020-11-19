@@ -1,4 +1,5 @@
 {
+  "name": "F-train",
   "lang": "en",
   "type": "intent",
   "samples": [
@@ -214,6 +215,5 @@
       "text": "My system is not working due to an error I made",
       "label": "f-problem"
     }
-  ],
-  "name": "bpdsF-train.en"
+  ]
 }

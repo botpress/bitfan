@@ -1,8 +1,15 @@
 {
-  "name": "bpdsB-slot-test",
+  "name": "B-test",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "fruit-to-buy", "types": ["fruit"] }],
+  "variables": [
+    {
+      "name": "fruit-to-buy",
+      "types": [
+        "fruit"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [

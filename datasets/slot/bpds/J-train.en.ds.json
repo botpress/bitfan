@@ -1,11 +1,19 @@
 {
-  "name": "bpdsJ-slot-train",
+  "name": "J-train",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "fruit_to_eat", "types": ["fruit"] }],
+  "variables": [
+    {
+      "name": "fruit_to_eat",
+      "types": [
+        "fruit"
+      ]
+    }
+  ],
   "enums": [
-    { "name": "fruit", "values": 
-      [
+    {
+      "name": "fruit",
+      "values": [
         {
           "name": "apples",
           "synonyms": []
@@ -36,7 +44,9 @@
         },
         {
           "name": "cherry",
-          "synonyms": ["cherries"]
+          "synonyms": [
+            "cherries"
+          ]
         },
         {
           "name": "coconut",
@@ -60,7 +70,9 @@
         },
         {
           "name": "melon",
-          "synonyms": ["Galia melon"]
+          "synonyms": [
+            "Galia melon"
+          ]
         },
         {
           "name": "nectarine",
@@ -84,7 +96,9 @@
         },
         {
           "name": "Bell pepper",
-          "synonyms": ["Chile pepper"]
+          "synonyms": [
+            "Chile pepper"
+          ]
         },
         {
           "name": "Purple mangosteen",
@@ -110,7 +124,7 @@
           "name": "tesguino",
           "synonyms": []
         }
-      ] 
+      ]
     }
   ],
   "patterns": [],

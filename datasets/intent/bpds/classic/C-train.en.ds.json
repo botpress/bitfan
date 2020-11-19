@@ -1,4 +1,5 @@
 {
+  "name": "C-train",
   "lang": "en",
   "type": "intent",
   "samples": [
@@ -234,6 +235,5 @@
       "text": "I'm having a system challenge",
       "label": "c-problem"
     }
-  ],
-  "name": "bpdsC-train.en"
+  ]
 }

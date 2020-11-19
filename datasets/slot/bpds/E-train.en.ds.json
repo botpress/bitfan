@@ -1,10 +1,25 @@
 {
-  "name": "bpdsE-slot-train",
+  "name": "E-train",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "employe_to_fire", "types": ["email", "employe-number", "any"] }],
+  "variables": [
+    {
+      "name": "employe_to_fire",
+      "types": [
+        "email",
+        "employe-number",
+        "any"
+      ]
+    }
+  ],
   "enums": [],
-  "patterns": [{ "name": "employe-number", "regex": "[0-9]{6}", "case_sensitive": false }],
+  "patterns": [
+    {
+      "name": "employe-number",
+      "regex": "[0-9]{6}",
+      "case_sensitive": false
+    }
+  ],
   "samples": [
     {
       "text": "I want to fire François Xavier",

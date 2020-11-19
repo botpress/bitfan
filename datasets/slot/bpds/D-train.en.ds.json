@@ -1,8 +1,15 @@
 {
-  "name": "bpdsD-slot-train",
+  "name": "D-train",
   "type": "slot",
   "lang": "en",
-  "variables": [{ "name": "restaurant", "types": ["any"] }],
+  "variables": [
+    {
+      "name": "restaurant",
+      "types": [
+        "any"
+      ]
+    }
+  ],
   "enums": [],
   "patterns": [],
   "samples": [
