@@ -112,6 +112,10 @@ export namespace engines {
     bpEndpoint: string,
     password: string
   ) => Engine<"slot">;
+  export const makeBpSpellEngine: (
+    bpEndpoint: string,
+    password: string
+  ) => UnsupervisedEngine<"spell">;
 }
 
 export namespace sampling {

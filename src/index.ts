@@ -37,6 +37,7 @@ import { BpIntentEngine } from "./builtin/engines/intent";
 import { BpTopicEngine } from "./builtin/engines/topic";
 import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { BpSlotEngine } from "./builtin/engines/slot";
+import { BpSpellingEngine } from "./builtin/engines/spell";
 
 import { areSame, isOOS, makeKey } from "./builtin/labels";
 
@@ -123,6 +124,8 @@ const impl: typeof sdk = {
       new BpIntentTopicEngine(bpEndpoint, password),
     makeBpSlotEngine: (bpEndpoint: string, password: string) =>
       new BpSlotEngine(bpEndpoint, password),
+    makeBpSpellEngine: (bpEndpoint: string, password: string) =>
+      new BpSpellingEngine(bpEndpoint, password),
   },
 
   tables: {
