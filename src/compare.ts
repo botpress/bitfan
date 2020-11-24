@@ -24,8 +24,6 @@ export default function comparePerformances(
     ...userDefinedTolerance,
   };
 
-  let status: sdk.RegressionStatus = "success";
-
   const reasons: sdk.RegressionReason[] = [];
   for (const metric of currentMetrics) {
     for (const problem of currentProblems) {
@@ -54,9 +52,8 @@ export default function comparePerformances(
         const delta = toleranceByMetric[metric] * previousScore;
 
         if (currentScore + delta < previousScore) {
-          status = "regression";
           reasons.push({
-            status,
+            status: "regression",
             metric,
             problem,
             seed,
@@ -65,9 +62,8 @@ export default function comparePerformances(
             allowedRegression: -delta,
           });
         } else if (currentScore < previousScore) {
-          status = "tolerated-regression";
           reasons.push({
-            status,
+            status: "tolerated-regression",
             metric,
             problem,
             seed,
@@ -78,6 +74,15 @@ export default function comparePerformances(
         }
       }
     }
+  }
+
+  let status: sdk.RegressionStatus;
+  if (reasons.some((r) => r.status === "regression")) {
+    status = "regression";
+  } else if (reasons.some((r) => r.status === "tolerated-regression")) {
+    status = "tolerated-regression";
+  } else {
+    status = "success";
   }
 
   return {
