@@ -2,13 +2,23 @@ import axios from "axios";
 
 import { sleep } from "../../utils";
 
-import {
-  BpPredictError,
-  BpPredictOutput,
-  BpTrainInput,
-  Predictions,
-  TrainingSession,
-} from "./stan-typings";
+interface TrainingSession {
+  key: string;
+  status: TrainingStatus;
+  language: string;
+  progress: number;
+}
+
+type TrainingStatus =
+  | "idle"
+  | "done"
+  | "needs-training"
+  | "training"
+  | "canceled"
+  | "errored"
+  | null;
+
+import { PredictOutput, TrainInput } from "./stan-typings";
 
 const POLLING_INTERVAL = 500;
 
@@ -60,7 +70,7 @@ export class StanProvider {
   }
 
   public async train(
-    trainInput: BpTrainInput,
+    trainInput: TrainInput,
     loggingCb?: (time: number, progress: number) => void
   ) {
     const inputWithPassword = { ...trainInput, password: this._password };
@@ -79,17 +89,11 @@ export class StanProvider {
     }
   }
 
-  private _isPredictError(
-    out: BpPredictError | BpPredictOutput
-  ): out is BpPredictError {
-    return !!out.errored;
-  }
-
   private async _postPredict(
     texts: string[]
   ): Promise<{
     success: boolean;
-    predictions: (BpPredictOutput | BpPredictError)[];
+    predictions: PredictOutput[];
   }> {
     const { data } = await axios.post(
       `${this._stanEndpoint}/predict/${this._modelId}`,
@@ -101,23 +105,16 @@ export class StanProvider {
     return data;
   }
 
-  private async _fetchPrediction(
-    texts: string[]
-  ): Promise<(BpPredictOutput | BpPredictError)[]> {
-    const { predictions } = await this._postPredict(texts);
-    return predictions;
-  }
-
-  public async predict(texts: string[]): Promise<BpPredictOutput[]> {
+  public async predict(texts: string[]): Promise<PredictOutput[]> {
     try {
-      const predOutput = await this._fetchPrediction(texts);
-      if (predOutput.some(this._isPredictError)) {
+      const predOutput = await this._postPredict(texts);
+      if (!predOutput.success) {
         throw new Error(
           "An error occured at prediction. The nature of the error is unknown."
         );
       }
 
-      return predOutput as BpPredictOutput[];
+      return predOutput.predictions;
     } catch (err) {
       this._mapErrorAndRethrow("PREDICT", err);
     }

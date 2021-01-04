@@ -4,8 +4,8 @@ import { areSame, getOOSLabel, makeKey } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
-  BpTrainInput,
-  IntentPred,
+  TrainInput,
+  IntentPrediction,
 } from "../../services/bp-provider/stan-typings";
 
 const MAIN_TOPIC = "main";
@@ -32,23 +32,19 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
 
     const intents = allLabels.map((l) => ({
       name: makeKey(l),
-      variables: [],
-      examples: trainSet.samples
+      slots: [],
+      contexts: [MAIN_TOPIC],
+      utterances: trainSet.samples
         .filter((r) => areSame(r.label, l))
         .map((r) => r.text),
     }));
 
-    const trainInput: BpTrainInput = {
+    const trainInput: TrainInput = {
       language: trainSet.lang,
-      enums: [],
-      patterns: [],
+      entities: [],
       seed,
-      topics: [
-        {
-          name: MAIN_TOPIC,
-          intents,
-        },
-      ],
+      intents,
+      contexts: [MAIN_TOPIC],
     };
 
     return this._stanProvider.train(trainInput, (_time, progressPercent) => {
@@ -57,11 +53,11 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
   }
 
   private _makePredictions(
-    intents: IntentPred[],
+    intents: IntentPrediction[],
     oos: number
   ): sdk.Candidate<"intent">[] {
     const candidates: sdk.Candidate<"intent">[] = intents.map(
-      ({ label: elected, confidence }) => ({
+      ({ name: elected, confidence }) => ({
         elected,
         confidence,
       })
@@ -81,13 +77,15 @@ export class BpIntentEngine implements sdk.Engine<"intent"> {
     let done = 0;
 
     for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
-      const predictions = (
-        await this._stanProvider.predict(batch.map((r) => r.text))
-      ).map((p) => p.predictions);
+      const predictions = await this._stanProvider.predict(
+        batch.map((r) => r.text)
+      );
 
-      for (const [pred, row] of _.zip(predictions, batch)) {
-        const { text, label } = row!;
-        const { intents, oos } = pred![MAIN_TOPIC];
+      for (const [pred, sample] of _.zip(predictions, batch)) {
+        const { text, label } = sample!;
+        const { intents, oos } = pred!.contexts.find(
+          (c) => c.name === MAIN_TOPIC
+        )!;
         const candidates = this._makePredictions(intents, oos);
 
         results.push({
