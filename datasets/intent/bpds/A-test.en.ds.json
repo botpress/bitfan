@@ -9,35 +9,19 @@
     },
     {
       "label": "bill-inquiry",
-      "text": "I am facing an issue with my bill"
+      "text": "I need my bill verified"
     },
     {
       "label": "bill-inquiry",
-      "text": "I believe there is an error on my bill"
+      "text": "I want to see my bill"
     },
     {
       "label": "bill-inquiry",
-      "text": "I got an error on my bill"
+      "text": "I want to check my statement"
     },
     {
       "label": "bill-inquiry",
-      "text": "I need my bill amended"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "I want to amend my bill"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "I want to amend my statement"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "I want to amend my statements"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "I want to resolve a billing issue"
+      "text": "I want to verify my statements"
     },
     {
       "label": "bill-inquiry",
@@ -46,10 +30,6 @@
     {
       "label": "bill-inquiry",
       "text": "Please give me my statement"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "Rectify my bill"
     },
     {
       "label": "bill-inquiry",
@@ -62,14 +42,6 @@
     {
       "label": "bill-inquiry",
       "text": "help with bill"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "something is not working with my statement"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "problem with bill"
     },
     {
       "label": "bill-inquiry",
@@ -105,6 +77,42 @@
     },
     {
       "label": "bill-inquiry",
+      "text": "bill details"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "information on invoice"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "I am facing an issue with my bill"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "I believe there is an error on my bill"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "I got an error on my bill"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "I want to resolve a billing issue"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "Rectify my bill"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "something is not working with my statement"
+    },
+    {
+      "label": "bill-inquiry",
+      "text": "problem with bill"
+    },
+    {
+      "label": "bill-inquiry",
       "text": "there is an error in my bill"
     },
     {
@@ -113,15 +121,7 @@
     },
     {
       "label": "bill-inquiry",
-      "text": "bill details"
-    },
-    {
-      "label": "bill-inquiry",
       "text": "error with charging"
-    },
-    {
-      "label": "bill-inquiry",
-      "text": "information on invoice"
     },
     {
       "label": "cancellation",
@@ -135,10 +135,7 @@
       "label": "cancellation",
       "text": "I can't continue with my subscription"
     },
-    {
-      "label": "cancellation",
-      "text": "I have an inquiry about termination"
-    },
+    { "label": "cancellation", "text": "I have an inquiry about termination" },
     {
       "label": "cancellation",
       "text": "I want to stop my business relationship with you"
@@ -213,7 +210,7 @@
     },
     {
       "label": "cancellation",
-      "text": "how to cancel"
+      "text": "who should I ask to cancel"
     },
     {
       "label": "cancellation",
@@ -465,7 +462,7 @@
     },
     {
       "label": "problem",
-      "text": "They're is a problem with my screen"
+      "text": "There is a problem with my keyboard"
     },
     {
       "label": "problem",
@@ -507,14 +504,8 @@
       "label": "oos",
       "text": "innce geneon fupl gre tojo wayju rorce genpng zwda plcwhs keapes bada eyplli omrar"
     },
-    {
-      "label": "oos",
-      "text": "nach odng nawhrg tedan erasoo fuuil"
-    },
-    {
-      "label": "oos",
-      "text": "gndbo"
-    },
+    { "label": "oos", "text": "nach odng nawhrg tedan erasoo fuuil" },
+    { "label": "oos", "text": "gndbo" },
     {
       "label": "oos",
       "text": "odcfoom gndbo foap lear brsli kiatui mod walich ntag apyhrc datpds"
@@ -527,18 +518,12 @@
       "label": "oos",
       "text": "osavhi illkhi lzniea frv palzbng ilzinay ayrvha lduime"
     },
-    {
-      "label": "oos",
-      "text": "ndmollp irad rnn oil ldwat"
-    },
+    { "label": "oos", "text": "ndmollp irad rnn oil ldwat" },
     {
       "label": "oos",
       "text": "oora baca otseik eyleto rahebdy yakot arct payo omvepe isck"
     },
-    {
-      "label": "oos",
-      "text": "leormon recaet plel omlklz ceolgru atui anopa"
-    },
+    { "label": "oos", "text": "leormon recaet plel omlklz ceolgru atui anopa" },
     {
       "label": "oos",
       "text": "ldlkap avnd rgil fred frikha lpssme mood atyoel nso cais jon odoo"
@@ -547,10 +532,7 @@
       "label": "oos",
       "text": "lej arleav anopa pahiyo roucnn haomjlp ikas pemnj"
     },
-    {
-      "label": "oos",
-      "text": "obro rourgo cho fiis elw"
-    },
+    { "label": "oos", "text": "obro rourgo cho fiis elw" },
     {
       "label": "oos",
       "text": "nghi ayolll dta keapes ikas meu goyofo dafi uhwejo bnaki lkch nss erht"
@@ -577,11 +559,11 @@
     },
     {
       "label": "oos",
-      "text": "fan central monkey mild paper shareholder battlefield hover"
+      "text": "fan central dog hot paper shareholder battlefield hover"
     },
     {
       "label": "oos",
-      "text": "cutting central win score serious addition"
+      "text": "cutting extreme loose miss serious addition"
     },
     {
       "label": "oos",
@@ -589,43 +571,43 @@
     },
     {
       "label": "oos",
-      "text": "chimney mobile survey deer directory poor mobile prescription"
+      "text": "chimney mobile survey deer directory rich static parking"
     },
     {
       "label": "oos",
-      "text": "costume addition donor lean apology fan recommendation sit us write"
+      "text": "costume multiplication taker lean apology blower recommendation sit us write"
     },
     {
       "label": "oos",
-      "text": "rare contract discuss junior poor van"
+      "text": "rare contract discuss junior funny van"
     },
     {
       "label": "oos",
-      "text": "writer fan year fast ego cucumber step warm favorable prescription"
+      "text": "writer someone year fast ecological cucumber step warm favorable action"
     },
     {
       "label": "oos",
-      "text": "opponent face communication addition kidnap serious sausage us"
+      "text": "opponent face communication substraction kidnap serious sausage you"
     },
     {
       "label": "oos",
-      "text": "fan object"
+      "text": "heavy object"
     },
     {
       "label": "oos",
-      "text": "fast sacred Bible sausage bee horse sword communication"
+      "text": "slow sacred bible steak bee horse sword destruction"
     },
     {
       "label": "oos",
-      "text": "satisfaction seed locally fist stop prediction minister continuous blade tendency"
+      "text": "satisfaction seed locally fist stop prediction minister continuous blade software"
     },
     {
       "label": "oos",
-      "text": "remunerate conception course cucumber monkey reflection fist active prescription medal"
+      "text": "remunerate conception course carrot cat reflection first active kill medal"
     },
     {
       "label": "oos",
-      "text": "addition differ kidnap capital hay rare established wait"
+      "text": "opperation differ commit capital hay frequent established wait"
     },
     {
       "label": "oos",
@@ -633,15 +615,15 @@
     },
     {
       "label": "oos",
-      "text": "warm accompany monkey monkey garlic rack"
+      "text": "cold accompany bird leopard garlic rack"
     },
     {
       "label": "oos",
-      "text": "donor even medal flavor"
+      "text": "man even trophy flavor"
     },
     {
       "label": "oos",
-      "text": "tumour remunerate disco scatter"
+      "text": "tumour volunteer disco scatter"
     },
     {
       "label": "oos",
@@ -703,10 +685,7 @@
       "label": "oos",
       "text": "But the fat Hobbit, he knows. Eyes always watching."
     },
-    {
-      "label": "oos",
-      "text": "Let’s face it, Mr. Frodo, we’re lost."
-    },
+    { "label": "oos", "text": "Let’s face it, Mr. Frodo, we’re lost." },
     {
       "label": "oos",
       "text": "I thought up an ending for my book. And he lives happily ever after, till the end of his days."
@@ -809,7 +788,7 @@
     },
     {
       "label": "oos",
-      "text": "I want to begin my contract?"
+      "text": "I want to begin my contract"
     },
     {
       "label": "oos",
@@ -833,7 +812,7 @@
     },
     {
       "label": "oos",
-      "text": "How can I start my contract?"
+      "text": "How can I initiate my contract?"
     },
     {
       "label": "oos",
