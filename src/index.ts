@@ -35,7 +35,6 @@ import { sampleClasses } from "./builtin/sampling/samplesClasses";
 
 import { BpIntentEngine } from "./builtin/engines/intent";
 import { BpTopicEngine } from "./builtin/engines/topic";
-import { BpIntentTopicEngine } from "./builtin/engines/intent-topic";
 import { BpSlotEngine } from "./builtin/engines/slot";
 import { BpSpellingEngine } from "./builtin/engines/spell";
 
@@ -120,8 +119,6 @@ const impl: typeof sdk = {
       new BpTopicEngine(bpEndpoint, password),
     makeBpIntentEngine: (bpEndpoint: string, password: string) =>
       new BpIntentEngine(bpEndpoint, password),
-    makeBpIntentTopicEngine: (bpEndpoint: string, password: string) =>
-      new BpIntentTopicEngine(bpEndpoint, password),
     makeBpSlotEngine: (bpEndpoint: string, password: string) =>
       new BpSlotEngine(bpEndpoint, password),
     makeBpSpellEngine: (bpEndpoint: string, password: string) =>

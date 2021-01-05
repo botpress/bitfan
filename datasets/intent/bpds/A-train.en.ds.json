@@ -57,7 +57,7 @@
     },
     {
       "label": "cancellation",
-      "text": "I want to stop my contract?"
+      "text": "I want to stop my contract"
     },
     {
       "label": "cancellation",
@@ -65,7 +65,7 @@
     },
     {
       "label": "cancellation",
-      "text": "I need to end my agreement with you?"
+      "text": "I need to end my agreement with you"
     },
     {
       "label": "cancellation",
@@ -77,7 +77,7 @@
     },
     {
       "label": "cancellation",
-      "text": "Cancel contract"
+      "text": "Cancel the contract"
     },
     {
       "label": "cancellation",
@@ -101,7 +101,7 @@
     },
     {
       "label": "contact-details",
-      "text": " What is the contact number?"
+      "text": "What is the contact number?"
     },
     {
       "label": "contact-details",
@@ -125,7 +125,7 @@
     },
     {
       "label": "contact-details",
-      "text": "contact number"
+      "text": "Contact number"
     },
     {
       "label": "contact-details",
@@ -181,7 +181,7 @@
     },
     {
       "label": "problem",
-      "text": "I got a technical problem"
+      "text": "I experience a technical problem"
     },
     {
       "label": "problem",

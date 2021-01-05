@@ -1,124 +1,97 @@
-export interface TrainingSession {
-  key: string;
-  status: TrainingStatus;
-  language: string;
-  progress: number;
-}
+// Typings for Stan's API v1
 
-type TrainingStatus =
-  | "idle"
-  | "done"
-  | "needs-training"
-  | "training"
-  | "canceled"
-  | "errored"
-  | null;
-
-export interface BpTrainInput {
+/**
+ * ################################
+ * ############ INPUTS ############
+ * ################################
+ */
+export interface TrainInput {
   language: string;
-  topics: Topic[];
-  enums: Enum[];
-  patterns: Pattern[];
+  contexts: string[];
+  intents: IntentDefinition[];
+  entities: (ListEntityDefinition | PatternEntityDefinition)[];
+  password?: string;
   seed?: number;
 }
 
-export interface Topic {
+export interface IntentDefinition {
   name: string;
-  intents: IntentDef[];
+  contexts: string[];
+  utterances: string[];
+  slots: SlotDefinition[];
 }
 
-export interface IntentDef {
+export interface SlotDefinition {
   name: string;
-  variables: Variable[];
-  examples: string[];
+  entities: string[];
 }
 
-export interface Variable {
+export interface ListEntityDefinition {
   name: string;
-  types: string[];
-}
-
-export interface Enum {
-  name: string;
-  values: EnumOccurence[];
+  type: "list";
+  values: { name: string; synonyms: string[] }[];
   fuzzy: number;
 }
 
-export interface EnumOccurence {
+export interface PatternEntityDefinition {
   name: string;
-  synonyms: string[];
-}
-
-export interface Pattern {
-  name: string;
+  type: "pattern";
   regex: string;
   case_sensitive: boolean;
+  examples: string[];
 }
 
-export type BpPredictError = { errored: true };
+export interface PredictInput {
+  utterances: string[];
+  password: string;
+}
 
-export type BpPredictOutput = {
-  errored: false;
-  language: string;
-  detectedLanguage: string;
+/**
+ * #################################
+ * ############ OUTPUTS ############
+ * #################################
+ */
+export interface PredictOutput {
+  entities: EntityPrediction[];
+  contexts: ContextPrediction[];
+  utterance: string;
   spellChecked: string;
-  entities: Entity[];
-  slots: SlotCollection;
-  predictions: Predictions;
-  ms: number;
-};
-
-export type SlotCollection = {
-  [slot: string]: Slot;
-};
-
-export interface Predictions {
-  [topic: string]: PredictedTopic;
+  detectedLanguage: string;
 }
 
-export interface PredictedTopic {
-  confidence: number;
-  oos: number;
-  intents: IntentPred[];
-}
+export type EntityType = "pattern" | "list" | "system";
 
-export interface IntentPred {
-  label: string;
-  confidence: number;
-  slots: SlotCollection;
-  extractor: "exact-matcher" | "classifier";
-}
-
-export interface Slot {
+export interface EntityPrediction {
   name: string;
-  value: any;
-  source: any;
-  entity: Entity;
+  type: EntityType;
+  value: string;
   confidence: number;
-  start: number;
-  end: number;
-}
-
-export interface Intent {
-  name: string;
-  confidence: number;
-  topic: string;
-  matches?: (intentPattern: string) => boolean;
-}
-
-export interface Entity {
-  name: string;
-  type: string;
-  meta: EntityMeta;
-  data: any;
-}
-
-export interface EntityMeta {
-  sensitive: boolean;
-  confidence: number;
-  provider?: string;
   source: string;
   start: number;
   end: number;
-  raw?: any;
+  unit?: string;
+}
+
+export interface ContextPrediction {
+  name: string;
+  oos: number;
+  confidence: number;
+  intents: IntentPrediction[];
+}
+
+export interface IntentPrediction {
+  name: string;
+  confidence: number;
+  slots: SlotPrediction[];
+  extractor: "exact-matcher" | "classifier";
+}
+
+export interface SlotPrediction {
+  name: string;
+  value: string;
+  confidence: number;
+  source: string;
+  start: number;
+  end: number;
+  entity: EntityPrediction;
 }

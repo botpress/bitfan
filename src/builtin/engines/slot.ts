@@ -2,7 +2,12 @@ import * as sdk from "bitfan/sdk";
 import _ from "lodash";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
-import { BpTrainInput } from "../../services/bp-provider/stan-typings";
+import {
+  ListEntityDefinition,
+  PatternEntityDefinition,
+  SlotDefinition,
+  TrainInput,
+} from "../../services/bp-provider/stan-typings";
 
 const MAIN_TOPIC = "main";
 const MAIN_INTENT = "main";
@@ -19,7 +24,7 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
   train(trainSet: sdk.DataSet<"slot">, seed: number, progress: sdk.ProgressCb) {
     const { enums, patterns, lang, samples, variables } = trainSet;
 
-    const examples = samples.map((r) => {
+    const utterances = samples.map((r) => {
       const { text, label } = r;
 
       let sanitized = `${text}`;
@@ -43,21 +48,20 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
       return sanitized;
     });
 
-    const trainInput: BpTrainInput = {
-      enums: enums || [],
-      patterns: patterns || [],
+    const trainInput: TrainInput = {
+      entities: [
+        ...enums.map(this._mapEnums),
+        ...patterns.map(this._mapPatterns),
+      ],
       language: lang,
       seed,
-      topics: [
+      contexts: [MAIN_TOPIC],
+      intents: [
         {
-          name: MAIN_TOPIC,
-          intents: [
-            {
-              name: MAIN_INTENT,
-              variables: variables || [],
-              examples,
-            },
-          ],
+          name: MAIN_INTENT,
+          contexts: [MAIN_TOPIC],
+          slots: variables.map(this._mapVariable) || [],
+          utterances,
         },
       ],
     };
@@ -67,15 +71,44 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
     });
   }
 
+  private _mapEnums(e: sdk.Enum): ListEntityDefinition {
+    const { fuzzy, name, values } = e;
+    return {
+      fuzzy,
+      name,
+      type: "list",
+      values,
+    };
+  }
+
+  private _mapPatterns(p: sdk.Pattern): PatternEntityDefinition {
+    const { case_sensitive, name, regex } = p;
+    return {
+      case_sensitive,
+      examples: [],
+      name,
+      regex,
+      type: "pattern",
+    };
+  }
+
+  private _mapVariable(s: sdk.Variable): SlotDefinition {
+    const { name, types } = s;
+    return {
+      name,
+      entities: types,
+    };
+  }
+
   async predict(testSet: sdk.DataSet<"slot">, progress: sdk.ProgressCb) {
     const results: sdk.Prediction<"slot">[] = [];
 
     let done = 0;
 
     for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
-      const predictions = (
-        await this._stanProvider.predict(batch.map((r) => r.text))
-      ).map((p) => p.predictions);
+      const predictions = await this._stanProvider.predict(
+        batch.map((r) => r.text)
+      );
 
       for (const { pred, row } of _.zipWith(
         predictions,
@@ -83,16 +116,15 @@ export class BpSlotEngine implements sdk.Engine<"slot"> {
         (pred, row) => ({ pred, row })
       )) {
         const { text, label } = row;
-        const { intents } = pred[MAIN_TOPIC];
-        const mainIntent = intents.find((i) => i.label === MAIN_INTENT);
+        const { intents } = pred!.contexts.find((c) => c.name === MAIN_TOPIC)!;
+        const mainIntent = intents.find((i) => i.name === MAIN_INTENT);
 
-        const candidates: sdk.Candidate<"slot">[] = _(mainIntent?.slots)
-          .values()
-          .map(({ name, start, end, confidence }) => ({
+        const candidates: sdk.Candidate<"slot">[] = mainIntent!.slots.map(
+          ({ name, start, end, confidence }) => ({
             elected: { name, start, end },
             confidence,
-          }))
-          .value();
+          })
+        );
 
         results.push({
           text,

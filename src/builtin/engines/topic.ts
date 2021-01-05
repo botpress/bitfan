@@ -4,8 +4,8 @@ import { areSame, makeKey, OOS } from "../../builtin/labels";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
-  BpTrainInput,
-  PredictedTopic,
+  ContextPrediction,
+  TrainInput,
 } from "src/services/bp-provider/stan-typings";
 
 const BATCH_SIZE = 10;
@@ -29,27 +29,25 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
       .uniqWith(areSame)
       .value();
 
-    const topics = allTopics.map((t) => {
+    const intents = _.flatMap(allTopics, (t) => {
       const samplesOfTopic = samples.filter((s) => areSame(s.label, t));
 
-      return {
-        name: makeKey(t),
-        intents: [
-          {
-            name: this._makeIntenName(t),
-            variables: [],
-            examples: samplesOfTopic.map((s) => s.text),
-          },
-        ],
-      };
+      return [
+        {
+          name: this._makeIntenName(t),
+          contexts: [makeKey(t)],
+          slots: [],
+          utterances: samplesOfTopic.map((s) => s.text),
+        },
+      ];
     });
 
-    const trainInput: BpTrainInput = {
+    const trainInput: TrainInput = {
       language: trainSet.lang,
-      enums: [],
-      patterns: [],
+      entities: [],
       seed,
-      topics,
+      intents,
+      contexts: allTopics,
     };
 
     return this._stanProvider.train(trainInput, (_time, progressPercent) => {
@@ -63,18 +61,18 @@ export class BpTopicEngine implements sdk.Engine<"topic"> {
     let done = 0;
 
     for (const batch of _.chunk(testSet.samples, BATCH_SIZE)) {
-      const predictions = (
-        await this._stanProvider.predict(batch.map((r) => r.text))
-      ).map((p) => p.predictions);
+      const predictions = await this._stanProvider.predict(
+        batch.map((r) => r.text)
+      );
 
       for (const [pred, row] of _.zip(predictions, batch)) {
         const { text, label } = row!;
 
-        let mostConfidentTopic: PredictedTopic | undefined;
+        let mostConfidentTopic: ContextPrediction | undefined;
 
         const candidates: sdk.Candidate<"topic">[] = [];
         for (const topicLabel of Object.keys(pred!)) {
-          const topic = pred![topicLabel];
+          const topic = pred!.contexts.find((c) => c.name === topicLabel)!;
 
           candidates.push({
             elected: topicLabel,

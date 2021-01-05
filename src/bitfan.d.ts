@@ -100,10 +100,6 @@ export namespace engines {
     bpEndpoint: string,
     password: string
   ) => Engine<"intent">;
-  export const makeBpIntentTopicEngine: (
-    bpEndpoint: string,
-    password: string
-  ) => Engine<"intent-topic">;
   export const makeBpTopicEngine: (
     bpEndpoint: string,
     password: string

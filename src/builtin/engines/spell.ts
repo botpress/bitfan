@@ -3,13 +3,12 @@ import _ from "lodash";
 
 import { StanProvider } from "../../services/bp-provider/stan-provider";
 import {
-  BpTrainInput,
-  IntentDef,
+  TrainInput,
+  IntentDefinition,
 } from "../../services/bp-provider/stan-typings";
 
 const MAIN_TOPIC = "main";
 const MAIN_INTENT = "main";
-const NONE = "none";
 
 const BATCH_SIZE = 10;
 
@@ -27,26 +26,22 @@ export class BpSpellingEngine implements sdk.UnsupervisedEngine<"spell"> {
       );
     }
 
-    const dummyIntent: IntentDef = {
+    const dummyIntent: IntentDefinition = {
       name: MAIN_INTENT,
-      examples: corpus
+      contexts: [MAIN_TOPIC],
+      utterances: corpus
         .map((c) => c.text)
         .join("\n")
         .split("\n"),
-      variables: [],
+      slots: [],
     };
 
-    const trainInput: BpTrainInput = {
+    const trainInput: TrainInput = {
       language: corpus[0].lang,
-      enums: [],
-      patterns: [],
+      entities: [],
       seed,
-      topics: [
-        {
-          name: MAIN_TOPIC,
-          intents: [dummyIntent],
-        },
-      ],
+      contexts: [MAIN_TOPIC],
+      intents: [dummyIntent],
     };
 
     return this._stanProvider.train(trainInput, (_time, progressPercent) => {
