@@ -2,23 +2,7 @@ import axios from "axios";
 
 import { sleep } from "../../utils";
 
-interface TrainingSession {
-  key: string;
-  status: TrainingStatus;
-  language: string;
-  progress: number;
-}
-
-type TrainingStatus =
-  | "idle"
-  | "done"
-  | "needs-training"
-  | "training"
-  | "canceled"
-  | "errored"
-  | null;
-
-import { PredictOutput, TrainInput } from "./stan-typings";
+import { PredictOutput, TrainingSession, TrainInput } from "./stan-typings";
 
 const POLLING_INTERVAL = 500;
 
@@ -55,7 +39,10 @@ export class StanProvider {
     let time = 0;
 
     let session = await this._getTrainingStatus(modelId);
-    while (session.status === "training") {
+    while (
+      session.status === "training" ||
+      session.status === "training-pending"
+    ) {
       // TODO: add a max training time...
       await sleep(POLLING_INTERVAL);
       time += POLLING_INTERVAL;
@@ -90,7 +77,7 @@ export class StanProvider {
   }
 
   private async _postPredict(
-    texts: string[]
+    utterances: string[]
   ): Promise<{
     success: boolean;
     predictions: PredictOutput[];
@@ -98,7 +85,7 @@ export class StanProvider {
     const { data } = await axios.post(
       `${this._stanEndpoint}/predict/${this._modelId}`,
       {
-        texts,
+        utterances,
         password: this._password,
       }
     );
